@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) 2022 Strategio Digital s.r.o.
+ * @author Jiří Zapletal (https://strategio.dev, jz@strategio.dev)
+ */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background: rgb(19,24,129);
+    background: radial-gradient(circle,rgb(19,24,129) 30%,rgb(11,15,87) 70%);
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(19, 24, 129, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo {
+    height: 100px;
+    margin: 0 1.5rem;
+}
+
+.text {
+    margin: 2rem 0;
+    color: #aaa;
+
+
+    h1 {
+        font-size: 2rem;
+        margin: 0 0 1rem;
+        color: white;
+    }
+
+    p {
+        font-size: 1rem;
+        color: white;
+    }
+
+    a {
+        color: darkorange;
+        padding: 1rem 1rem 0;
+        text-decoration: none;
+    }
+
+    .btn {
+        opacity: .7;
+        border: none;
+        display: inline-block;
+        margin: 1rem .3rem 0 .3rem;
+        padding: .7rem 2rem ;
+        line-height: 1;
+        background-color: darkorange;
+        border-radius: 2rem;
+        color: white;
+        font-size: .8rem;
+        font-weight: bold;
+        text-transform: lowercase;
+        transition: 300ms opacity ease;
+
+        &:hover,
+        &:focus,
+        &:active {
+            opacity: 1;
+        }
+    }
+}

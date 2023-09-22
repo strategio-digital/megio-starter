@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  strategio-network:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    networks:
+      - strategio-network
+    ports:
+      - "8090:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/http.d/default.conf:/etc/nginx/http.d/default.conf
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - $PWD:/var/www/html:cached
+
+#  postgres:
+#    image: postgres:14
+#    #restart: on-failure because postgres shutdown on first creation (permissions problem)
+#    restart: "on-failure"
+#    environment:
+#      POSTGRES_USER: ${DB_USERNAME}
+#      POSTGRES_PASSWORD: ${DB_PASSWORD}
+#      POSTGRES_DB: ${DB_DATABASE}
+#    networks:
+#      - strategio-network
+#    ports:
+#      - "${DB_PORT}:5432"
+#    volumes:
+#      - ./docker/temp/postgres:/var/lib/postgresql/data:cached

@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build"
+  },
+  "dependencies": {
+    "strategio-saas": "0.1.0-dev"
+  }
+}

@@ -1,0 +1,12 @@
+services:
+    entityManager: App\Database\EntityManager
+    - App\Console\UserCreateCommand
+
+includes:
+    - ./../vendor/strategio/saas/config/app.neon
+    - ./../vendor/strategio/saas/config/events.neon
+
+extensions:
+    doctrine: Saas\Extension\Doctrine\DoctrineExtension
+    events: Saas\Extension\Events\EventsExtension
+    latte: Saas\Extension\Latte\LatteExtension

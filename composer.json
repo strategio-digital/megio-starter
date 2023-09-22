@@ -1,0 +1,33 @@
+{
+    "name": "strategio/saas-sandbox",
+    "description": "saas-sandbox",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "App\\Migrations\\": "migrations/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jiří Zapletal",
+            "email": "jz@strategio.dev"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2",
+        "strategio/saas": "dev-master"
+    },
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse -l 8 app/ www/ bin/console  --memory-limit 1G",
+        "neon": "vendor/bin/neon-lint config",
+        "latte": "vendor/bin/latte-lint view",
+        "analyse": [
+            "@phpstan",
+            "@neon",
+            "@latte"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Copyright (c) 2022 Strategio Digital s.r.o.
+ * @author Jiří Zapletal (https://strategio.dev, jz@strategio.dev)
+ */
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$startedAt = microtime(true);
+$container = (new \Saas\Bootstrap())
+    ->projectRootPath(__DIR__ . '/../')
+    ->configure(\Saas\Helper\Path::configDir() . '/app.neon', $startedAt);
+
+/** @var \Saas\Http\Kernel\App $app */
+$app = $container->getByType(\Saas\Http\Kernel\App::class);
+$app->cmd();

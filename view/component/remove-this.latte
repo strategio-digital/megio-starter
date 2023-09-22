@@ -1,0 +1,30 @@
+{*
+ * Copyright (c) 2022 Strategio Digital s.r.o.
+ * @author Jiří Zapletal (https://strategio.dev, jz@strategio.dev)
+ *}
+
+{varType string $title}
+{varType string $description}
+
+<div class="container">
+    <div>
+        <img src="{vite('assets/img/strategio.svg')}" alt="Strategio SaaS" class="logo" height="100" width="100">
+        <div class="text">
+            <h1>{$title}</h1>
+            <div style="line-height: 1.5rem">
+                <p>{$description}</p>
+            </div>
+            <div>
+                <a class="btn" href="{route(Saas\Helper\Router::ROUTE_APP, ['uri' => '/'])}">User login</a>
+                <a class="btn" href="{route(Saas\Helper\Router::ROUTE_APP, ['uri' => '/admin'])}">Admin login</a>
+            </div>
+
+            <div style="display: flex; justify-content: center; margin-top: 1.0rem">
+                <a href="https://github.com/strategio-digital/saas" target="_blank">Github</a>
+                <a href="{route(Saas\Helper\Router::ROUTE_API)}" target="_blank">API</a>
+                <a href="https://documenter.getpostman.com/view/14885541/2s8YsqUZuv" target="_blank">Postman</a>
+            </div>
+        </div>
+        <div id="vue-app" style="height: 1rem"></div>
+    </div>
+</div>
