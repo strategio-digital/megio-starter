@@ -1,6 +1,6 @@
 {
-    "name": "strategio/saas-sandbox",
-    "description": "saas-sandbox",
+    "name": "strategio/saas-startup",
+    "description": "saas-startup",
     "type": "project",
     "license": "MIT",
     "autoload": {
