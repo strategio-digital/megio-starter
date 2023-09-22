@@ -3120,12 +3120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/saas.git",
-                "reference": "9586dafaff38f15ade823d74a2aede6f57f279dc"
+                "reference": "e7997b18076bfc0005c383d8bc1ae605a47cf761"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/saas/zipball/9586dafaff38f15ade823d74a2aede6f57f279dc",
-                "reference": "9586dafaff38f15ade823d74a2aede6f57f279dc",
+                "url": "https://api.github.com/repos/strategio-digital/saas/zipball/e7997b18076bfc0005c383d8bc1ae605a47cf761",
+                "reference": "e7997b18076bfc0005c383d8bc1ae605a47cf761",
                 "shasum": ""
             },
             "require": {
@@ -3179,7 +3179,7 @@
                 "issues": "https://github.com/strategio-digital/saas/issues",
                 "source": "https://github.com/strategio-digital/saas/tree/master"
             },
-            "time": "2023-09-21T22:53:15+00:00"
+            "time": "2023-09-22T01:09:14+00:00"
         },
         {
             "name": "symfony/cache",
