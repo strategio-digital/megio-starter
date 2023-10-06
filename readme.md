@@ -1,5 +1,5 @@
-# App name
-Application built on [Strategio SaaS](https://github.com/strategio-digital/saas).  
+# Megio starter
+Skeleton for your apps, webs & APIs built on [Megio](https://megio.dev).
 
-## Installation
-https://docs.saas.strategio.dev/docs/getting-started/installation
+## Installation guide
+https://megio.dev/docs/getting-started/installation

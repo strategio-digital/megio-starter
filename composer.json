@@ -1,6 +1,6 @@
 {
-    "name": "strategio/saas-startup",
-    "description": "saas-startup",
+    "name": "strategio/megio-starter",
+    "description": "Boilerplate for Megio apps & webs",
     "type": "project",
     "license": "MIT",
     "autoload": {

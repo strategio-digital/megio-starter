@@ -1,10 +1,22 @@
 {
   "private": true,
+  "name": "megio-starter",
+  "author": {
+    "name": "Jiří Zapletal",
+    "email": "jz@strategio.dev",
+    "url": "https://jz.strategio.dev"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build"
+    "build": "tsc && vite build"
   },
   "dependencies": {
-    "strategio-saas": "0.1.0-dev"
+    "megio-panel": "^0.5.92"
+  },
+  "devDependencies": {
+    "laravel-vite-plugin": "latest",
+    "sass": "latest",
+    "typescript": "latest",
+    "vite": "latest"
   }
 }

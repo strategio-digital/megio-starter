@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  strategio-network:
+  megio-apps:
 
 services:
   app:
@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     restart: "no"
     networks:
-      - strategio-network
+      - megio-apps
     ports:
       - "8090:80"
     volumes:
@@ -20,7 +20,7 @@ services:
       - $PWD:/var/www/html:cached
 
 #  postgres:
-#    image: postgres:14
+#    image: postgres:16
 #    #restart: on-failure because postgres shutdown on first creation (permissions problem)
 #    restart: "on-failure"
 #    environment:
@@ -28,7 +28,7 @@ services:
 #      POSTGRES_PASSWORD: ${DB_PASSWORD}
 #      POSTGRES_DB: ${DB_DATABASE}
 #    networks:
-#      - strategio-network
+#      - megio-apps
 #    ports:
 #      - "${DB_PORT}:5432"
 #    volumes:
