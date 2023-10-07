@@ -21,9 +21,9 @@ elif test "$1" = "serve"; then
   fi
   docker-compose -f docker-compose.yml up -d
 elif test "$1" = "mvc"; then
-  cd vendor/strategio/saas
+  cd vendor/strategio/megio-core
   git init
-  git remote add origin git@github.com:strategio-digital/saas.git
+  git remote add origin git@github.com:strategio-digital/megio-core.git
   git pull
   git checkout master --force
   cd ../../../
