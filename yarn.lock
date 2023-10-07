@@ -358,10 +358,10 @@ magic-string@^0.30.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-megio-panel@^0.5.92:
-  version "0.5.92"
-  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.5.92.tgz#1be634c405dc4cb4e3b2c061fb1f0044f64e774f"
-  integrity sha512-+CFIPqCPjPAtlph9ZR9Y8em6QmfXc5nanprh7M4qAqyD1iAjdxiulRfLr6vKh9MR0fGrIBxQqQ2N5TUgKYmLJQ==
+megio-panel@^0.5.94:
+  version "0.5.94"
+  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.5.94.tgz#fb04f7d69dffce782d9d31091b96074e89394701"
+  integrity sha512-nKBbQgF1BU4Ajgpfsor3x9p35CrVju7dneL86jJB82YPsQV94hy2+KXuxJcdfWb1RCckCfgA6E5DTCRkxUpRzA==
   dependencies:
     "@mdi/js" "^7.2.96"
     vue "^3.2.45"

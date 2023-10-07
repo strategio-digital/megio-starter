@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91b573c26fc93be9061e388992fb5556",
+    "content-hash": "96842cbb3f324f0f47a4c7b8ed517750",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.283.1",
+            "version": "3.283.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0d1857ca3392ec9f8ee0b1605ba09842cced6351"
+                "reference": "6616677d76e39af28138512740199d38a461859f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0d1857ca3392ec9f8ee0b1605ba09842cced6351",
-                "reference": "0d1857ca3392ec9f8ee0b1605ba09842cced6351",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6616677d76e39af28138512740199d38a461859f",
+                "reference": "6616677d76e39af28138512740199d38a461859f",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.2"
             },
-            "time": "2023-10-05T18:07:42+00:00"
+            "time": "2023-10-06T18:09:54+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2544,16 +2544,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.37",
+            "version": "1.10.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e"
+                "reference": "5302bb402c57f00fb3c2c015bac86e0827e4b691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/058ba07e92f744d4dcf6061ae75283d0c6456f2e",
-                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5302bb402c57f00fb3c2c015bac86e0827e4b691",
+                "reference": "5302bb402c57f00fb3c2c015bac86e0827e4b691",
                 "shasum": ""
             },
             "require": {
@@ -2602,7 +2602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-02T16:18:37+00:00"
+            "time": "2023-10-06T14:19:14+00:00"
         },
         {
             "name": "psr/cache",
@@ -3120,12 +3120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/saas.git",
-                "reference": "b6040636bee14fc1e51f002ed0abdeb5cfefbb73"
+                "reference": "0e64e5cf94410add236afeb46f6e10d78e940d09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/saas/zipball/b6040636bee14fc1e51f002ed0abdeb5cfefbb73",
-                "reference": "b6040636bee14fc1e51f002ed0abdeb5cfefbb73",
+                "url": "https://api.github.com/repos/strategio-digital/saas/zipball/0e64e5cf94410add236afeb46f6e10d78e940d09",
+                "reference": "0e64e5cf94410add236afeb46f6e10d78e940d09",
                 "shasum": ""
             },
             "require": {
@@ -3171,7 +3171,8 @@
             "authors": [
                 {
                     "name": "Jiří Zapletal",
-                    "email": "jz@strategio.dev"
+                    "email": "jz@strategio.dev",
+                    "homepage": "https://jz.strategio.dev"
                 }
             ],
             "description": "Saas",
@@ -3179,7 +3180,7 @@
                 "issues": "https://github.com/strategio-digital/saas/issues",
                 "source": "https://github.com/strategio-digital/saas/tree/master"
             },
-            "time": "2023-09-22T01:40:41+00:00"
+            "time": "2023-10-06T23:58:33+00:00"
         },
         {
             "name": "symfony/cache",
