@@ -11,7 +11,7 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "megio-panel": "^0.5.94"
+    "megio-panel": "^0.7.3"
   },
   "devDependencies": {
     "laravel-vite-plugin": "latest",

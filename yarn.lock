@@ -358,12 +358,18 @@ magic-string@^0.30.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-megio-panel@^0.5.94:
-  version "0.5.94"
-  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.5.94.tgz#fb04f7d69dffce782d9d31091b96074e89394701"
-  integrity sha512-nKBbQgF1BU4Ajgpfsor3x9p35CrVju7dneL86jJB82YPsQV94hy2+KXuxJcdfWb1RCckCfgA6E5DTCRkxUpRzA==
+megio-api@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.7.3.tgz#8e65231b6e80f7ed1a11293f77b9003192031056"
+  integrity sha512-+JOQt8LM1Zt2c20OBkhb2lVErLh0TxywqJWaSfqgJZogY6kkOSnMSManYjk9PGyKx794uqZyjLRxguh/MXuAyw==
+
+megio-panel@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.7.3.tgz#61d7cfd17454e46516e9cf91a8c8257f1f315c6a"
+  integrity sha512-JMP4lwaPhTMOt9KOmNZl98vx8+khI3TErBz3cn0FWFUISKHVePK+EJRfLHx+8fMDz0w5G/iPEd5LcxxfLycmLQ==
   dependencies:
     "@mdi/js" "^7.2.96"
+    megio-api "^0.7.3"
     vue "^3.2.45"
     vue-router "^4.1.6"
     vuetify "^3.0.1"
