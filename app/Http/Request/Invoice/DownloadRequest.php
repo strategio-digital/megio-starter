@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Http\Request\Invoice;
 
 use Nette\Schema\Expect;
-use Saas\Http\Request\Request;
-use Saas\Storage\Storage;
+use Megio\Http\Request\Request;
+use Megio\Storage\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class DownloadRequest extends Request

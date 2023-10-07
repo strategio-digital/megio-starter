@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Console;
 
 use App\Database\Entity\User;
-use Saas\Database\Entity\Auth\Resource;
-use Saas\Database\Entity\Auth\Role;
-use Saas\Database\EntityManager;
+use Megio\Database\Entity\Auth\Resource;
+use Megio\Database\Entity\Auth\Role;
+use Megio\Database\EntityManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

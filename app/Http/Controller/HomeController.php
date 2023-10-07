@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controller;
 
-use Saas\Helper\Path;
-use Saas\Http\Controller\Base\Controller;
+use Megio\Helper\Path;
+use Megio\Http\Controller\Base\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller

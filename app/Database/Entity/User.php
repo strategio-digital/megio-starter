@@ -7,17 +7,17 @@ use App\Database\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Saas\Database\Entity\Auth\Role;
-use Saas\Database\Field\TCreatedAt;
-use Saas\Database\Field\TEmail;
-use Saas\Database\Field\TId;
-use Saas\Database\Field\TLastLogin;
-use Saas\Database\Field\TPassword;
-use Saas\Database\Field\TUpdatedAt;
-use Saas\Database\Interface\IAuthenticable;
-use Saas\Database\Interface\ICrudable;
-use Saas\Database\Method\TResourceMethods;
-use Saas\Database\Method\TRoleMethods;
+use Megio\Database\Entity\Auth\Role;
+use Megio\Database\Field\TCreatedAt;
+use Megio\Database\Field\TEmail;
+use Megio\Database\Field\TId;
+use Megio\Database\Field\TLastLogin;
+use Megio\Database\Field\TPassword;
+use Megio\Database\Field\TUpdatedAt;
+use Megio\Database\Interface\IAuthenticable;
+use Megio\Database\Interface\ICrudable;
+use Megio\Database\Method\TResourceMethods;
+use Megio\Database\Method\TRoleMethods;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]

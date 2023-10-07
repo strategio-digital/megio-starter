@@ -3,10 +3,10 @@ services:
     - App\Console\UserCreateCommand
 
 includes:
-    - ./../vendor/strategio/saas/config/app.neon
-    - ./../vendor/strategio/saas/config/events.neon
+    - ./../vendor/strategio/megio-core/config/app.neon
+    - ./../vendor/strategio/megio-core/config/events.neon
 
 extensions:
-    doctrine: Saas\Extension\Doctrine\DoctrineExtension
-    events: Saas\Extension\Events\EventsExtension
-    latte: Saas\Extension\Latte\LatteExtension
+    doctrine: Megio\Extension\Doctrine\DoctrineExtension
+    events: Megio\Extension\Events\EventsExtension
+    latte: Megio\Extension\Latte\LatteExtension
