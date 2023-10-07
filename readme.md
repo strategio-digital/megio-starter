@@ -49,7 +49,7 @@ class DownloadRequest extends Request
     public function process(array $data): Response
     {
         $invoice = new Invoice();
-        $invoice->setType($data['type'])
+        $invoice->setType($data['invoice']['type'])
         
         ...
         
