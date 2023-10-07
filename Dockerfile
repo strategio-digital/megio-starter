@@ -16,7 +16,6 @@ COPY ./assets ./assets
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 COPY ./vite.config.ts ./vite.config.ts
-COPY ./tsconfig.node.json ./tsconfig.node.json
 COPY ./tsconfig.json ./tsconfig.json
 COPY --from=build-stage-php /build/vendor /build/vendor
 
