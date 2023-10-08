@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f79bdee5cf419e8d9880a63e367bd68",
+    "content-hash": "32fb5a6cd80d6d2e4a3b6898fbe6d998",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3116,7 +3116,7 @@
         },
         {
             "name": "strategio/megio-core",
-            "version": "dev-master",
+            "version": "0.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
@@ -3157,7 +3157,6 @@
                 "symfony/uid": "^6.3",
                 "tracy/tracy": "^2.9"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3178,7 +3177,7 @@
             "description": "Most powerful tool for creating webs, apps & APIs.",
             "support": {
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
-                "source": "https://github.com/strategio-digital/megio-core/tree/master"
+                "source": "https://github.com/strategio-digital/megio-core/tree/0.7.6"
             },
             "time": "2023-10-07T15:43:54+00:00"
         },
@@ -5490,9 +5489,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "strategio/megio-core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
