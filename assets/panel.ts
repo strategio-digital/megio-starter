@@ -1,8 +1,9 @@
-// Minimal settings
-import 'megio-panel'
+// Minimal setup
 import 'megio-panel/styles'
+import { createMegioPanel } from 'megio-panel'
 
-// Advanced settings
-// import { createApp } from 'vue'
-// import App from '@/assets/vue/app/App.vue'
-// createApp(App).mount('#app')
+const apiUrl = window.location.host.includes('localhost') ? 'http://localhost:8090/' : '/'
+createMegioPanel(apiUrl)
+
+// Advanced setup
+// https://github.com/strategio-digital/megio-panel
