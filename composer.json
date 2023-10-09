@@ -18,7 +18,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
-        "strategio/megio-core": "0.7.6"
+        "strategio/megio-core": "^0.7.7"
     },
     "scripts": {
         "phpstan": "vendor/bin/phpstan analyse -l 8 app/ www/ bin/console  --memory-limit 1G",
