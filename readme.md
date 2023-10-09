@@ -6,13 +6,15 @@ Skeleton for your apps, webs & APIs built on Megio.
 
 ## Template rendering
 ```php
-class HomeController extends Controller
+class ArticleController extends Controller
 {
-    public function index(): Response
+    public function list(EntityManager $em, int $page): Response
     {
-        return $this->render(Path::viewDir() . '/controller/home.latte', [
-            'title' => 'Megio Panel',
-            'description' => 'Most powerful tool for creating webs, apps & APIs.'
+        /** @var Article[] $article */
+        $articles = $em->getRepository(Article::class)->findBy(['page' => $page])
+        
+        return $this->render(Path::viewDir() . '/controller/article.latte', [
+            'articles' => $articles
         ]);
     }
 }
@@ -69,9 +71,11 @@ return static function (RoutingConfigurator $routes): void {
         ->controller(\App\Http\Request\Invoice\DownloadRequest::class)
         ->options(['auth' => false]);
     
-    $routes->add('home', '/')
+    $routes->add('article', '/article/{page}')
         ->methods(['GET'])
-        ->controller([\App\Http\Controller\HomeController::class, 'index'])
+        ->controller([\App\Http\Controller\ArticleController::class, 'list'])
+        ->requirements(['page' => '\d+'])
+        ->defaults(['page' => 1])
         ->options(['auth' => false]);
 };
 ```
