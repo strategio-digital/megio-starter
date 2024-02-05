@@ -1,23 +1,7 @@
-FROM php:8.2-fpm-alpine as build-stage-php
-WORKDIR /build
-
-RUN apk add curl
-
-COPY ./composer.json ./composer.json
-COPY ./composer.lock ./composer.lock
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-cache --prefer-dist --no-scripts
-
 FROM node:18-alpine as build-stage-node
 WORKDIR /build
 
-COPY ./assets ./assets
-COPY ./package.json ./package.json
-COPY ./yarn.lock ./yarn.lock
-COPY ./vite.config.ts ./vite.config.ts
-COPY ./tsconfig.json ./tsconfig.json
-COPY --from=build-stage-php /build/vendor /build/vendor
+COPY . ./
 
 RUN yarn cache clean --mirror
 RUN yarn && yarn build
@@ -62,13 +46,14 @@ RUN docker-php-ext-install intl
 #RUN docker-php-ext-install -j$(nproc) gd
 #RUN apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Copy source code & set permissions
+# Copy source code
 COPY . ./
-COPY --from=build-stage-php /build/vendor ./vendor
+#COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
 COPY --from=build-stage-node /build/www/temp ./www/temp
+
+# Install composer & dependencies
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-cache --prefer-dist --no-scripts
 
 # Resolve permissions
 RUN chmod -R ugo+w ./temp

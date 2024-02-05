@@ -1,6 +1,6 @@
 #!/bin/sh
 # remove temp files
-rm -rf /var/www/html/temp/*
+#rm -rf /var/www/html/temp/*
 
 # migrate databases
 php bin/console migration:migrate --no-interaction
