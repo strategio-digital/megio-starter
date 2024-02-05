@@ -6,6 +6,9 @@ includes:
     - ./../vendor/strategio/megio-core/config/app.neon
     - ./../vendor/strategio/megio-core/config/events.neon
 
+#events:
+    #- Megio\Subscriber\RedirectToWww
+
 extensions:
     doctrine: Megio\Extension\Doctrine\DoctrineExtension
     events: Megio\Extension\Events\EventsExtension
