@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "megio-starter",
+  "type": "module",
   "author": {
     "name": "Jiří Zapletal",
     "email": "jz@strategio.dev",
@@ -14,9 +15,9 @@
     "megio-panel": "^0.7.6"
   },
   "devDependencies": {
-    "laravel-vite-plugin": "latest",
-    "sass": "latest",
-    "typescript": "latest",
-    "vite": "latest"
+    "laravel-vite-plugin": "^1.0.1",
+    "sass": "^1.70.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
   }
 }
