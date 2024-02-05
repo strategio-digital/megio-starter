@@ -37,14 +37,12 @@ class UserCreateCommand extends Command
         $user = new User();
         
         if ($roleName) {
-            /** @var Role|null $role */
             $role = $this->em->getAuthRoleRepo()->findOneBy(['name' => $roleName]);
             
             if (!$role) {
                 $role = new Role();
                 $role->setName($roleName);
                 
-                /** @var Resource[] $resources */
                 $resources = $this->em->getRepository(Resource::class)->findAll();
                 foreach ($resources as $resource) {
                     $role->addResource($resource);
