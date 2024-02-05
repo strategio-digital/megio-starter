@@ -10,7 +10,6 @@ class ArticleController extends Controller
 {
     public function list(EntityManager $em, int $page): Response
     {
-        /** @var Article[] $article */
         $articles = $em->getRepository(Article::class)->findBy(['page' => $page])
         
         return $this->render(Path::viewDir() . '/controller/article.latte', [
