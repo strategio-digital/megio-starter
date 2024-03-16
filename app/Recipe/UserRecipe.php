@@ -27,4 +27,9 @@ class UserRecipe extends CollectionRecipe
     {
         return ['email', 'lastLogin', 'createdAt', 'updatedAt'];
     }
+    
+    public function createFormFields(): array
+    {
+        return ['email', 'password'];
+    }
 }
