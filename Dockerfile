@@ -46,10 +46,19 @@ RUN docker-php-ext-install intl
 #RUN docker-php-ext-install -j$(nproc) gd
 #RUN apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
+# Install zip
+#RUN apk add zip libzip-dev #git libicu-dev curl gnupg
+#RUN docker-php-ext-configure zip
+#RUN docker-php-ext-install zip
+
+# Install PCNTL
+#RUN docker-php-ext-configure pcntl --enable-pcntl
+#RUN docker-php-ext-install pcntl
+
 # Copy source code
 COPY . ./
-#COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
 COPY --from=build-stage-node /build/www/temp ./www/temp
+#COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
 
 # Install composer & dependencies
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

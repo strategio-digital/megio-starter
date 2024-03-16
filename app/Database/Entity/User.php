@@ -27,15 +27,6 @@ class User implements ICrudable, IAuthenticable
     use TId, TCreatedAt, TUpdatedAt, TEmail, TPassword, TLastLogin;
     use TRoleMethods, TResourceMethods;
     
-    /** @var string[] */
-    public array $invisibleFields = ['id', 'updatedAt'];
-    
-    /** @var string[] */
-    public array $showAllFields = ['email', 'lastLogin', 'createdAt', 'updatedAt'];
-    
-    /** @var string[] */
-    public array $showOneFields = ['email', 'lastLogin', 'createdAt', 'updatedAt'];
-    
     /** @var Collection<int, Role> */
     #[ORM\ManyToMany(targetEntity: Role::class)]
     #[ORM\JoinTable(name: 'user_has_role')]
