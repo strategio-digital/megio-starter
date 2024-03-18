@@ -5,6 +5,10 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
+use Megio\Collection\Builder\Field\Email;
+use Megio\Collection\Builder\Field\Password;
+use Megio\Collection\Builder\Field\Text;
+use Megio\Collection\Builder\Builder;
 
 class UserTestRecipe extends CollectionRecipe
 {
@@ -17,12 +21,13 @@ class UserTestRecipe extends CollectionRecipe
     {
         return 'user-test';
     }
-    public function showOneColumns(): array
+    
+    public function readOne(): array
     {
         return ['email'];
     }
     
-    public function showAllColumns(): array
+    public function readAll(): array
     {
         return ['email'];
     }
