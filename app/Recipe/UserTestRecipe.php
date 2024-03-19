@@ -5,10 +5,10 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\Builder\Field\Email;
-use Megio\Collection\Builder\Field\Password;
-use Megio\Collection\Builder\Field\Text;
-use Megio\Collection\Builder\Builder;
+use Megio\Collection\FieldBuilder\Field\Email;
+use Megio\Collection\FieldBuilder\Field\Password;
+use Megio\Collection\FieldBuilder\Field\Text;
+use Megio\Collection\FieldBuilder\FieldBuilder;
 
 class UserTestRecipe extends CollectionRecipe
 {

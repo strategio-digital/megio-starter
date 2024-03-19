@@ -4,19 +4,26 @@ declare(strict_types=1);
 namespace App\Recipe;
 
 use App\Database\Entity\User;
-use Megio\Collection\Builder\Field\Text;
-use Megio\Collection\Builder\Rule\MaxRule;
-use Megio\Collection\Builder\Rule\UniqueRule;
+use App\Database\EntityManager;
+use Megio\Collection\FieldBuilder\Field\Select;
+use Megio\Collection\FieldBuilder\Field\Text;
+use Megio\Collection\FieldBuilder\Rule\MaxRule;
+use Megio\Collection\FieldBuilder\Rule\NullableRule;
+use Megio\Collection\FieldBuilder\Rule\UniqueRule;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\Builder\Field\Email;
-use Megio\Collection\Builder\Field\Password;
-use Megio\Collection\Builder\Builder;
-use Megio\Collection\Builder\Rule\EqualRule;
-use Megio\Collection\Builder\Rule\MinRule;
-use Megio\Collection\Builder\Rule\RequiredRule;
+use Megio\Collection\FieldBuilder\Field\Email;
+use Megio\Collection\FieldBuilder\Field\Password;
+use Megio\Collection\FieldBuilder\FieldBuilder;
+use Megio\Collection\FieldBuilder\Rule\EqualRule;
+use Megio\Collection\FieldBuilder\Rule\MinRule;
+use Megio\Collection\FieldBuilder\Rule\RequiredRule;
 
 class UserRecipe extends CollectionRecipe
 {
+    public function __construct(protected EntityManager $em)
+    {
+    }
+    
     public function source(): string
     {
         return User::class;
@@ -37,8 +44,11 @@ class UserRecipe extends CollectionRecipe
         return ['email', 'lastLogin', 'createdAt'];
     }
     
-    public function create(Builder $builder): Builder
+    public function create(FieldBuilder $builder): FieldBuilder
     {
+        $roles = $this->em->getAuthRoleRepo()->findAll();
+        $items = array_map(fn($role) => new Select\Item($role->getId(), $role->getName()), $roles);
+        
         return $builder
             //->ignoreDoctrineRules()
             //->ignoreRules(['email' => ['unique']])
@@ -47,19 +57,20 @@ class UserRecipe extends CollectionRecipe
                 new RequiredRule(),
                 new UniqueRule(User::class, 'email')
             ]))
-            
             ->add(new Password('password', 'Heslo', [
                 new RequiredRule(),
                 new MinRule(6),
                 new MaxRule(32)
             ]))
-            
             ->add(new Password('password_check', 'Heslo znovu', [
                 new EqualRule('password'),
-            ], [], false));
+            ], [], false))
+            ->add(new Select('role', 'Role', $items, [
+                new NullableRule(),
+            ]));
     }
     
-    public function update(Builder $builder): Builder
+    public function update(FieldBuilder $builder): FieldBuilder
     {
         return $builder
             ->add(new Text('id', 'ID', [], ['disabled' => true], false))
