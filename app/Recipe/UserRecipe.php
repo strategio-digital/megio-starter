@@ -6,6 +6,7 @@ namespace App\Recipe;
 use App\Database\Entity\User;
 use Megio\Collection\Builder\Field\Text;
 use Megio\Collection\Builder\Rule\MaxRule;
+use Megio\Collection\Builder\Rule\UniqueRule;
 use Megio\Collection\CollectionRecipe;
 use Megio\Collection\Builder\Field\Email;
 use Megio\Collection\Builder\Field\Password;
@@ -39,12 +40,20 @@ class UserRecipe extends CollectionRecipe
     public function create(Builder $builder): Builder
     {
         return $builder
-            ->add(new Email('email', 'E-mail', [new RequiredRule()]))
+            //->ignoreDoctrineRules()
+            //->ignoreRules(['email' => ['unique']])
+            
+            ->add(new Email('email', 'E-mail', [
+                new RequiredRule(),
+                new UniqueRule(User::class, 'email')
+            ]))
+            
             ->add(new Password('password', 'Heslo', [
                 new RequiredRule(),
                 new MinRule(6),
                 new MaxRule(32)
             ]))
+            
             ->add(new Password('password_check', 'Heslo znovu', [
                 new EqualRule('password'),
             ], [], false));
