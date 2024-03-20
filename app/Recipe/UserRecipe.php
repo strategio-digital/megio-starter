@@ -5,14 +5,14 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
-use Megio\Collection\FieldBuilder\Field\Select;
-use Megio\Collection\FieldBuilder\Field\Text;
+use Megio\Collection\FieldBuilder\Field\SelectField;
+use Megio\Collection\FieldBuilder\Field\TextField;
 use Megio\Collection\FieldBuilder\Rule\MaxRule;
 use Megio\Collection\FieldBuilder\Rule\NullableRule;
 use Megio\Collection\FieldBuilder\Rule\UniqueRule;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\FieldBuilder\Field\Email;
-use Megio\Collection\FieldBuilder\Field\Password;
+use Megio\Collection\FieldBuilder\Field\EmailField;
+use Megio\Collection\FieldBuilder\Field\PasswordField;
 use Megio\Collection\FieldBuilder\FieldBuilder;
 use Megio\Collection\FieldBuilder\Rule\EqualRule;
 use Megio\Collection\FieldBuilder\Rule\MinRule;
@@ -47,25 +47,25 @@ class UserRecipe extends CollectionRecipe
     public function create(FieldBuilder $builder): FieldBuilder
     {
         $roles = $this->em->getAuthRoleRepo()->findAll();
-        $items = array_map(fn($role) => new Select\Item($role->getId(), $role->getName()), $roles);
+        $items = array_map(fn($role) => new SelectField\Item($role->getId(), $role->getName()), $roles);
         
         return $builder
             //->ignoreDoctrineRules()
             //->ignoreRules(['email' => ['unique']])
             
-            ->add(new Email('email', 'E-mail', [
+            ->add(new EmailField('email', 'E-mail', [
                 new RequiredRule(),
                 new UniqueRule(User::class, 'email')
             ]))
-            ->add(new Password('password', 'Heslo', [
+            ->add(new PasswordField('password', 'Heslo', [
                 new RequiredRule(),
                 new MinRule(6),
                 new MaxRule(32)
             ]))
-            ->add(new Password('password_check', 'Heslo znovu', [
+            ->add(new PasswordField('password_check', 'Heslo znovu', [
                 new EqualRule('password'),
             ], [], false))
-            ->add(new Select('role', 'Role', $items, [
+            ->add(new SelectField('role', 'Role', $items, [
                 new NullableRule(),
             ]));
     }
@@ -73,8 +73,8 @@ class UserRecipe extends CollectionRecipe
     public function update(FieldBuilder $builder): FieldBuilder
     {
         return $builder
-            ->add(new Text('id', 'ID', [], ['disabled' => true], false))
-            ->add(new Email('email', 'E-mail'))
-            ->add(new Password('password', 'Heslo'));
+            ->add(new TextField('id', 'ID', [], ['disabled' => true], false))
+            ->add(new EmailField('email', 'E-mail'))
+            ->add(new PasswordField('password', 'Heslo'));
     }
 }

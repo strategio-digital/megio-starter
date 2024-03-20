@@ -5,9 +5,9 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\FieldBuilder\Field\Email;
-use Megio\Collection\FieldBuilder\Field\Password;
-use Megio\Collection\FieldBuilder\Field\Text;
+use Megio\Collection\FieldBuilder\Field\EmailField;
+use Megio\Collection\FieldBuilder\Field\PasswordField;
+use Megio\Collection\FieldBuilder\Field\TextField;
 use Megio\Collection\FieldBuilder\FieldBuilder;
 
 class UserTestRecipe extends CollectionRecipe
