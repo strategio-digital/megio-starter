@@ -18,12 +18,12 @@ class UserTestRecipe extends CollectionRecipe
         return 'user-test';
     }
     
-    public function readOne(): array
+    public function showOne(): array
     {
         return ['email'];
     }
     
-    public function readAll(): array
+    public function showAll(): array
     {
         return ['email'];
     }

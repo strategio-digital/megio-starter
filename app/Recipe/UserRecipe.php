@@ -5,18 +5,18 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
-use Megio\Collection\FieldBuilder\Field\SelectField;
-use Megio\Collection\FieldBuilder\Field\TextField;
-use Megio\Collection\FieldBuilder\Rule\MaxRule;
-use Megio\Collection\FieldBuilder\Rule\NullableRule;
-use Megio\Collection\FieldBuilder\Rule\UniqueRule;
+use Megio\Collection\WriteBuilder\Field\SelectField;
+use Megio\Collection\WriteBuilder\Field\TextField;
+use Megio\Collection\WriteBuilder\Rule\MaxRule;
+use Megio\Collection\WriteBuilder\Rule\NullableRule;
+use Megio\Collection\WriteBuilder\Rule\UniqueRule;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\FieldBuilder\Field\EmailField;
-use Megio\Collection\FieldBuilder\Field\PasswordField;
-use Megio\Collection\FieldBuilder\FieldBuilder;
-use Megio\Collection\FieldBuilder\Rule\EqualRule;
-use Megio\Collection\FieldBuilder\Rule\MinRule;
-use Megio\Collection\FieldBuilder\Rule\RequiredRule;
+use Megio\Collection\WriteBuilder\Field\EmailField;
+use Megio\Collection\WriteBuilder\Field\PasswordField;
+use Megio\Collection\WriteBuilder\WriteBuilder;
+use Megio\Collection\WriteBuilder\Rule\EqualRule;
+use Megio\Collection\WriteBuilder\Rule\MinRule;
+use Megio\Collection\WriteBuilder\Rule\RequiredRule;
 
 class UserRecipe extends CollectionRecipe
 {
@@ -34,17 +34,17 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
     
-    public function readOne(): array
+    public function showOne(): array
     {
         return ['email', 'lastLogin', 'createdAt', 'updatedAt'];
     }
     
-    public function readAll(): array
+    public function showAll(): array
     {
         return ['email', 'lastLogin', 'createdAt'];
     }
     
-    public function create(FieldBuilder $builder): FieldBuilder
+    public function create(WriteBuilder $builder): WriteBuilder
     {
         $roles = $this->em->getAuthRoleRepo()->findAll();
         $items = array_map(fn($role) => new SelectField\Item($role->getId(), $role->getName()), $roles);
@@ -70,7 +70,7 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function update(FieldBuilder $builder): FieldBuilder
+    public function update(WriteBuilder $builder): WriteBuilder
     {
         return $builder
             ->add(new TextField('id', 'ID', [], [], true))
