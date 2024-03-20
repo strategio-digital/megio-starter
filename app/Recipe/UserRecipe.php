@@ -64,7 +64,7 @@ class UserRecipe extends CollectionRecipe
             ]))
             ->add(new PasswordField('password_check', 'Heslo znovu', [
                 new EqualRule('password'),
-            ], [], false))
+            ], [], false, false))
             ->add(new SelectField('role', 'Role', $items, [
                 new NullableRule(),
             ]));
@@ -73,7 +73,7 @@ class UserRecipe extends CollectionRecipe
     public function update(FieldBuilder $builder): FieldBuilder
     {
         return $builder
-            ->add(new TextField('id', 'ID', [], ['disabled' => true], false))
+            ->add(new TextField('id', 'ID', [], [], true))
             ->add(new EmailField('email', 'E-mail'))
             ->add(new PasswordField('password', 'Heslo'));
     }
