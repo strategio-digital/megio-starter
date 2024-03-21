@@ -5,7 +5,7 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\ReadBuilder\Column\TextColumn;
+use Megio\Collection\ReadBuilder\Column\StringColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 
 class UserTestRecipe extends CollectionRecipe
@@ -23,7 +23,7 @@ class UserTestRecipe extends CollectionRecipe
     public function read(ReadBuilder $builder): ReadBuilder
     {
         return $builder
-            ->add(new TextColumn('email', 'E-mail'))
-            ->add(new TextColumn('updatedAt', 'Aktualizováno'));
+            ->add(new StringColumn(key: 'email', name: 'E-mail'))
+            ->add(new StringColumn(key: 'updatedAt', name: 'Aktualizováno'));
     }
 }

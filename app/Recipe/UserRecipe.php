@@ -5,7 +5,6 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
-use Megio\Collection\ReadBuilder\Column\TextColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
@@ -38,12 +37,12 @@ class UserRecipe extends CollectionRecipe
     
     public function read(ReadBuilder $builder): ReadBuilder
     {
-        return $builder->buildByDbSchema(['password']);
+        return $builder->buildByDbSchema(exclude: ['password'], persist: true);
     }
     
     public function readAll(ReadBuilder $builder): ReadBuilder
     {
-        return $builder->buildByDbSchema(['password']);
+        return $builder->buildByDbSchema(exclude: ['password']);
     }
     
     public function create(WriteBuilder $builder): WriteBuilder
@@ -54,19 +53,19 @@ class UserRecipe extends CollectionRecipe
         return $builder
             //->ignoreDoctrineRules()
             //->ignoreRules(['email' => ['unique']])
-            ->add(new EmailField('email', 'E-mail', [
+            ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
                 new RequiredRule(),
                 new UniqueRule(User::class, 'email')
             ]))
-            ->add(new PasswordField('password', 'Heslo', [
+            ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
                 new RequiredRule(),
                 new MinRule(6),
                 new MaxRule(32)
             ]))
-            ->add(new PasswordField('password_check', 'Heslo znovu', [
+            ->add(new PasswordField(name: 'password_check', label: 'Heslo znovu', rules: [
                 new EqualRule('password'),
-            ], [], false, false))
-            ->add(new SelectField('role', 'Role', $items, [
+            ], mapToEntity: false))
+            ->add(new SelectField(name: 'role', label: 'Role', items: $items, rules: [
                 new NullableRule(),
             ]));
     }
@@ -74,8 +73,8 @@ class UserRecipe extends CollectionRecipe
     public function update(WriteBuilder $builder): WriteBuilder
     {
         return $builder
-            ->add(new TextField('id', 'ID', [], [], true))
-            ->add(new EmailField('email', 'E-mail'))
-            ->add(new PasswordField('password', 'Heslo'));
+            ->add(new TextField(name: 'id', label: 'ID', disabled: true))
+            ->add(new EmailField(name: 'email', label: 'E-mail'))
+            ->add(new PasswordField(name: 'password', label: 'Heslo'));
     }
 }
