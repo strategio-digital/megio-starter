@@ -5,6 +5,8 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
+use Megio\Collection\ReadBuilder\Column\TextColumn;
+use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Rule\MaxRule;
@@ -34,14 +36,14 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
     
-    public function showOne(): array
+    public function read(ReadBuilder $builder): ReadBuilder
     {
-        return ['email', 'lastLogin', 'createdAt', 'updatedAt'];
+        return $builder->buildByDbSchema(['password']);
     }
     
-    public function showAll(): array
+    public function readAll(ReadBuilder $builder): ReadBuilder
     {
-        return ['email', 'lastLogin', 'createdAt'];
+        return $builder->buildByDbSchema(['password']);
     }
     
     public function create(WriteBuilder $builder): WriteBuilder
@@ -52,7 +54,6 @@ class UserRecipe extends CollectionRecipe
         return $builder
             //->ignoreDoctrineRules()
             //->ignoreRules(['email' => ['unique']])
-            
             ->add(new EmailField('email', 'E-mail', [
                 new RequiredRule(),
                 new UniqueRule(User::class, 'email')
