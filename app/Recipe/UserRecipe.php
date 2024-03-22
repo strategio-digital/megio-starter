@@ -42,6 +42,7 @@ class UserRecipe extends CollectionRecipe
     public function read(ReadBuilder $builder): ReadBuilder
     {
         return $builder
+            ->ignoreTransformers(['email' => ['callable']])
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
             ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
                 new CallableTransformer(fn($value) => 'E-mail: ' . $value, adminPanelOnly: true),
