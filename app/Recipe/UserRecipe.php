@@ -5,9 +5,13 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
+use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
+use Megio\Collection\ReadBuilder\Transformer\CallableTransformer;
+use Megio\Collection\ReadBuilder\Transformer\RichTextTransformer;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
+use Megio\Collection\WriteBuilder\Rule\CallableRule;
 use Megio\Collection\WriteBuilder\Rule\MaxRule;
 use Megio\Collection\WriteBuilder\Rule\NullableRule;
 use Megio\Collection\WriteBuilder\Rule\UniqueRule;
@@ -37,12 +41,20 @@ class UserRecipe extends CollectionRecipe
     
     public function read(ReadBuilder $builder): ReadBuilder
     {
-        return $builder->buildByDbSchema(exclude: ['password'], persist: true);
+        return $builder
+            ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
+            ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
+                new CallableTransformer(fn($value) => 'E-mail: ' . $value, adminPanelOnly: true),
+            ]));
     }
     
     public function readAll(ReadBuilder $builder): ReadBuilder
     {
-        return $builder->buildByDbSchema(exclude: ['password']);
+        return $builder
+            ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
+            ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
+                new CallableTransformer(fn($value) => 'E-mail: ' . $value, adminPanelOnly: true),
+            ]));
     }
     
     public function create(WriteBuilder $builder): WriteBuilder
@@ -52,10 +64,11 @@ class UserRecipe extends CollectionRecipe
         
         return $builder
             //->ignoreSchemaRules()
-            //->ignoreRules(['email' => ['unique']])
+            ->ignoreRules(['email' => ['unique']])
             ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
                 new RequiredRule(),
-                new UniqueRule(User::class, 'email')
+                new UniqueRule(User::class, 'email'),
+                new CallableRule(fn($value) => $value === 'jz@strategio.dev', 'E-mail není jz@strategio.dev.'),
             ]))
             ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
                 new RequiredRule(),
