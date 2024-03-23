@@ -52,7 +52,7 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password'], persist: true)
-            ->ignoreFormatters(['email' => [RichTextFormatter::class]])
+            //->ignoreFormatters(['email' => [RichTextFormatter::class]])
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail', formatters: [
                 new CallableFormatter(fn($value) => 'mailto:' . $value),
                 new RichTextFormatter(max: 1, suffix: ' ...', adminPanelOnly: true)
