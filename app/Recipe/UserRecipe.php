@@ -55,7 +55,7 @@ class UserRecipe extends CollectionRecipe
             ->ignoreTransformers(['email' => [RichTextTransformer::class]])
             ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
                 //new CallableTransformer(fn($value) => 'E-mail: ' . $value),
-                new RichTextTransformer(max: 1, suffix: ' ...')
+                new RichTextTransformer(max: 1, suffix: ' ...', adminPanelOnly: true)
             ]));
     }
     
@@ -66,10 +66,10 @@ class UserRecipe extends CollectionRecipe
         
         return $builder
             //->ignoreSchemaRules()
-            ->ignoreRules(['email' => ['unique']])
+            //->ignoreRules(['email' => [UniqueRule::class]])
             ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
                 new RequiredRule(),
-                new UniqueRule(User::class, 'email'),
+                new UniqueRule(entityClassName: User::class, columnName: 'email', message: 'Tento e-mail je již použit.'),
                 new CallableRule(fn($value) => $value === 'jz@strategio.dev', 'E-mail není jz@strategio.dev.'),
             ]))
             ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
