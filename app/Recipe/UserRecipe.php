@@ -5,6 +5,7 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
+use Megio\Collection\ReadBuilder\Column\Base\ShowOnlyOn;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\ReadBuilder\Formatter\CallableFormatter;
@@ -54,8 +55,8 @@ class UserRecipe extends CollectionRecipe
             ->buildByDbSchema(exclude: ['password'], persist: true)
             //->ignoreFormatters(['email' => [RichTextFormatter::class]])
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail', formatters: [
-                new CallableFormatter(fn($value) => 'mailto:' . $value),
-                new RichTextFormatter(max: 1, suffix: ' ...', adminPanelOnly: true)
+                new CallableFormatter(fn($value) => 'mailto:' . $value, showOnlyOn: ShowOnlyOn::ADMIN_PANEL),
+                new RichTextFormatter(max: 1, suffix: ' ...', showOnlyOn: ShowOnlyOn::API),
             ]), moveBeforeKey: 'id');
     }
     
