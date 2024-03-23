@@ -7,8 +7,8 @@ use App\Database\Entity\User;
 use App\Database\EntityManager;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
-use Megio\Collection\ReadBuilder\Transformer\CallableTransformer;
-use Megio\Collection\ReadBuilder\Transformer\RichTextTransformer;
+use Megio\Collection\ReadBuilder\Formatter\CallableFormatter;
+use Megio\Collection\ReadBuilder\Formatter\RichTextFormatter;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Rule\CallableRule;
@@ -43,8 +43,8 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
-            ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                new CallableTransformer(fn($value) => 'mailto:' . $value),
+            ->add(new EmailColumn(key: 'email', name: 'E-mail', formatters: [
+                new CallableFormatter(fn($value) => 'mailto:' . $value),
             ]));
     }
     
@@ -52,10 +52,10 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password'], persist: true)
-            ->ignoreTransformers(['email' => [RichTextTransformer::class]])
-            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                new CallableTransformer(fn($value) => 'mailto:' . $value),
-                new RichTextTransformer(max: 1, suffix: ' ...', adminPanelOnly: true)
+            ->ignoreFormatters(['email' => [RichTextFormatter::class]])
+            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', formatters: [
+                new CallableFormatter(fn($value) => 'mailto:' . $value),
+                new RichTextFormatter(max: 1, suffix: ' ...', adminPanelOnly: true)
             ]), moveBeforeKey: 'id');
     }
     
