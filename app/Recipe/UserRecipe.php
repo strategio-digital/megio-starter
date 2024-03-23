@@ -42,10 +42,9 @@ class UserRecipe extends CollectionRecipe
     public function read(ReadBuilder $builder): ReadBuilder
     {
         return $builder
-            ->ignoreTransformers(['email' => ['callable']])
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
             ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                new CallableTransformer(fn($value) => 'E-mail: ' . $value, adminPanelOnly: true),
+                new CallableTransformer(fn($value) => 'E-mail: ' . $value),
             ]));
     }
     
@@ -53,8 +52,10 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
+            ->ignoreTransformers(['email' => [RichTextTransformer::class]])
             ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                new CallableTransformer(fn($value) => 'E-mail: ' . $value, adminPanelOnly: true),
+                //new CallableTransformer(fn($value) => 'E-mail: ' . $value),
+                new RichTextTransformer(max: 1, suffix: ' ...')
             ]));
     }
     
