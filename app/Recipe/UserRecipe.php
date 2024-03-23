@@ -44,19 +44,19 @@ class UserRecipe extends CollectionRecipe
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
             ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                new CallableTransformer(fn($value) => 'E-mail: ' . $value),
+                new CallableTransformer(fn($value) => 'mailto:' . $value),
             ]));
     }
     
     public function readAll(ReadBuilder $builder): ReadBuilder
     {
         return $builder
-            ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
+            ->buildByDbSchema(exclude: ['password'], persist: true)
             ->ignoreTransformers(['email' => [RichTextTransformer::class]])
-            ->add(new EmailColumn(key: 'email', name: 'E-mail', transformers: [
-                //new CallableTransformer(fn($value) => 'E-mail: ' . $value),
+            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', transformers: [
+                new CallableTransformer(fn($value) => 'mailto:' . $value),
                 new RichTextTransformer(max: 1, suffix: ' ...', adminPanelOnly: true)
-            ]));
+            ]), moveBeforeKey: 'id');
     }
     
     public function create(WriteBuilder $builder): WriteBuilder
