@@ -5,11 +5,9 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
-use Megio\Collection\ReadBuilder\Column\Base\ShowOnlyOn;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\ReadBuilder\Formatter\CallableFormatter;
-use Megio\Collection\ReadBuilder\Formatter\RichTextFormatter;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Rule\CallableRule;
@@ -53,11 +51,8 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password'], persist: true)
-            //->ignoreFormatters(['email' => [RichTextFormatter::class]])
-            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', formatters: [
-                new CallableFormatter(fn($value) => 'mailto:' . $value, showOnlyOn: ShowOnlyOn::ADMIN_PANEL),
-                new RichTextFormatter(max: 1, suffix: ' ...', showOnlyOn: ShowOnlyOn::API),
-            ]), moveBeforeKey: 'id');
+            //->ignoreFormatters(['createdAt' => [DateTimeFormatter::class]])
+            ->add(col: new EmailColumn(key: 'email', name: 'E-mail'));
     }
     
     public function create(WriteBuilder $builder): WriteBuilder
