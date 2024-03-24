@@ -5,8 +5,8 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
-use Megio\Collection\ReadBuilder\Column\StringColumn;
-use Megio\Collection\ReadBuilder\ReadBuilder;
+use Megio\Collection\WriteBuilder\Field\PasswordField;
+use Megio\Collection\WriteBuilder\WriteBuilder;
 
 class UserTest2Recipe extends CollectionRecipe
 {
@@ -20,10 +20,12 @@ class UserTest2Recipe extends CollectionRecipe
         return 'user-test-2';
     }
     
-    public function read(ReadBuilder $builder): ReadBuilder
+    public function create(WriteBuilder $builder): WriteBuilder
     {
         return $builder
-            ->add(new StringColumn(key: 'email', name: 'E-mail'))
-            ->add(new StringColumn(key: 'updatedAt', name: 'Aktualizováno'));
+            //->ignoreRules(['email' => [UniqueRule::class]])
+            ->buildByDbSchema(exclude: ['lastLogin'], persist: true)
+            ->add(new PasswordField(name: 'password_check', label: 'Kontrola hesla', mapToEntity: false))
+        ;
     }
 }

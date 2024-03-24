@@ -66,7 +66,6 @@ class UserRecipe extends CollectionRecipe
         $items = array_map(fn($role) => new SelectField\Item($role->getId(), $role->getName()), $roles);
         
         return $builder
-            //->ignoreSchemaRules()
             //->ignoreRules(['email' => [UniqueRule::class]])
             ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
                 new RequiredRule(),
