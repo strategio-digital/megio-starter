@@ -8,7 +8,7 @@ use Megio\Collection\CollectionRecipe;
 use Megio\Collection\ReadBuilder\Column\StringColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 
-class UserTestRecipe extends CollectionRecipe
+class UserTest2Recipe extends CollectionRecipe
 {
     public function source(): string
     {
@@ -17,7 +17,7 @@ class UserTestRecipe extends CollectionRecipe
     
     public function key(): string
     {
-        return 'user-test';
+        return 'user-test-2';
     }
     
     public function read(ReadBuilder $builder): ReadBuilder

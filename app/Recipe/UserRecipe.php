@@ -35,7 +35,7 @@ class UserRecipe extends CollectionRecipe
         return User::class;
     }
     
-    public function name(): string
+    public function key(): string
     {
         return 'user';
     }
