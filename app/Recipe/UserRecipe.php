@@ -68,9 +68,10 @@ class UserRecipe extends CollectionRecipe
                 new UniqueRule(entityClassName: User::class, columnName: 'email', message: 'Tento e-mail je již použit.'),
                 new CallableRule(fn($value) => $value === 'jz@strategio.dev', 'E-mail není jz@strategio.dev.'),
             ], serializers: [
-                new CallableSerializer(function($value) { return $value; } )
+                new CallableSerializer(function ($value) {
+                    return $value;
+                })
             ]))
-            
             ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
                 new RequiredRule(),
                 new MinRule(6),
