@@ -3,9 +3,9 @@
 
 
 "@babel/parser@^7.23.9":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.24.0.tgz#26a3d1ff49031c53a97d03b604375f028746a9ac"
-  integrity sha512-QuP/FxEAzMSjXygs8v4N9dvdXzEHN4W1oF3PxuWAtPo08UdM17u89RDMgjLn/mlc56iM0HlLmVkO/wgR+rDgHg==
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.24.1.tgz#1e416d3627393fab1cb5b0f2f1796a100ae9133a"
+  integrity sha512-Zo9c7N3xdOIQrNip7Lc9wvRPzlRtovHVE4lkz8WEDr7uYh/GMQhSiIgFxGIArRHYdJE5kxtZjAf8rT0xhdLCzg==
 
 "@esbuild/aix-ppc64@0.19.12":
   version "0.19.12"
@@ -428,18 +428,18 @@ magic-string@^0.30.7:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-megio-api@^0.7.4:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.7.5.tgz#df841770e75aac88b9a8e298a02076aa437b8a0f"
-  integrity sha512-vIWNI35GtIGKu3vFXYQm2bnMKpVSc60ZjdgkjG8povsA1534NRS2UWYsPoN1mm5IsY9ighZob9quW5fsk3tnMQ==
+megio-api@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.9.2.tgz#e455e92a2bf1955a589c5698885a7d07b87feb3b"
+  integrity sha512-0wqdiazEzAFeND/C6X35DCA4E5nZtr0zHZZIoumC7QlOgWHc7GGkqJ+EkoK6TTPw4W8NSeRFq2AbINz8fqrzEQ==
 
-megio-panel@^0.7.6:
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.7.7.tgz#6f49a6c727950408287682d1273a81749be02c0c"
-  integrity sha512-6OVq3x3hgw5Hx0lsb4IkD2RUVwkIxZruOnoE2ZB+knbjgSeC8HaHVdKw9ZMPFiCBZOc4SzegKDonF+JbyQaRMg==
+megio-panel@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.8.0.tgz#a2ee6d7910a5b09abdde96fa288acc6479059046"
+  integrity sha512-iCAA8ErylaqPrRyDQreXyzJIS9knAyxjWZAUUDo92Tm8J4uvhU6Y4AKnYAKNRbBOTeZ3dWVHkvtF7C6tKECdtQ==
   dependencies:
     "@mdi/js" "^7.2.96"
-    megio-api "^0.7.4"
+    megio-api "^0.9.2"
     vue "^3.2.45"
     vue-router "^4.1.6"
     vuetify "^3.0.1"
@@ -475,13 +475,13 @@ postcss@^8.4.32:
     source-map-js "^1.0.2"
 
 postcss@^8.4.35:
-  version "8.4.35"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.35.tgz#60997775689ce09011edf083a549cea44aabe2f7"
-  integrity sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==
+  version "8.4.38"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.38.tgz#b387d533baf2054288e337066d81c6bee9db9e0e"
+  integrity sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==
   dependencies:
     nanoid "^3.3.7"
     picocolors "^1.0.0"
-    source-map-js "^1.0.2"
+    source-map-js "^1.2.0"
 
 readdirp@~3.6.0:
   version "3.6.0"
@@ -521,10 +521,15 @@ sass@^1.70.0:
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
-"source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
+"source-map-js@>=0.6.2 <2.0.0":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+
+source-map-js@^1.0.2, source-map-js@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.2.0.tgz#16b809c162517b5b8c3e7dcd315a2a5c2612b2af"
+  integrity sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==
 
 to-regex-range@^5.0.1:
   version "5.0.1"
@@ -588,6 +593,6 @@ vuetify-sonner@^0.2.1:
     vue-sonner "^0.3.3"
 
 vuetify@^3.0.1:
-  version "3.5.9"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.5.9.tgz#9cb3554f4b9bb7f3c277a10b99ab5944e6d04b03"
-  integrity sha512-tA3N2uWZFNSZRFNnXN841x4rWozYXKC0fGW/mJIwcKkQiI0+gmVCETtjF8bnOS7L1s0buWzw94uYTlXQa5AQ4w==
+  version "3.5.11"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.5.11.tgz#9e5b628544e736de0b7f236b704539d544588152"
+  integrity sha512-us5I0jyFwIQYG4v41PFmVMkoc/oJddVT4C2RFjJTI99ttigbQ92gsTeG5SB8BPfmfnUS4paR5BedZwk6W3KlJw==

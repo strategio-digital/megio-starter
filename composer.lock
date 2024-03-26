@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "889acd78b0dc55facf7271d6d4b7e4ae",
+    "content-hash": "da9b1b96b9592a1bedb5ced93eb7e8e9",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.301.1",
+            "version": "3.301.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0a910d2b35e7087337cdf3569dc9b6ce232aafba"
+                "reference": "2fd8cae93e87326f2263c420fa9031ad8903a2f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0a910d2b35e7087337cdf3569dc9b6ce232aafba",
-                "reference": "0a910d2b35e7087337cdf3569dc9b6ce232aafba",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2fd8cae93e87326f2263c420fa9031ad8903a2f2",
+                "reference": "2fd8cae93e87326f2263c420fa9031ad8903a2f2",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.301.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.301.7"
             },
-            "time": "2024-03-15T18:14:42+00:00"
+            "time": "2024-03-25T18:14:28+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1095,16 +1095,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.19.0",
+            "version": "2.19.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "a809a71aa6a233a6c82e68ebaaf8954adc4998dc"
+                "reference": "1a5a4c674a416b4fdf76833c627c5e7f58bbb890"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/a809a71aa6a233a6c82e68ebaaf8954adc4998dc",
-                "reference": "a809a71aa6a233a6c82e68ebaaf8954adc4998dc",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/1a5a4c674a416b4fdf76833c627c5e7f58bbb890",
+                "reference": "1a5a4c674a416b4fdf76833c627c5e7f58bbb890",
                 "shasum": ""
             },
             "require": {
@@ -1190,9 +1190,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.19.0"
+                "source": "https://github.com/doctrine/orm/tree/2.19.3"
             },
-            "time": "2024-03-03T17:43:41+00:00"
+            "time": "2024-03-21T11:01:42+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -1619,16 +1619,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v3.0.13",
+            "version": "v3.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "462444d669809528b6f6ce191b616d747c9b4bfc"
+                "reference": "1ab054b1af13ee647ccbc5bf2673a3483a7457d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/462444d669809528b6f6ce191b616d747c9b4bfc",
-                "reference": "462444d669809528b6f6ce191b616d747c9b4bfc",
+                "url": "https://api.github.com/repos/nette/latte/zipball/1ab054b1af13ee647ccbc5bf2673a3483a7457d5",
+                "reference": "1ab054b1af13ee647ccbc5bf2673a3483a7457d5",
                 "shasum": ""
             },
             "require": {
@@ -1698,9 +1698,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v3.0.13"
+                "source": "https://github.com/nette/latte/tree/v3.0.14"
             },
-            "time": "2024-01-09T13:54:57+00:00"
+            "time": "2024-03-19T09:03:26+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -2544,16 +2544,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.62",
+            "version": "1.10.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cd5c8a1660ed3540b211407c77abf4af193a6af9"
+                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cd5c8a1660ed3540b211407c77abf4af193a6af9",
-                "reference": "cd5c8a1660ed3540b211407c77abf4af193a6af9",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3c657d057a0b7ecae19cb12db446bbc99d8839c6",
+                "reference": "3c657d057a0b7ecae19cb12db446bbc99d8839c6",
                 "shasum": ""
             },
             "require": {
@@ -2602,7 +2602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-13T12:27:20+00:00"
+            "time": "2024-03-23T10:30:26+00:00"
         },
         {
             "name": "psr/cache",
@@ -3116,16 +3116,16 @@
         },
         {
             "name": "strategio/megio-core",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
-                "reference": "36925b06c0cdd286f82e127a7fa8c5b33cdce9c1"
+                "reference": "11c161af4e1e348fc801deffd2667f8e5ba33582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/36925b06c0cdd286f82e127a7fa8c5b33cdce9c1",
-                "reference": "36925b06c0cdd286f82e127a7fa8c5b33cdce9c1",
+                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/11c161af4e1e348fc801deffd2667f8e5ba33582",
+                "reference": "11c161af4e1e348fc801deffd2667f8e5ba33582",
                 "shasum": ""
             },
             "require": {
@@ -3177,9 +3177,9 @@
             "description": "Most powerful tool for creating webs, apps & APIs.",
             "support": {
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
-                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.0"
+                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.1"
             },
-            "time": "2024-03-16T02:02:53+00:00"
+            "time": "2024-03-25T22:41:41+00:00"
         },
         {
             "name": "symfony/cache",
