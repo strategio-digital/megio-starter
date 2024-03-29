@@ -83,6 +83,7 @@ class UserRecipe extends CollectionRecipe
             ], mapToEntity: false))
             ->add(new SelectField(name: 'role', label: 'Role', items: $items, rules: [
                 new NullableRule(),
+                new RequiredRule(),
             ]));
     }
     
