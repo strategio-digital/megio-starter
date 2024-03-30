@@ -22,6 +22,7 @@ use Megio\Collection\WriteBuilder\WriteBuilder;
 use Megio\Collection\WriteBuilder\Rule\EqualRule;
 use Megio\Collection\WriteBuilder\Rule\MinRule;
 use Megio\Collection\WriteBuilder\Rule\RequiredRule;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserRecipe extends CollectionRecipe
 {
@@ -39,7 +40,7 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
     
-    public function read(ReadBuilder $builder): ReadBuilder
+    public function read(ReadBuilder $builder, Request $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
@@ -48,7 +49,7 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function readAll(ReadBuilder $builder): ReadBuilder
+    public function readAll(ReadBuilder $builder, Request $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password'], persist: true)
@@ -56,7 +57,7 @@ class UserRecipe extends CollectionRecipe
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail'));
     }
     
-    public function create(WriteBuilder $builder): WriteBuilder
+    public function create(WriteBuilder $builder, Request $request): WriteBuilder
     {
         $roles = $this->em->getAuthRoleRepo()->findAll();
         $items = array_map(fn($role) => new SelectField\Item($role->getId(), $role->getName()), $roles);
@@ -87,7 +88,7 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function update(WriteBuilder $builder): WriteBuilder
+    public function update(WriteBuilder $builder, Request $request): WriteBuilder
     {
         return $builder
             ->add(new TextField(name: 'id', label: 'ID', disabled: true))
