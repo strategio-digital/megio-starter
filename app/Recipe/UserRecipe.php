@@ -8,6 +8,7 @@ use App\Database\EntityManager;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\Formatter\CallableFormatter;
+use Megio\Collection\RecipeRequest;
 use Megio\Collection\WriteBuilder\Field\Base\EmptyValue;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
@@ -23,7 +24,6 @@ use Megio\Collection\WriteBuilder\WriteBuilder;
 use Megio\Collection\WriteBuilder\Rule\EqualRule;
 use Megio\Collection\WriteBuilder\Rule\MinRule;
 use Megio\Collection\WriteBuilder\Rule\RequiredRule;
-use Symfony\Component\HttpFoundation\Request;
 
 class UserRecipe extends CollectionRecipe
 {
@@ -41,7 +41,7 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
     
-    public function read(ReadBuilder $builder, Request $request): ReadBuilder
+    public function read(ReadBuilder $builder, RecipeRequest $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
@@ -50,7 +50,7 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function readAll(ReadBuilder $builder, Request $request): ReadBuilder
+    public function readAll(ReadBuilder $builder, RecipeRequest $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password'], persist: true)
@@ -58,7 +58,7 @@ class UserRecipe extends CollectionRecipe
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail'));
     }
     
-    public function create(WriteBuilder $builder, Request $request): WriteBuilder
+    public function create(WriteBuilder $builder, RecipeRequest $request): WriteBuilder
     {
         $roles = $this->em->getAuthRoleRepo()->findAll();
         $items = array_map(fn($role) => new SelectField\Item($role->getId(), $role->getName()), $roles);
@@ -89,17 +89,17 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function update(WriteBuilder $builder, Request $request): WriteBuilder
+    public function update(WriteBuilder $builder, RecipeRequest $request): WriteBuilder
     {
         $pwf = new PasswordField(name: 'password', label: 'Heslo');
         
         // Do not show password on form rendering
-        if ($request->attributes->get('_route') === 'megio.collections.form.updating') {
+        if ($request->isFormRendering()) {
             $pwf->setValue(new EmptyValue());
         }
         
         return $builder
-            ->add(new TextField(name: 'id', label: 'ID', disabled: true))
+            ->add(new TextField(name: 'id', label: 'ID', attrs: ['fullWidth' => true], disabled: true))
             ->add(new EmailField(name: 'email', label: 'E-mail'))
             ->add($pwf);
     }
