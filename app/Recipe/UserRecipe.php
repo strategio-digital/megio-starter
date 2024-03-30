@@ -8,6 +8,7 @@ use App\Database\EntityManager;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\Formatter\CallableFormatter;
+use Megio\Collection\WriteBuilder\Field\Base\EmptyValue;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Rule\CallableRule;
@@ -90,9 +91,16 @@ class UserRecipe extends CollectionRecipe
     
     public function update(WriteBuilder $builder, Request $request): WriteBuilder
     {
+        $pwf = new PasswordField(name: 'password', label: 'Heslo');
+        
+        // Do not show password on form rendering
+        if ($request->attributes->get('_route') === 'megio.collections.form.updating') {
+            $pwf->setValue(new EmptyValue());
+        }
+        
         return $builder
             ->add(new TextField(name: 'id', label: 'ID', disabled: true))
             ->add(new EmailField(name: 'email', label: 'E-mail'))
-            ->add(new PasswordField(name: 'password', label: 'Heslo'));
+            ->add($pwf);
     }
 }
