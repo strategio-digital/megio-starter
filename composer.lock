@@ -3116,16 +3116,16 @@
         },
         {
             "name": "strategio/megio-core",
-            "version": "0.8.1",
+            "version": "0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
-                "reference": "11c161af4e1e348fc801deffd2667f8e5ba33582"
+                "reference": "5a93071e2e64eb75a11d668587e2410534cd4501"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/11c161af4e1e348fc801deffd2667f8e5ba33582",
-                "reference": "11c161af4e1e348fc801deffd2667f8e5ba33582",
+                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/5a93071e2e64eb75a11d668587e2410534cd4501",
+                "reference": "5a93071e2e64eb75a11d668587e2410534cd4501",
                 "shasum": ""
             },
             "require": {
@@ -3177,9 +3177,9 @@
             "description": "Most powerful tool for creating webs, apps & APIs.",
             "support": {
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
-                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.1"
+                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.2"
             },
-            "time": "2024-03-25T22:41:41+00:00"
+            "time": "2024-03-30T21:27:49+00:00"
         },
         {
             "name": "symfony/cache",
