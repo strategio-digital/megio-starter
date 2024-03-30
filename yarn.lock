@@ -468,10 +468,10 @@ megio-api@^0.9.4:
   resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.9.4.tgz#1a12326d9aaad2c5fefcd52401ed62ccc64ae94d"
   integrity sha512-X2u5+7OqyAZDqXNrjoCyLYoWjw1W3JeEZRYwfSGLM9LiCQKaE2bR8xmaLEmvw392R8/I84Gtp+xReilFqbiYVg==
 
-megio-panel@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.8.1.tgz#076904c95ece18d3e41fb24d5e67e5c125f79cf5"
-  integrity sha512-B7Vi/WaukPJzHhoOkbt2UOjnki+CDa1hQfAD1hUeOroUuq7SedBOLO90N3ocHezqdnbWHHADOcDwBOo6G+h1UQ==
+megio-panel@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.8.2.tgz#e06626284b2d44dd685087bc8db4a52d127358f2"
+  integrity sha512-i/9Nba/ijOPuODzF2XscnWh7uSfKgeBGmRYPKe/fGGXtWblQDzDJ/bE8rNVuoZ/PnbEN1Sw/sEqxojKwkc/22w==
   dependencies:
     "@mdi/js" "^7.4.47"
     megio-api "^0.9.4"
