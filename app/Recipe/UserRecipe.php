@@ -7,7 +7,7 @@ use App\Database\Entity\User;
 use App\Database\EntityManager;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
-use Megio\Collection\ReadBuilder\Formatter\CallableFormatter;
+use Megio\Collection\Formatter\CallableFormatter;
 use Megio\Collection\WriteBuilder\Field\SelectField;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Rule\CallableRule;
