@@ -10,6 +10,3 @@ import '@/assets/scss/layout.scss'
 // import { createApp } from 'vue'
 // import App from '@/assets/vue/app/App.vue'
 // createApp(App).mount('#app')
-
-// TODO: react example
-// React-JS example
