@@ -31,7 +31,7 @@ class Author implements ICrudable, IJoinable
     #[ORM\OneToOne(mappedBy: 'author', targetEntity: Profile::class)]
     protected ?Profile $profile = null;
     
-    ## TODO:
+    ## DONE
     /** @var Collection<int, Article> */
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
     protected Collection $articles;

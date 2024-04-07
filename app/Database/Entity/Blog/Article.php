@@ -10,11 +10,12 @@ use Megio\Database\Field\TCreatedAt;
 use Megio\Database\Field\TId;
 use Megio\Database\Field\TUpdatedAt;
 use Megio\Database\Interface\ICrudable;
+use Megio\Database\Interface\IJoinable;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`blog_article`')]
 #[ORM\HasLifecycleCallbacks]
-class Article implements ICrudable
+class Article implements ICrudable, IJoinable
 {
     use TId, TCreatedAt, TUpdatedAt;
     
@@ -32,7 +33,7 @@ class Article implements ICrudable
     
     ## TODO:
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'articles')]
-    ##[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
     protected ?Author $author = null;
     
     ## TODO:
@@ -44,5 +45,10 @@ class Article implements ICrudable
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+    }
+    
+    public function getJoinableLabel(): string
+    {
+        return $this->title;
     }
 }
