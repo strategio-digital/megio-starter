@@ -55,6 +55,11 @@ RUN docker-php-ext-install intl
 #RUN docker-php-ext-configure pcntl --enable-pcntl
 #RUN docker-php-ext-install pcntl
 
+# Install SOAP
+#RUN apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c libxml2-dev
+#RUN docker-php-ext-configure soap
+#RUN docker-php-ext-install soap
+
 # Copy source code
 COPY . ./
 COPY --from=build-stage-node /build/www/temp ./www/temp
