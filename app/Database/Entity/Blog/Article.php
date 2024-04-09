@@ -31,8 +31,8 @@ class Article implements ICrudable, IJoinable
     #[ORM\Column(type: 'text')]
     protected string $content;
     
-    ## DONE (EAGER loading solve an issue with multiple queries in datagrid)
-    #[ORM\ManyToOne(targetEntity: Author::class, fetch: 'EAGER', inversedBy: 'articles')]
+    ## DONE
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'articles')]
     #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
     protected ?Author $author = null;
     
