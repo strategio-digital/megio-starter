@@ -66,6 +66,7 @@ COPY --from=build-stage-node /build/www/temp ./www/temp
 #COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
 
 # Install composer & dependencies
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-cache --prefer-dist --no-scripts
 
