@@ -30,8 +30,14 @@ class Profile implements ICrudable, IJoinable
     #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id')]
     protected ?Author $author = null;
     
-    public function getJoinableLabel(): string
+    /**
+     * @return array{fields: string[], format: string}
+     */
+    public function getJoinableLabel(): array
     {
-        return $this->nickname;
+        return [
+            'fields' => ['nickname'],
+            'format' => '%s'
+        ];
     }
 }

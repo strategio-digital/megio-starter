@@ -33,10 +33,11 @@ class Author implements ICrudable, IJoinable
     
     ## DONE
     /** @var Collection<int, Article> */
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, fetch: 'LAZY')]
     protected Collection $articles;
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->articles = new ArrayCollection();
     }
     
@@ -45,8 +46,14 @@ class Author implements ICrudable, IJoinable
         return $this->profile;
     }
     
-    public function getJoinableLabel(): string
+    /**
+     * @return array{fields: string[], format: string}
+     */
+    public function getJoinableLabel(): array
     {
-        return $this->firstName . ' ' . $this->lastName;
+        return [
+            'fields' => ['firstName', 'lastName'],
+            'format' => '%s %s'
+        ];
     }
 }
