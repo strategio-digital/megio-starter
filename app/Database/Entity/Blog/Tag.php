@@ -10,11 +10,12 @@ use Megio\Database\Field\TCreatedAt;
 use Megio\Database\Field\TId;
 use Megio\Database\Field\TUpdatedAt;
 use Megio\Database\Interface\ICrudable;
+use Megio\Database\Interface\IJoinable;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`blog_article_tag`')]
 #[ORM\HasLifecycleCallbacks]
-class Tag implements ICrudable
+class Tag implements ICrudable, IJoinable
 {
     use TId, TCreatedAt, TUpdatedAt;
     
@@ -33,5 +34,16 @@ class Tag implements ICrudable
     
     public function __construct() {
         $this->articles = new ArrayCollection();
+    }
+    
+    /**
+     * @return array{fields: string[], format: string}
+     */
+    public function getJoinableLabel(): array
+    {
+        return [
+            'fields' => ['name'],
+            'format' => '%s'
+        ];
     }
 }
