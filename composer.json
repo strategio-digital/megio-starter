@@ -21,6 +21,8 @@
         "strategio/megio-core": "^0.8.3"
     },
     "scripts": {
+        "push-db": "scp ./docker/temp/sqlite/db.sqlite3 root@srv1.strategio.dev:/data-volumes/strategio-apps/saas-app/dbv2.sqlite3",
+        "pull-db": "scp root@srv1.strategio.dev:/data-volumes/strategio-apps/saas-app/dbv2.sqlite3 ./docker/temp/sqlite/db.sqlite3",
         "phpstan": "vendor/bin/phpstan analyse -l 8 app/ www/ bin/console  --memory-limit 1G",
         "neon": "vendor/bin/neon-lint config",
         "latte": "vendor/bin/latte-lint view",
