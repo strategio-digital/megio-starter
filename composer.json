@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "strategio/megio-core": "^0.8.3"
     },
     "scripts": {
