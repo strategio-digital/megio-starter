@@ -60,7 +60,7 @@ class UserRecipe extends CollectionRecipe
         return $builder
             ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
                 new RequiredRule(),
-                new UniqueRule(entityClassName: User::class, columnName: 'email', message: 'Tento e-mail je již použit.')
+                new UniqueRule(targetEntity: User::class, columnName: 'email', message: 'Tento e-mail je již použit.')
             ]))
             ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
                 new RequiredRule(),
