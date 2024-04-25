@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "name": "megio-starter",
   "type": "module",
   "author": {
@@ -12,12 +12,13 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "megio-panel": "^0.8.7"
+    "megio-panel": "^0.8.12"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
     "laravel-vite-plugin": "^1.0.2",
-    "sass": "^1.72.0",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.7"
+    "sass": "^1.75.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10"
   }
 }
