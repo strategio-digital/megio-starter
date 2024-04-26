@@ -473,18 +473,18 @@ magic-string@^0.30.10:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.15"
 
-megio-api@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.9.5.tgz#41cd622d8fa461363fabfcf6a7cff4f79b21e9f0"
-  integrity sha512-FhCgG/U81r8Ls1wJ0DniVAF9GxMhqIJ73xxsfyjApOOqi2K6H27MEUUnEa8pgGKXiCga2dUbV7UtMKAfntRFZA==
+megio-api@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/megio-api/-/megio-api-0.9.6.tgz#690570e2ae281c7036e7c104f1dc91dfbb19c423"
+  integrity sha512-sq6ihAodadKOuEB9DyENcpIcqA9b0xH5XNNEzWD52Mh1ckTLwZCvoCBjTtbDCCyQOjwxEBYmsafaMqvgw6xHpg==
 
-megio-panel@^0.8.12:
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.8.12.tgz#793a3c45887f17616c34fa5e27d4d1b225354237"
-  integrity sha512-pa5OrzZCZRAX3HaJQ0Pl68sLTlg49n6Si6v0nnyfOlA+TbGIX08eKINoJGyYKMHwIg+1RzZZwdjNujEq69lC3g==
+megio-panel@^0.8.13:
+  version "0.8.13"
+  resolved "https://registry.yarnpkg.com/megio-panel/-/megio-panel-0.8.13.tgz#e8d85ec8446f01b9f783e3012a2a3f0a553e4596"
+  integrity sha512-xecBXDNpVqitdk/PcE65lw5s3CGuov8W3a9l5iGkOH76lLiC5/IDGOY9NmJeDbFXVw2Lc5vemXqe8CI5MPwMnQ==
   dependencies:
     "@mdi/js" "^7.4.47"
-    megio-api "^0.9.5"
+    megio-api "^0.9.6"
     quill "2.0.0-rc.4"
     vue "^3.4.21"
     vue-router "^4.3.0"
