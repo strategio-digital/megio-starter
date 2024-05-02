@@ -29,7 +29,7 @@ class DownloadRequest extends Request
     }
     
     // Add request validations
-    public function schema(): array
+    public function schema(array $data): array
     {
         return [
             'invoice' => Expect::structure([

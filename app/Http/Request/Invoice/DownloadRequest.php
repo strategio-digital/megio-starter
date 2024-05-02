@@ -15,7 +15,7 @@ class DownloadRequest extends Request
     {
     }
     
-    public function schema(): array
+    public function schema(array $data): array
     {
         return [
             // Add custom request validations
