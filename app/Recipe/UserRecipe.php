@@ -44,12 +44,10 @@ class UserRecipe extends CollectionRecipe
     
     public function search(SearchBuilder $builder, CollectionRequest $request): SearchBuilder
     {
-        $builder
+        return $builder
             ->keepDefaults()
             ->addSearchable(new Searchable(column: 'email', formatter: fn($value) => "%{$value}%"))
             ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
-        
-        return $builder;
     }
     
     public function read(ReadBuilder $builder, CollectionRequest $request): ReadBuilder
@@ -66,8 +64,7 @@ class UserRecipe extends CollectionRecipe
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail', sortable: true), moveBeforeKey: 'lastLogin')
-            ->add(col: new ToManyColumn(key: 'roles', name: 'Role'))
-        ;
+            ->add(col: new ToManyColumn(key: 'roles', name: 'Role'));
     }
     
     public function create(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
