@@ -7,6 +7,7 @@ use App\Database\Entity\User;
 use App\Database\EntityManager;
 use Megio\Collection\CollectionRequest;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
+use Megio\Collection\ReadBuilder\Column\ToManyColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\Formatter\CallableFormatter;
 use Megio\Collection\SearchBuilder\Searchable;
@@ -64,7 +65,9 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
-            ->add(col: new EmailColumn(key: 'email', name: 'E-mail'), moveBeforeKey: 'lastLogin');
+            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', sortable: true), moveBeforeKey: 'lastLogin')
+            ->add(col: new ToManyColumn(key: 'roles', name: 'Role'))
+        ;
     }
     
     public function create(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
