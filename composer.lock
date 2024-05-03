@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b1c1134d1091c00105c233f7b191526",
+    "content-hash": "d30cd5bf42db45ab45b8b92117315229",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3116,16 +3116,16 @@
         },
         {
             "name": "strategio/megio-core",
-            "version": "0.8.6",
+            "version": "0.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
-                "reference": "8eed94f512c87e60c7fa7a6c6fc63580c00b2897"
+                "reference": "c01a12849120f06c36c3efb771c209dab25c6094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/8eed94f512c87e60c7fa7a6c6fc63580c00b2897",
-                "reference": "8eed94f512c87e60c7fa7a6c6fc63580c00b2897",
+                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/c01a12849120f06c36c3efb771c209dab25c6094",
+                "reference": "c01a12849120f06c36c3efb771c209dab25c6094",
                 "shasum": ""
             },
             "require": {
@@ -3177,9 +3177,9 @@
             "description": "Most powerful tool for creating webs, apps & APIs.",
             "support": {
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
-                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.6"
+                "source": "https://github.com/strategio-digital/megio-core/tree/0.8.7"
             },
-            "time": "2024-05-03T01:00:40+00:00"
+            "time": "2024-05-03T04:37:09+00:00"
         },
         {
             "name": "symfony/cache",
