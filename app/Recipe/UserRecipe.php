@@ -5,10 +5,12 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
+use Megio\Collection\CollectionRequest;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\Formatter\CallableFormatter;
-use Megio\Collection\RecipeRequest;
+use Megio\Collection\SearchBuilder\Searchable;
+use Megio\Collection\SearchBuilder\SearchBuilder;
 use Megio\Collection\WriteBuilder\Field\Base\EmptyValue;
 use Megio\Collection\WriteBuilder\Field\TextField;
 use Megio\Collection\WriteBuilder\Field\ToManySelectField;
@@ -39,7 +41,17 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
     
-    public function read(ReadBuilder $builder, RecipeRequest $request): ReadBuilder
+    public function search(SearchBuilder $builder, CollectionRequest $request): SearchBuilder
+    {
+        $builder
+            ->keepDefaults()
+            ->addSearchable(new Searchable(column: 'email', formatter: fn($value) => "%{$value}%"))
+            ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
+        
+        return $builder;
+    }
+    
+    public function read(ReadBuilder $builder, CollectionRequest $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
@@ -48,14 +60,14 @@ class UserRecipe extends CollectionRecipe
             ]));
     }
     
-    public function readAll(ReadBuilder $builder, RecipeRequest $request): ReadBuilder
+    public function readAll(ReadBuilder $builder, CollectionRequest $request): ReadBuilder
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
             ->add(col: new EmailColumn(key: 'email', name: 'E-mail'), moveBeforeKey: 'lastLogin');
     }
     
-    public function create(WriteBuilder $builder, RecipeRequest $request): WriteBuilder
+    public function create(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
     {
         return $builder
             ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
@@ -74,7 +86,7 @@ class UserRecipe extends CollectionRecipe
             ->add(new ToManySelectField(name: 'roles', label: 'Role', reverseEntity: Role::class));
     }
     
-    public function update(WriteBuilder $builder, RecipeRequest $request): WriteBuilder
+    public function update(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
     {
         $pwf = new PasswordField(name: 'password', label: 'Heslo');
         
