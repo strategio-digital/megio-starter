@@ -18,7 +18,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
-        "strategio/megio-core": "^0.8.8"
+        "strategio/megio-core": "^0.8.12"
     },
     "scripts": {
         "push-db": "scp ./docker/temp/sqlite/db.sqlite3 root@srv1.strategio.dev:/data-volumes/strategio-apps/saas-app/dbv2.sqlite3",

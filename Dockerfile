@@ -60,6 +60,11 @@ RUN docker-php-ext-install intl
 #RUN docker-php-ext-configure soap
 #RUN docker-php-ext-install soap
 
+# Isntall excimer (Sentry)
+#RUN apk add autoconf g++ make pcre-dev
+#RUN pecl install excimer
+#RUN docker-php-ext-enable excimer
+
 # Copy source code
 COPY . ./
 COPY --from=build-stage-node /build/www/temp ./www/temp
