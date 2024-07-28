@@ -5,25 +5,25 @@ namespace App\Recipe;
 
 use App\Database\Entity\User;
 use App\Database\EntityManager;
+use Megio\Collection\CollectionRecipe;
 use Megio\Collection\CollectionRequest;
+use Megio\Collection\Formatter\CallableFormatter;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
 use Megio\Collection\ReadBuilder\Column\ToManyColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
-use Megio\Collection\Formatter\CallableFormatter;
 use Megio\Collection\SearchBuilder\Searchable;
 use Megio\Collection\SearchBuilder\SearchBuilder;
 use Megio\Collection\WriteBuilder\Field\Base\EmptyValue;
-use Megio\Collection\WriteBuilder\Field\TextField;
-use Megio\Collection\WriteBuilder\Field\ToManySelectField;
-use Megio\Collection\WriteBuilder\Rule\MaxRule;
-use Megio\Collection\WriteBuilder\Rule\UniqueRule;
-use Megio\Collection\CollectionRecipe;
 use Megio\Collection\WriteBuilder\Field\EmailField;
 use Megio\Collection\WriteBuilder\Field\PasswordField;
-use Megio\Collection\WriteBuilder\WriteBuilder;
+use Megio\Collection\WriteBuilder\Field\TextField;
+use Megio\Collection\WriteBuilder\Field\ToManySelectField;
 use Megio\Collection\WriteBuilder\Rule\EqualRule;
+use Megio\Collection\WriteBuilder\Rule\MaxRule;
 use Megio\Collection\WriteBuilder\Rule\MinRule;
 use Megio\Collection\WriteBuilder\Rule\RequiredRule;
+use Megio\Collection\WriteBuilder\Rule\UniqueRule;
+use Megio\Collection\WriteBuilder\WriteBuilder;
 use Megio\Database\Entity\Auth\Role;
 
 class UserRecipe extends CollectionRecipe
@@ -46,7 +46,7 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->keepDefaults()
-            ->addSearchable(new Searchable(column: 'email', formatter: fn($value) => "%{$value}%"))
+            ->addSearchable(new Searchable(column: 'email', operator: 'LIKE', formatter: fn($value) => "%{$value}%"))
             ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
     }
     
