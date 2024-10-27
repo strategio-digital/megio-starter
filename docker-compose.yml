@@ -1,7 +1,8 @@
-version: '3'
-
 networks:
   megio-apps:
+
+volumes:
+  postgres_data:
 
 services:
   app:
@@ -32,4 +33,5 @@ services:
 #    ports:
 #      - "${DB_PORT}:5432"
 #    volumes:
-#      - ./docker/temp/postgres:/var/lib/postgresql/data:cached
+#      - postgres_data:/var/lib/postgresql/data
+#      - $PWD/docker/temp:/var/lib/postgresql/temp

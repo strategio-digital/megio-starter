@@ -19,6 +19,7 @@ COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/php.ini
 #COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # Install core linux dependencies
+RUN apk add su-exec
 RUN apk add openssl curl ca-certificates
 RUN apk add bash nano
 RUN apk add nginx
