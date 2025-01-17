@@ -36,9 +36,9 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 
 # Install postgres
-#RUN apk add --no-cache libpq-dev
-#RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-#RUN docker-php-ext-install pdo pdo_pgsql
+RUN apk add --no-cache libpq-dev
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo pdo_pgsql
 
 # Intall GD
 #RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev

@@ -5,7 +5,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $startedAt = microtime(true);
 $container = (new \Megio\Bootstrap())
     ->projectRootPath(__DIR__ . '/../')
-    ->logger(new \Megio\Debugger\JsonLogstashLogger())
+    ->logger($_ENV['APP_ENVIRONMENT'] === 'develop'
+        ? new \Megio\Debugger\JsonLogstashLogger()
+        : new \Megio\Debugger\SentryLogger())
     ->configure(\Megio\Helper\Path::configDir() . '/app.neon', $startedAt);
 
 /** @var \Megio\Http\Kernel\App $app */

@@ -1,5 +1,6 @@
 services:
     entityManager: App\Database\EntityManager
+    - Megio\Queue\QueueWorkerEnumFactory(App\Worker\QueueWorker)
     - App\Console\UserCreateCommand
 
 includes:

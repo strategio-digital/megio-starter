@@ -18,18 +18,19 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
-        "strategio/megio-core": "^0.9.0"
+        "strategio/megio-core": "^0.9.1"
     },
     "scripts": {
-        "push-db": "scp ./docker/temp/sqlite/db.sqlite3 root@srv1.strategio.dev:/data-volumes/strategio-apps/saas-app/dbv2.sqlite3",
-        "pull-db": "scp root@srv1.strategio.dev:/data-volumes/strategio-apps/saas-app/dbv2.sqlite3 ./docker/temp/sqlite/db.sqlite3",
-        "phpstan": "vendor/bin/phpstan analyse -l 8 app/ www/ bin/console  --memory-limit 1G",
-        "neon": "vendor/bin/neon-lint config",
-        "latte": "vendor/bin/latte-lint view",
+        "phpstan:baseline": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon -vv -b phpstan-baseline.neon --allow-empty-baseline",
+        "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon",
+        "neon": "vendor/bin/neon-lint config/",
+        "latte": "vendor/bin/latte-lint view/",
+        "schema": "bin/console orm:validate-schema",
         "analyse": [
             "@phpstan",
             "@neon",
-            "@latte"
+            "@latte",
+            "@schema"
         ]
     }
 }

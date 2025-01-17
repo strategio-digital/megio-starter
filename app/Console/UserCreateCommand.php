@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'app:user:create', description: 'Create a new user account', aliases: ['user'])]
+#[AsCommand(name: 'app:user:create', description: 'Create a new user account.', aliases: ['user'])]
 class UserCreateCommand extends Command
 {
     public function __construct(private readonly EntityManager $em)

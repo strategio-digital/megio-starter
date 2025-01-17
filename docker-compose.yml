@@ -10,6 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: "no"
+    environment:
+      QUEUE_WORKERS_ENABLED: ${QUEUE_WORKERS_ENABLED}
     networks:
       - megio-apps
     ports:
@@ -20,18 +22,18 @@ services:
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
       - $PWD:/var/www/html:cached
 
-#  postgres:
-#    image: postgres:16
-#    #restart: on-failure because postgres shutdown on first creation (permissions problem)
-#    restart: "on-failure"
-#    environment:
-#      POSTGRES_USER: ${DB_USERNAME}
-#      POSTGRES_PASSWORD: ${DB_PASSWORD}
-#      POSTGRES_DB: ${DB_DATABASE}
-#    networks:
-#      - megio-apps
-#    ports:
-#      - "${DB_PORT}:5432"
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#      - $PWD/docker/temp:/var/lib/postgresql/temp
+  postgres:
+    image: postgres:16
+    #restart: on-failure because postgres shutdown on first creation (permissions problem)
+    restart: "on-failure"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - megio-apps
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - $PWD/docker/temp:/var/lib/postgresql/temp
