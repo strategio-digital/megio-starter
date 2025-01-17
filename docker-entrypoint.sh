@@ -23,7 +23,7 @@ if [ "$QUEUE_WORKERS_ENABLED" = "true" ]; then
   echo "Starting queue workers..."
   start_queue_worker "php bin/console app:queue example.worker"
   #start_queue_worker "php bin/console app:queue example.worker"
-  #start_queue_worker "php bin/console app:queue-2 example.worker"
+  #start_queue_worker "php bin/console app:queue example.worker-2"
 fi
 
 # start php-fpm and nginx
