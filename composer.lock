@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b551ff22f00082a61d80abdcab2f4bd",
+    "content-hash": "69e869139751852cc033843fa1677842",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.337.1",
+            "version": "3.337.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "fa70febad922e9868c83bfe03c6d078fc2633e17"
+                "reference": "f885dd803a257da9d54e72a4750bba73e1196aee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fa70febad922e9868c83bfe03c6d078fc2633e17",
-                "reference": "fa70febad922e9868c83bfe03c6d078fc2633e17",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f885dd803a257da9d54e72a4750bba73e1196aee",
+                "reference": "f885dd803a257da9d54e72a4750bba73e1196aee",
                 "shasum": ""
             },
             "require": {
@@ -154,9 +154,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.337.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.337.2"
             },
-            "time": "2025-01-16T19:12:46+00:00"
+            "time": "2025-01-17T19:10:04+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -3260,16 +3260,16 @@
         },
         {
             "name": "strategio/megio-core",
-            "version": "0.9.1",
+            "version": "0.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
-                "reference": "fb66cd6ca6858cd073831c3008a28a2b690f18ca"
+                "reference": "eff1a8ded7042c5b3dcc4e4196143dc64a458c35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/fb66cd6ca6858cd073831c3008a28a2b690f18ca",
-                "reference": "fb66cd6ca6858cd073831c3008a28a2b690f18ca",
+                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/eff1a8ded7042c5b3dcc4e4196143dc64a458c35",
+                "reference": "eff1a8ded7042c5b3dcc4e4196143dc64a458c35",
                 "shasum": ""
             },
             "require": {
@@ -3326,9 +3326,9 @@
             "description": "Most powerful tool for creating webs, apps & APIs.",
             "support": {
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
-                "source": "https://github.com/strategio-digital/megio-core/tree/0.9.1"
+                "source": "https://github.com/strategio-digital/megio-core/tree/0.9.2"
             },
-            "time": "2025-01-17T18:04:22+00:00"
+            "time": "2025-01-20T23:13:44+00:00"
         },
         {
             "name": "symfony/cache",
@@ -5684,12 +5684,12 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

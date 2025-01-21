@@ -19,11 +19,3 @@ sh:
 
 test:
 	docker compose exec app composer analyse
-
-mvc:
-	cd vendor/strategio/megio-core
-	git init
-	git remote add origin git@github.com:strategio-digital/megio-core.git
-	git pull
-	git checkout master --force
-	cd ../../../

@@ -40,6 +40,11 @@ RUN apk add --no-cache libpq-dev
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql
 
+# Isntall excimer (Sentry)
+#RUN apk add autoconf g++ make pcre-dev
+#RUN pecl install excimer
+#RUN docker-php-ext-enable excimer
+
 # Intall GD
 #RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev
 #RUN docker-php-ext-configure gd --with-freetype --with-jpeg
@@ -60,11 +65,6 @@ RUN docker-php-ext-install pdo pdo_pgsql
 #RUN apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c libxml2-dev
 #RUN docker-php-ext-configure soap
 #RUN docker-php-ext-install soap
-
-# Isntall excimer (Sentry)
-#RUN apk add autoconf g++ make pcre-dev
-#RUN pecl install excimer
-#RUN docker-php-ext-enable excimer
 
 # Copy source code
 COPY . ./

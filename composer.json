@@ -18,7 +18,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
-        "strategio/megio-core": "^0.9.1"
+        "strategio/megio-core": "^0.9.2"
     },
     "scripts": {
         "phpstan:baseline": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon -vv -b phpstan-baseline.neon --allow-empty-baseline",
