@@ -19,3 +19,10 @@ sh:
 
 test:
 	docker compose exec app composer analyse
+
+db-restore:
+	docker compose exec postgres gunzip /var/lib/postgresql/temp/dump.sql.gz
+	docker compose exec postgres psql -U "$(DB_USERNAME)" -d "postgres" -c "DROP DATABASE IF EXISTS \"$(DB_DATABASE)\";"
+	docker compose exec postgres psql -U "$(DB_USERNAME)" -d "postgres" -c "CREATE DATABASE \"$(DB_DATABASE)\";"
+	docker compose exec postgres pg_restore --no-owner --no-privileges -U "$(DB_USERNAME)" -d "$(DB_DATABASE)" /var/lib/postgresql/temp/dump.sql
+	docker compose exec postgres rm /var/lib/postgresql/temp/dump.sql
