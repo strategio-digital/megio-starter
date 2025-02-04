@@ -12,7 +12,7 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "megio-panel": "^0.9.3"
+    "megio-panel": "^0.9.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
