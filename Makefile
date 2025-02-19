@@ -6,6 +6,7 @@ endif
 
 build:
 	docker compose up -d --build
+	docker compose exec app composer i
 	yarn && yarn build
 
 serve:
