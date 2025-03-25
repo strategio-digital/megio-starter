@@ -63,11 +63,12 @@ class DownloadRequest extends Request
 ```
 
 ## Routing
+
 ```php
 return static function (RoutingConfigurator $routes): void {
     $routes->add('download', '/api/invoice/download')
         ->methods(['POST'])
-        ->controller(\App\Http\Request\Invoice\DownloadRequest::class)
+        ->controller(\App\Admin\Http\Request\ExampleRequest::class)
         ->options(['auth' => false]);
     
     $routes->add('article', '/article/{page}')

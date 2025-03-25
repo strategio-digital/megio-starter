@@ -1,14 +1,14 @@
 services:
-    entityManager: App\Database\EntityManager
-    - Megio\Queue\QueueWorkerEnumFactory(App\Worker\QueueWorker)
-    - App\Console\UserCreateCommand
+    entityManager: App\EntityManager
+    - Megio\Queue\QueueWorkerEnumFactory(App\QueueWorker)
+    - App\User\Console\UserCreateCommand
 
 includes:
     - ./../vendor/strategio/megio-core/config/app.neon
     - ./../vendor/strategio/megio-core/config/events.neon
 
 events:
-    - App\Subscriber\Collection\OnUserCreated
+    - App\User\Subscriber\Collection\OnUserCreated
     #- Megio\Subscriber\RedirectToWww
 
 extensions:
