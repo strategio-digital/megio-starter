@@ -6,22 +6,23 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["./assets/**/*"]
 	},
-    "formatter": {
-        "enabled": true,
-        "indentStyle": "tab",
-        "indentWidth": 4
-    },
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 4
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-            "correctness": {
-                "noUnusedVariables": "off",
-                "noUnusedImports": "off"
-            }
-        }
+			"correctness": {
+				"noUnusedVariables": "off",
+				"noUnusedImports": "off"
+			}
+		}
 	},
 	"javascript": {
 		"formatter": {

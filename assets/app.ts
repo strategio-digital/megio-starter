@@ -1,10 +1,10 @@
 // Files
-import '@/assets/img/strategio.svg'
-import '@/assets/img/favicon.svg'
-import '@/assets/img/favicon.png'
+import '@/assets/img/strategio.svg';
+import '@/assets/img/favicon.svg';
+import '@/assets/img/favicon.png';
 
 // Styles
-import '@/assets/scss/tailwind.css'
+import '@/assets/scss/tailwind.css';
 
 // Vue-JS example
 // import { createApp } from 'vue'

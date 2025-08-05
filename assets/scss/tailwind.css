@@ -3,7 +3,11 @@
 @source "../../view";
 
 @theme {
-    --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
-    --font-serif: "Montserrat", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif;
+	--font-serif:
+		"Montserrat", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+		serif;
+	--font-mono:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
 }
