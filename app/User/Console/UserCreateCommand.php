@@ -20,20 +20,24 @@ class UserCreateCommand extends Command
     {
         parent::__construct();
     }
-    
+
     protected function configure(): void
     {
         $this->addArgument('email', InputArgument::REQUIRED, 'E-mail');
         $this->addArgument('password', InputArgument::REQUIRED, 'Password');
         $this->addOption('role', 'r', InputArgument::OPTIONAL, 'Create role with all permissions');
     }
-    
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         $passwd = $input->getArgument('password');
         $roleName = $input->getOption('role');
-        
+
+        assert(is_string($email));
+        assert(is_string($passwd));
+        assert(is_string($roleName) || is_null($roleName));
+
         $user = new User();
         
         if ($roleName) {
