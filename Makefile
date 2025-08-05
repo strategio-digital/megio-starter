@@ -20,6 +20,7 @@ sh:
 
 test:
 	docker compose exec app composer analyse
+	yarn lint
 
 db-restore:
 	docker compose exec postgres gunzip /var/lib/postgresql/temp/dump.sql.gz
