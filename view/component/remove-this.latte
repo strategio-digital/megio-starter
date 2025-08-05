@@ -1,20 +1,41 @@
 {varType string $title}
 {varType string $description}
 
-<div class="container">
-    <div>
-        <img src="{vite('assets/img/strategio.svg')}" alt="{$title}" class="logo" height="100" width="100">
-        <div class="text">
-            <h1>{$title}</h1>
-            <div style="line-height: 1.5rem">
-                <p>{$description}</p>
+<div
+    class="h-full min-h-screen text-center font-sans text-[rgb(19,24,129)] flex justify-center items-center p-4"
+    style="background: radial-gradient(circle, rgb(19,24,129) 30%, rgb(11,15,87) 70%)"
+>
+
+    <div class="font-serif">
+        <img src="{vite('assets/img/strategio.svg')}" alt="{$title}" class="h-[100px] mx-auto" height="100" width="100">
+
+        <div class="mt-8 text-[#aaa]">
+            <h1 class="text-3xl mb-4 text-white font-bold">{$title}</h1>
+
+            <div class="leading-6">
+                <p class="text-white text-base">{$description}</p>
             </div>
-            <div>
-                <a class="btn" href="{route(Megio\Helper\Router::ROUTE_APP, ['uri' => '/'])}">User login</a>
-                <a class="btn" href="{route(Megio\Helper\Router::ROUTE_APP, ['uri' => '/admin'])}">Admin login</a>
+
+            <div class="mt-4 flex flex-col md:flex-row justify-center gap-3">
+                <a
+                    href="{route(Megio\Helper\Router::ROUTE_APP, ['uri' => '/'])}"
+                    class="inline-block opacity-70 border-none py-2 px-8 bg-orange-400 rounded-full text-white text-sm font-bold lowercase transition-opacity duration-300 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                >
+                    User login
+                </a>
+                <a
+                    href="{route(Megio\Helper\Router::ROUTE_APP, ['uri' => '/admin'])}"
+                    class="inline-block opacity-70 border-none py-2 px-8 bg-orange-400 rounded-full text-white text-sm font-bold lowercase transition-opacity duration-300 hover:opacity-100 focus:opacity-100 active:opacity-100"
+                >
+                    Admin login
+                </a>
             </div>
-            <div style="display: flex; justify-content: center; margin-top: 1.0rem">
-                <a href="https://megio.dev" target="_blank" title="{$title} | Documentation">Read the docs</a>
+
+            <div class="flex justify-center mt-4">
+                <a
+                    href="https://megio.dev" target="_blank" title="{$title} | Documentation"
+                    class="text-orange-400 no-underline"
+                >Read the docs</a>
             </div>
         </div>
     </div>

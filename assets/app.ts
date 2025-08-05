@@ -4,7 +4,7 @@ import '@/assets/img/favicon.svg'
 import '@/assets/img/favicon.png'
 
 // Styles
-import '@/assets/scss/layout.scss'
+import '@/assets/scss/tailwind.css'
 
 // Vue-JS example
 // import { createApp } from 'vue'
