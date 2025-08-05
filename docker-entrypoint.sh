@@ -20,7 +20,6 @@ start_queue_worker() {
 echo "Enabled queue workers: $QUEUE_WORKERS_ENABLED"
 if [ "$QUEUE_WORKERS_ENABLED" = "true" ]; then
   echo "Starting queue workers..."
-  start_queue_worker "php bin/console app:queue zip.lead.attachment"
   #start_queue_worker "php bin/console app:queue example.worker"
   #start_queue_worker "php bin/console app:queue example.worker-two"
 fi
