@@ -1,0 +1,12 @@
+{varType string $description}
+
+{extends './../../@layout.latte'}
+
+{block head}
+    {include parent}
+    <meta name="description" content="{$description}">
+{/block}
+
+{block content}
+    <div id="vue-register-form"></div>
+{/block}

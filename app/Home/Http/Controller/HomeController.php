@@ -11,9 +11,6 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        return $this->render(Path::viewDir() . '/home/controller/home.latte', [
-            'title' => 'Megio Panel',
-            'description' => 'Most powerful tool for creating webs, apps & APIs.'
-        ]);
+        return $this->render(Path::viewDir() . '/home/controller/home.latte');
     }
 }

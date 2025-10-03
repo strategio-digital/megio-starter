@@ -17,6 +17,6 @@ $container = (new Bootstrap())
         : new SentryLogger())
     ->configure(Path::configDir() . '/app.neon', $startedAt);
 
-/** @var \Megio\Http\Kernel\App $app */
+/** @var App $app */
 $app = $container->getByType(App::class);
 $app->run();

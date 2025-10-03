@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Megio\Helper\Path;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;

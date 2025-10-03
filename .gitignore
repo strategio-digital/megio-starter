@@ -3,3 +3,5 @@
 /vendor/
 /node_modules/
 /www/temp
+.php-cs-fixer.cache
+.phpunit.result.cache

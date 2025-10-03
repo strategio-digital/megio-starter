@@ -4,6 +4,7 @@
 su-exec www-data php bin/console migration:migrate --no-interaction
 su-exec www-data php bin/console orm:generate-proxies
 su-exec www-data php bin/console app:auth:resources:update
+su-exec www-data php bin/console app:user:role:assign
 
 # rescuable queue worker
 start_queue_worker() {
@@ -20,8 +21,7 @@ start_queue_worker() {
 echo "Enabled queue workers: $QUEUE_WORKERS_ENABLED"
 if [ "$QUEUE_WORKERS_ENABLED" = "true" ]; then
   echo "Starting queue workers..."
-  #start_queue_worker "php bin/console app:queue example.worker"
-  #start_queue_worker "php bin/console app:queue example.worker-two"
+  start_queue_worker "php bin/console app:queue example.worker"
 fi
 
 # start php-fpm and nginx

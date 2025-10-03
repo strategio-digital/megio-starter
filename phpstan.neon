@@ -4,3 +4,4 @@ parameters:
         - app
         - bin
         - router
+        - tests

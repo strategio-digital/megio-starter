@@ -15,7 +15,7 @@ class OnUserCreated implements EventSubscriberInterface
             Events::ON_FINISH->value => ['handle'],
         ];
     }
-    
+
     public function handle(OnFinishEvent $event): void
     {
         /*if ($event->getEventType() === EventType::CREATE

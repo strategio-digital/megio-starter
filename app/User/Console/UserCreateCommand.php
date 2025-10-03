@@ -39,33 +39,33 @@ class UserCreateCommand extends Command
         assert(is_string($roleName) || is_null($roleName));
 
         $user = new User();
-        
+
         if ($roleName) {
             $role = $this->em->getAuthRoleRepo()->findOneBy(['name' => $roleName]);
-            
+
             if (!$role) {
                 $role = new Role();
                 $role->setName($roleName);
-                
+
                 $resources = $this->em->getRepository(Resource::class)->findAll();
                 foreach ($resources as $resource) {
                     $role->addResource($resource);
                 }
-                
+
                 $this->em->persist($role);
             }
-            
+
             $user->addRole($role);
         }
-        
+
         $user->setEmail($email);
         $user->setPassword($passwd);
-        
+
         $this->em->persist($user);
         $this->em->flush();
-        
+
         $output->writeln('<info>User successfully created.</info>');
-        
+
         return Command::SUCCESS;
     }
 }

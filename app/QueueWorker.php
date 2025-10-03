@@ -8,12 +8,12 @@ use Megio\Queue\IQueueWorkerEnum;
 
 enum QueueWorker: string implements IQueueWorkerEnum
 {
-    case EXAMPLE_WORKER = 'example.worker';
-    
+    case TIME_ENTRY_SYNC_WORKER = 'example.worker';
+
     public function className(): string
     {
         return match ($this) {
-            self::EXAMPLE_WORKER => ExampleWorker::class,
+            self::TIME_ENTRY_SYNC_WORKER => ExampleWorker::class,
         };
     }
 }

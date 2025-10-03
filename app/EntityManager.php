@@ -10,7 +10,7 @@ class EntityManager extends \Megio\Database\EntityManager
 {
     public function getUserRepo(): UserRepository
     {
-        $repo =  $this->getRepository(User::class);
+        $repo = $this->getRepository(User::class);
         assert($repo instanceof UserRepository);
         return $repo;
     }

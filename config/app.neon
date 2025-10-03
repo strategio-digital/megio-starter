@@ -1,7 +1,16 @@
 services:
     entityManager: App\EntityManager
     - Megio\Queue\QueueWorkerEnumFactory(App\QueueWorker)
+
+    validatorService:
+        factory: App\App\Serializer\ValidatorFactory::create
+    - App\App\Serializer\RequestSerializer(@validatorService)
+
+    - App\Dashboard\Facade\DashboardFacade
+
     - App\User\Console\UserCreateCommand
+    - App\User\Console\UserRoleAssignCommand
+    - App\User\Facade\UserFacade
 
 includes:
     - ./../vendor/strategio/megio-core/config/app.neon

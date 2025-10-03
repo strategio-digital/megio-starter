@@ -14,13 +14,24 @@ serve:
 	docker compose exec app bin/console migration:migrate --no-interaction
 	docker compose exec app bin/console orm:generate-proxies
 	docker compose exec app bin/console app:auth:resources:update
+	docker compose exec app bin/console app:user:role:assign
 
 sh:
 	docker compose exec -it app /bin/bash
 
+format:
+	docker compose exec app composer format
+	yarn format
+
+format-check:
+	docker compose exec app composer format:check
+	yarn lint
+
 test:
+	docker compose exec app rm -rf temp/*
 	docker compose exec app composer analyse
 	yarn lint
+	yarn typecheck
 
 db-restore:
 	docker compose exec postgres gunzip /var/lib/postgresql/temp/dump.sql.gz
