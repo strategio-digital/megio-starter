@@ -1,11 +1,20 @@
 {varType string $title}
+{varType string[] $_ENV}
+{varType string[] $_SERVER}
 <!doctype html>
 <html lang="cs" class="{block html}{/block}">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {block head}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="robots" content="index,follow">
+        <meta name="author" content="Jiří Zapletal">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{$_ENV['APP_URL'] . $_SERVER['REQUEST_URI']}">
+    {/block}
+    {block ogImage}
+        <meta property="og:image" content="{$_ENV['APP_URL'] . vite('assets/img/social.png')}">
     {/block}
     {block title}
         <title>{ifset $title}{$title} | {/ifset}WebAppName</title>
@@ -16,6 +25,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&amp;family=Montserrat:wght@400;700&amp;display=swap">
         <link rel="icon" type="image/svg+xml" href="{vite('assets/img/favicon.svg')}">
         <link rel="icon" type="image/png" href="{vite('assets/img/favicon.png')}">
+
         {vite('assets/app.ts', true)|noescape}
     {/block}
 </head>
