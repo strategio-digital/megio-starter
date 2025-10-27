@@ -1,7 +1,9 @@
 parameters:
-    level: 9
+    level: 10
     paths:
         - app
         - bin
         - router
         - tests
+    ignoreErrors:
+        - '#Trait App\\User\\Database\\Field\\TUserOwner is used zero times and is not analysed\.#'

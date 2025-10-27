@@ -23,7 +23,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
-        "strategio/megio-core": "^0.10.0",
+        "strategio/megio-core": "^0.11.0",
         "symfony/serializer": "^7.3",
         "symfony/validator": "^7.3",
         "symfony/property-access": "^7.3"
