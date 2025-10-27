@@ -35,7 +35,6 @@ class ErrorFormatValidationTest extends TestCase
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
 
-            $this->assertIsArray($errors);
             $this->assertArrayHasKey('name', $errors);
             $this->assertArrayHasKey('email', $errors);
             $this->assertArrayHasKey('age', $errors);
@@ -86,7 +85,6 @@ class ErrorFormatValidationTest extends TestCase
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
 
-            $this->assertIsArray($errors);
             $this->assertArrayHasKey('metadata', $errors);
             $this->assertArrayHasKey('items', $errors);
             $this->assertIsArray($errors['metadata']);
@@ -139,7 +137,6 @@ class ErrorFormatValidationTest extends TestCase
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
 
-            $this->assertIsArray($errors);
             $this->assertArrayHasKey('metadata', $errors);
             $this->assertIsArray($errors['metadata']);
             $this->assertArrayNotHasKey('name', $errors);
@@ -197,7 +194,6 @@ class ErrorFormatValidationTest extends TestCase
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
 
-            $this->assertIsArray($errors);
             $this->assertArrayHasKey('items', $errors);
             $this->assertIsArray($errors['items']);
             $this->assertArrayHasKey(1, $errors['items']);
@@ -249,7 +245,6 @@ class ErrorFormatValidationTest extends TestCase
         $this->assertInstanceOf(TestComplexNestedDto::class, $result);
         $this->assertSame('Valid Name', $result->name);
         $this->assertInstanceOf(TestMetadataDto::class, $result->metadata);
-        $this->assertIsArray($result->items);
         $this->assertCount(2, $result->items);
     }
 }
