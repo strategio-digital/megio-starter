@@ -41,17 +41,24 @@ readonly class RecursiveValidator implements ValidatorInterface
         // Get constraints and validate each property
         $constraints = $this->reflectionHelper->getValidationConstraints($dtoClass);
         foreach ($constraints as $propertyName => $propertyConstraints) {
+            // If property is missing, get default value from DTO constructor
             if (array_key_exists($propertyName, $data) === false) {
-                continue;
+                $defaultValue = $this->reflectionHelper->getDefaultValue($dtoClass, $propertyName);
+                $propertyValue = $defaultValue;
+            } else {
+                $propertyValue = $data[$propertyName];
             }
-
-            $propertyValue = $data[$propertyName];
             $dtoType = $this->reflectionHelper->getDtoTypeForProperty($dtoClass, $propertyName);
             $isArrayOfDtos = $this->reflectionHelper->isArrayOfDtos($dtoClass, $propertyName);
 
             // Handle nested DTOs
             if ($dtoType !== null && is_array($propertyValue) === true) {
-                $nestedErrors = $this->validateRecursively($dtoType, $propertyValue, $this->buildFullPath($path, $propertyName));
+                // Convert to string-keyed array
+                $stringKeyedValue = [];
+                foreach ($propertyValue as $key => $val) {
+                    $stringKeyedValue[(string)$key] = $val;
+                }
+                $nestedErrors = $this->validateRecursively($dtoType, $stringKeyedValue, $this->buildFullPath($path, $propertyName));
                 $errors = $this->mergeErrors($errors, $nestedErrors);
                 continue; // Skip Symfony validation for nested DTOs
             }
@@ -60,7 +67,9 @@ readonly class RecursiveValidator implements ValidatorInterface
             if ($isArrayOfDtos === true && is_array($propertyValue) === true) {
                 $arrayElementType = $this->getArrayElementType($dtoClass, $propertyName);
                 if ($arrayElementType !== null) {
-                    $arrayErrors = $this->validateArrayOfDtos($arrayElementType, $propertyValue, $this->buildFullPath($path, $propertyName));
+                    // Re-index array to ensure int keys
+                    $intKeyedArray = array_values($propertyValue);
+                    $arrayErrors = $this->validateArrayOfDtos($arrayElementType, $intKeyedArray, $this->buildFullPath($path, $propertyName));
                     $errors = $this->mergeErrors($errors, $arrayErrors);
                 }
                 continue; // Skip Symfony validation for array DTOs
@@ -101,7 +110,12 @@ readonly class RecursiveValidator implements ValidatorInterface
                 continue;
             }
 
-            $itemErrors = $this->validateRecursively($dtoClass, $itemData, $this->buildFullPath($path, (string)$index));
+            // Convert to string-keyed array
+            $stringKeyedItemData = [];
+            foreach ($itemData as $key => $val) {
+                $stringKeyedItemData[(string)$key] = $val;
+            }
+            $itemErrors = $this->validateRecursively($dtoClass, $stringKeyedItemData, $this->buildFullPath($path, (string)$index));
             $errors = $this->mergeErrors($errors, $itemErrors);
         }
 

@@ -4,12 +4,15 @@ declare(strict_types=1);
 namespace App\App\Serializer;
 
 use App\App\Serializer\Dto\ResponseDtoInterface;
+use App\App\Serializer\Normalizer\PlainEnumNormalizer;
 use App\App\Serializer\Validator\ValidatorInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -21,10 +24,14 @@ readonly class RequestSerializer
     public function __construct(
         private ValidatorInterface $validator,
     ) {
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
+
         $this->serializer = new Serializer(
             normalizers: [
                 new DateTimeNormalizer(),
-                new ObjectNormalizer(),
+                new BackedEnumNormalizer(),
+                new PlainEnumNormalizer(),
+                new ObjectNormalizer(classMetadataFactory: $classMetadataFactory),
                 new ArrayDenormalizer(),
             ],
             encoders: [new JsonEncoder()],
@@ -56,20 +63,14 @@ readonly class RequestSerializer
             type: $dtoClass,
             format: JsonEncoder::FORMAT,
         );
+
         assert($dto instanceof $dtoClass);
         return $dto;
     }
 
     public function serialize(ResponseDtoInterface $dto): JsonResponse
     {
-        try {
-            $json = $this->serializer->serialize($dto, 'json');
-            return new JsonResponse($json, Response::HTTP_OK, [], true);
-        } catch (Exception $e) {
-            return new JsonResponse(
-                ['error' => 'Chyba při serializaci dat: ' . $e->getMessage()],
-                Response::HTTP_INTERNAL_SERVER_ERROR,
-            );
-        }
+        $json = $this->serializer->serialize($dto, 'json');
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 }

@@ -41,7 +41,10 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->keepDefaults()
-            ->addSearchable(new Searchable(column: 'email', operator: 'LIKE', formatter: fn($value) => "%{$value}%"))
+            ->addSearchable(new Searchable(column: 'email', operator: 'LIKE', formatter: function (mixed $value): string {
+                assert(is_string($value));
+                return '%' . $value . '%';
+            }))
             ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
     }
 
@@ -49,8 +52,11 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
-            ->add(new EmailColumn(key: 'email', name: 'E-mail', formatters: [
-                new CallableFormatter(fn($value) => 'mailto:' . $value),
+            ->add(new EmailColumn(key: 'email', name: 'Email', formatters: [
+                new CallableFormatter(function (mixed $value): string {
+                    assert(is_string($value));
+                    return 'mailto:' . $value;
+                }),
             ]));
     }
 
@@ -58,32 +64,32 @@ class UserRecipe extends CollectionRecipe
     {
         return $builder
             ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
-            ->add(col: new EmailColumn(key: 'email', name: 'E-mail', sortable: true), moveBeforeKey: 'lastLogin')
-            ->add(col: new ToManyColumn(key: 'roles', name: 'Role'));
+            ->add(col: new EmailColumn(key: 'email', name: 'Email', sortable: true), moveBeforeKey: 'lastLogin')
+            ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'));
     }
 
     public function create(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
     {
         return $builder
-            ->add(new EmailField(name: 'email', label: 'E-mail', rules: [
+            ->add(new EmailField(name: 'email', label: 'Email', rules: [
                 new RequiredRule(),
-                new UniqueRule(targetEntity: User::class, columnName: 'email', message: 'Tento e-mail je již použit.'),
+                new UniqueRule(targetEntity: User::class, columnName: 'email', message: 'This email is already in use.'),
             ]))
-            ->add(new PasswordField(name: 'password', label: 'Heslo', rules: [
+            ->add(new PasswordField(name: 'password', label: 'Password', rules: [
                 new RequiredRule(),
                 new MinRule(6),
                 new MaxRule(32),
             ]))
-            ->add(new PasswordField(name: 'password_check', label: 'Heslo znovu', rules: [
+            ->add(new PasswordField(name: 'password_check', label: 'Password again', rules: [
                 new RequiredRule(),
                 new EqualRule('password'),
             ], mapToEntity: false))
-            ->add(new ToManySelectField(name: 'roles', label: 'Role', reverseEntity: Role::class));
+            ->add(new ToManySelectField(name: 'roles', label: 'Roles', reverseEntity: Role::class));
     }
 
     public function update(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
     {
-        $pwf = new PasswordField(name: 'password', label: 'Heslo');
+        $pwf = new PasswordField(name: 'password', label: 'Password');
 
         // Do not show password on form rendering
         if ($request->isFormRendering()) {
@@ -92,11 +98,11 @@ class UserRecipe extends CollectionRecipe
 
         return $builder
             ->add(new TextField(name: 'id', label: 'ID', attrs: ['fullWidth' => true], disabled: true))
-            ->add(new EmailField(name: 'email', label: 'E-mail'))
+            ->add(new EmailField(name: 'email', label: 'Email'))
             ->add($pwf)
             ->add(new ToManySelectField(
                 name: 'roles',
-                label: 'Role',
+                label: 'Roles',
                 reverseEntity: Role::class,
                 attrs: ['fullWidth' => true],
             ));

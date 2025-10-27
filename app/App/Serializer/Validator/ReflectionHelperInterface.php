@@ -31,4 +31,9 @@ interface ReflectionHelperInterface
      * @return class-string|null
      */
     public function getArrayElementType(ReflectionProperty $property): ?string;
+
+    /**
+     * @param class-string $dtoClass
+     */
+    public function getDefaultValue(string $dtoClass, string $propertyName): mixed;
 }

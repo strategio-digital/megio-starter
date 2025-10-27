@@ -116,6 +116,27 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         return null;
     }
 
+    public function getDefaultValue(string $dtoClass, string $propertyName): mixed
+    {
+        $reflection = new ReflectionClass($dtoClass);
+        $constructor = $reflection->getConstructor();
+
+        if ($constructor === null) {
+            return null;
+        }
+
+        foreach ($constructor->getParameters() as $parameter) {
+            if ($parameter->getName() === $propertyName) {
+                if ($parameter->isDefaultValueAvailable() === true) {
+                    return $parameter->getDefaultValue();
+                }
+                return null;
+            }
+        }
+
+        return null;
+    }
+
     private function isBuiltInType(string $typeName): bool
     {
         $builtInTypes = [

@@ -16,13 +16,14 @@ use Megio\Database\Field\TPassword;
 use Megio\Database\Field\TUpdatedAt;
 use Megio\Database\Interface\IAuthenticable;
 use Megio\Database\Interface\ICrudable;
+use Megio\Database\Interface\IJoinable;
 use Megio\Database\Method\TResourceMethods;
 use Megio\Database\Method\TRoleMethods;
 
 #[ORM\Table(name: '`user`')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class User implements ICrudable, IAuthenticable
+class User implements ICrudable, IAuthenticable, IJoinable
 {
     use TId;
     use TCreatedAt;
@@ -43,5 +44,13 @@ class User implements ICrudable, IAuthenticable
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+    }
+
+    public function getJoinableLabel(): array
+    {
+        return [
+            'fields' => ['email'],
+            'format' => '%s',
+        ];
     }
 }

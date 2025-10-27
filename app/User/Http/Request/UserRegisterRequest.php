@@ -37,7 +37,7 @@ class UserRegisterRequest extends Request
         } catch (EntityException $e) {
             return $this->error(['general' => $e->getMessage()]);
         } catch (UniqueConstraintViolationException) {
-            return $this->error(['email' => 'Uživatel s tímto e-mailem již existuje.']);
+            return $this->error(['email' => 'User with this email already exists.']);
         }
 
         return $this->json();

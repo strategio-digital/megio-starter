@@ -12,16 +12,16 @@ class UserController extends Controller
     public function login(): Response
     {
         return $this->render(Path::viewDir() . '/user/controller/login.latte', [
-            'title' => 'Přihlášení',
-            'description' => 'Přihlaste se do svého účtu',
+            'title' => 'Login',
+            'description' => 'Sign in to your account',
         ]);
     }
 
     public function register(): Response
     {
         return $this->render(Path::viewDir() . '/user/controller/register.latte', [
-            'title' => 'Registrace',
-            'description' => 'Vytvořte si nový účet',
+            'title' => 'Registration',
+            'description' => 'Create a new account',
         ]);
     }
 }
