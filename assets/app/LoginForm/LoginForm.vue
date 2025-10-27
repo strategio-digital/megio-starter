@@ -40,12 +40,12 @@ const handleSubmit = async () => {
 
 	if (response.status === 200) {
 		window.toast.asleep();
-		window.toast.add('success', 'Přihlášení proběhlo úspěšně.');
+		window.toast.add('success', 'Login successful.');
 		window.location.replace('/dashboard');
 		return;
 	}
 
-	errors.general = 'Přihlášení se nezdařilo';
+	errors.general = 'Password or e-mail is incorrect.';
 	isLoading.value = false;
 };
 </script>
@@ -59,10 +59,10 @@ const handleSubmit = async () => {
       <div class="max-w-md w-full space-y-8">
         <div class="text-center">
           <h2 class="text-3xl font-extrabold text-gray-900">
-            Přihlášení
+            Login
           </h2>
           <p class="mt-2 text-sm text-gray-600">
-            Zadejte své přihlašovací údaje
+            Enter your login credentials
           </p>
         </div>
 
@@ -73,7 +73,7 @@ const handleSubmit = async () => {
               name="email"
               type="email"
               label="Email"
-              placeholder="vas@email.cz"
+              placeholder="your@email.com"
               :error="errors.email"
               required
               :disabled="isLoading"
@@ -84,8 +84,8 @@ const handleSubmit = async () => {
               v-model="form.password"
               name="password"
               type="password"
-              label="Heslo"
-              placeholder="Zadejte heslo"
+              label="Password"
+              placeholder="Enter password"
               :error="errors.password"
               required
               :disabled="isLoading"
@@ -114,25 +114,25 @@ const handleSubmit = async () => {
             :disabled="isLoading"
             class="w-full"
         >
-          <span v-if="!isLoading">Přihlásit se</span>
+          <span v-if="!isLoading">Sign in</span>
           <span v-else class="flex items-center">
             <Spinner size="sm" color="white" class="mr-2"/>
-            Přihlašování...
+            Signing in...
           </span>
         </Button>
 
         <div class="text-center mt-4">
           <p class="text-sm text-gray-600">
-            Nemáte účet?
+            Don't have an account?
             <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">
-              Registrujte se
+              Sign up
             </a>
           </p>
         </div>
 
         <div class="text-center my-6">
           <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-            ← Zpět na úvod
+            ← Back to home
           </a>
         </div>
       </form>

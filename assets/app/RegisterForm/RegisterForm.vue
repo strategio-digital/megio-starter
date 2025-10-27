@@ -32,7 +32,7 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.fetch('api/user/register', {
+	const response = await megio.fetch('api/v1/user/register', {
 		method: 'POST',
 		body: JSON.stringify(form),
 	});
@@ -40,7 +40,7 @@ const handleSubmit = async () => {
 	if (response.status === 200) {
 		await megio.auth.loginByEmail(form.email, form.password, 'user');
 		window.toast.asleep();
-		window.toast.add('success', 'Registrace proběhla úspěšně.');
+		window.toast.add('success', 'Registration successful.');
 		window.location.replace('/dashboard');
 		return;
 	}
@@ -63,10 +63,10 @@ const handleSubmit = async () => {
       <div class="max-w-md w-full space-y-8">
         <div class="text-center">
           <h2 class="text-3xl font-extrabold text-gray-900">
-            Registrace
+            Registration
           </h2>
           <p class="mt-2 text-sm text-gray-600">
-            Zadejte své údaje pro vytvoření účtu
+            Enter your details to create an account
           </p>
         </div>
 
@@ -77,7 +77,7 @@ const handleSubmit = async () => {
               name="email"
               type="email"
               label="Email"
-              placeholder="vas@email.cz"
+              placeholder="your@email.com"
               :error="errors.email"
               required
               :disabled="isLoading"
@@ -88,8 +88,8 @@ const handleSubmit = async () => {
               v-model="form.password"
               name="password"
               type="password"
-              label="Heslo"
-              placeholder="Zadejte heslo"
+              label="Password"
+              placeholder="Enter password"
               :error="errors.password"
               required
               :disabled="isLoading"
@@ -118,25 +118,25 @@ const handleSubmit = async () => {
             :disabled="isLoading"
             class="w-full"
         >
-          <span v-if="!isLoading">Registrovat se</span>
+          <span v-if="!isLoading">Sign up</span>
           <span v-else class="flex items-center">
             <Spinner size="sm" color="white" class="mr-2"/>
-            Registrace...
+            Registering...
           </span>
         </Button>
 
         <div class="text-center mt-4">
           <p class="text-sm text-gray-600">
-            Už máte účet?
+            Already have an account?
             <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">
-              Přihlaste se
+              Sign in
             </a>
           </p>
         </div>
 
         <div class="text-center my-6">
           <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-            ← Zpět na úvod
+            ← Back to home
           </a>
         </div>
       </form>

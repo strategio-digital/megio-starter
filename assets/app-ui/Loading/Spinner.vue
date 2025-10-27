@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type Props = {
 	size?: 'sm' | 'md' | 'lg';
-	color?: 'primary' | 'secondary' | 'white';
+	color?: 'primary' | 'secondary' | 'white' | 'success';
 };
 
 const { size = 'md', color = 'primary' } = defineProps<Props>();
@@ -19,7 +19,8 @@ const { size = 'md', color = 'primary' } = defineProps<Props>();
       {
         'border-blue-600 border-t-transparent': color === 'primary',
         'border-gray-400 border-t-transparent': color === 'secondary',
-        'border-white border-t-transparent': color === 'white'
+        'border-white border-t-transparent': color === 'white',
+        'border-green-600 border-t-transparent': color === 'success'
       }
     ]"
   />

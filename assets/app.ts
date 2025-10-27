@@ -2,6 +2,7 @@
 import '@/assets/img/strategio.svg';
 import '@/assets/img/favicon.svg';
 import '@/assets/img/favicon.png';
+import '@/assets/img/social.png';
 
 // Styles
 import '@/assets/scss/tailwind.css';
@@ -41,26 +42,6 @@ window.toast = {
 	asleep,
 	awake,
 };
-
-const publicRoutes = [
-	'/',
-	'/login',
-	'/register',
-	'/forgot-password',
-	'/reset-password',
-];
-
-if (
-	publicRoutes.includes(window.location.pathname) &&
-	megio.auth.user.hasRole('user')
-) {
-	window.location.href = '/dashboard';
-} else if (
-	!megio.auth.user.hasRole('user') &&
-	!publicRoutes.includes(window.location.pathname)
-) {
-	window.location.href = '/login';
-}
 
 const loginEl = document.getElementById('vue-login-form');
 if (loginEl) {

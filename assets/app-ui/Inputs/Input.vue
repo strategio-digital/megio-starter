@@ -15,6 +15,8 @@ type Props = {
 	isNullable?: boolean;
 	statusMessage?: string;
 	statusVariant?: 'success' | 'info';
+	size?: 'sm' | 'md' | 'lg' | 'xl';
+	withSpinner?: boolean;
 };
 
 const props = defineProps<Props>();
@@ -53,6 +55,8 @@ const resolveValue = (value: Props['modelValue']) => {
 const handleInput = (event: Event) => {
 	const target = event.target as HTMLInputElement;
 	inputValue.value = target.value;
+	const resolvedValue = resolveValue(inputValue.value);
+	emit('update:modelValue', resolvedValue);
 };
 
 const handleChange = () => {
@@ -92,7 +96,9 @@ onMounted(() => {
             :placeholder="placeholder"
             :disabled="disabled"
             :class="[
-                'w-full px-3 py-2 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                'w-full border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/90 backdrop-blur-sm',
+                size === 'xl' ? 'px-6 py-4 text-lg' : size === 'lg' ? 'px-4 py-3 text-base' : size === 'sm' ? 'px-2 py-1 text-sm' : 'px-3 py-2',
+                withSpinner && (size === 'xl' || size === 'lg') ? 'pr-12' : '',
                 error
                   ? 'border-red-300 focus:ring-red-500'
                   : 'border-gray-300 hover:border-gray-400',

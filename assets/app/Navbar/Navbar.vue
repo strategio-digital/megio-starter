@@ -14,7 +14,7 @@ const { showBackButton = false, backUrl = '/dashboard' } = defineProps<Props>();
 const handleLogout = async () => {
 	megio.auth.logout();
 	window.toast.asleep();
-	window.toast.add('info', 'Byli jste odhlášeni.');
+	window.toast.add('info', 'You have been logged out.');
 	window.location.replace('/login');
 };
 
@@ -36,7 +36,7 @@ const handleBack = () => {
             size="sm"
             @click="handleBack"
         >
-          ← Zpět
+          ← Back
         </Button>
         <Button
             v-else
@@ -44,7 +44,7 @@ const handleBack = () => {
             size="sm"
             @click="handleLogout"
         >
-          Odhlásit se
+          Log out
         </Button>
       </div>
     </div>
