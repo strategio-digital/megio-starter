@@ -13,7 +13,7 @@ app/DomainName/
 ├── Dto/           # Data Transfer Objects with validation
 ├── Facade/        # Business logic layer
 ├── Http/          # Controllers, Requests & API Clients
-├── Recipe/        # CRUD configurations
+├── Recipe/        # CRUD & admin-panel configurations
 ├── Subscriber/    # Event subscribers
 └── Worker/        # Background jobs
 ```
@@ -128,6 +128,18 @@ When adding new functionality (e.g., user registration), follow this complete ch
 - Never return array from repository, use ArrayCollection when returning entities
 - Always use `use` statements, never long namespaces in code
 
+#### Recipes
+
+- Create Recipe in `app/Domain/Recipe/` extending `CollectionRecipe`
+- Implement `source()` method returning entity class
+- Implement `key()` method returning string identifier (e.g., 'license', 'user')
+- Use `search()` method to define searchable columns and filters
+- Use `read()` method for single record view configuration
+- Use `readAll()` method for list view configuration
+- Use `create()` method for create form configuration
+- Use `update()` method for update form configuration
+- Leverage ReadBuilder, WriteBuilder, and SearchBuilder for defining UI behavior
+
 #### Dependency Injection
 
 - Register new services in `config/app.neon` under services section
@@ -170,3 +182,122 @@ if (el) {
     createApp(component.default, {someId}).mount(el);
 }
 ```
+
+## Custom flows
+
+### Creating module Entity, Repository & Recipe
+
+When creating a new module (e.g., License), follow these steps:
+
+#### 1. Create Entity (`app/ModuleName/Database/Entity/EntityName.php`)
+
+```php
+<?php
+declare(strict_types=1);
+
+namespace App\ModuleName\Database\Entity;
+
+use App\ModuleName\Database\Repository\EntityNameRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Megio\Database\Field\TCreatedAt;
+use Megio\Database\Field\TId;
+use Megio\Database\Field\TUpdatedAt;
+use Megio\Database\Interface\ICrudable;
+
+#[ORM\Table(name: '`table_name`')]
+#[ORM\Entity(repositoryClass: EntityNameRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class EntityName implements ICrudable
+{
+    use TId;
+    use TCreatedAt;
+    use TUpdatedAt;
+
+    // Add your properties with ORM attributes
+    // Add getters and setters
+}
+```
+
+**Key points:**
+- Use traits: `TId`, `TCreatedAt`, `TUpdatedAt`, `TResourceMethods`
+- Implement `ICrudable` interface
+- Add ORM attributes for table and entity
+- Use Doctrine attributes for relationships to other entities
+- Add properties with proper ORM column attributes
+- ID is always string (UUIDv6), never int
+
+#### 2. Create Repository (`app/ModuleName/Database/Repository/EntityNameRepository.php`)
+
+```php
+<?php
+declare(strict_types=1);
+
+namespace App\ModuleName\Database\Repository;
+
+use Doctrine\ORM\EntityRepository;
+
+/**
+ * @method \App\ModuleName\Database\Entity\EntityName|NULL find($id, ?int $lockMode = NULL, ?int $lockVersion = NULL)
+ * @method \App\ModuleName\Database\Entity\EntityName|NULL findOneBy(array $criteria, array $orderBy = NULL)
+ * @method \App\ModuleName\Database\Entity\EntityName[] findAll()
+ * @method \App\ModuleName\Database\Entity\EntityName[] findBy(array $criteria, array $orderBy = NULL, ?int $limit = NULL, ?int $offset = NULL)
+ *
+ * @extends EntityRepository<EntityNameRepository>
+ */
+class EntityNameRepository extends EntityRepository {}
+```
+
+**Key points:**
+- Extend `EntityRepository`
+- Add PHPDoc with type hints for standard methods
+- Never return array from repository, use ArrayCollection when returning entities
+
+#### 3. Create Recipe (`app/ModuleName/Recipe/EntityNameRecipe.php`)
+
+```php
+<?php
+declare(strict_types=1);
+
+namespace App\ModuleName\Recipe;
+
+use App\ModuleName\Database\Entity\EntityName;
+use Megio\Collection\CollectionRecipe;
+
+class EntityNameRecipe extends CollectionRecipe
+{
+    public function source(): string
+    {
+        return EntityName::class;
+    }
+
+    public function key(): string
+    {
+        return 'entity-key';
+    }
+}
+```
+
+**Key points:**
+- Extend `CollectionRecipe`
+- Implement `source()` returning entity class
+- Implement `key()` returning string identifier (e.g., 'license', 'user')
+- Can add methods like `search()`, `read()`, `readAll()`, `create()`, `update()` as needed
+
+#### 4. Register in EntityManager (`app/EntityManager.php`)
+
+```php
+use App\ModuleName\Database\Entity\EntityName;
+use App\ModuleName\Database\Repository\EntityNameRepository;
+
+public function getEntityNameRepo(): EntityNameRepository
+{
+    $repo = $this->getRepository(EntityName::class);
+    assert($repo instanceof EntityNameRepository);
+    return $repo;
+}
+```
+
+**Key points:**
+- Add use statements for entity and repository
+- Create getter method following naming pattern `get{EntityName}Repo()`
+- Use assertion for type safety
