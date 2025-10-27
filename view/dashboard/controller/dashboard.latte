@@ -1,13 +1,4 @@
-{varType string $title}
-{varType string $description}
-
-{extends './../../@layout.latte'}
-
-{block head}
-    {include parent}
-    <title>{$title}</title>
-    <meta name="description" content="{$description}">
-{/block}
+{extends ./../../@layout.latte}
 
 {block content}
     <div id="vue-dashboard"></div>

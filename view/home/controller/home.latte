@@ -2,9 +2,9 @@
 
 {block head}
     {include parent}
-    <meta name="description" content="[Váš SEO popis]">
-    <meta name="og:title" content="[Název vaší stránky]">
-    <meta name="og:description" content="[Popis vaší stránky]">
+    <meta name="description" content="[Your SEO description]">
+    <meta name="og:title" content="[Your page title]">
+    <meta name="og:description" content="[Your page description]">
 {/block}
 
 {block content}
@@ -18,25 +18,25 @@
                         <img
                             class="w-6 h-6"
                             src="{vite('assets/img/favicon.svg')}"
-                            alt="[Název vaší aplikace]"
+                            alt="[Your application name]"
                         >
                     </div>
-                    <h2 class="text-xl font-bold text-gray-900">[Název vaší aplikace]</h2>
+                    <h2 class="text-xl font-bold text-gray-900">[Your application name]</h2>
                 </div>
             </div>
             
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#problem" class="text-gray-600 hover:text-gray-900 transition-colors">[Sekce 1]</a>
-                <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">[Sekce 2]</a>
-                <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">[Sekce 3]</a>
+                <a href="#problem" class="text-gray-600 hover:text-gray-900 transition-colors">[Section 1]</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition-colors">[Section 2]</a>
+                <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">[Section 3]</a>
             </div>
             
             <div class="items-center space-x-4 hidden md:flex">
                 <a href="{route('login')}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                    Přihlásit se
+                    Sign in
                 </a>
                 <a href="{route('register')}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    Registrace
+                    Sign up
                 </a>
             </div>
             
@@ -53,14 +53,14 @@
         <!-- Mobile menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200">
-                <a href="#problem" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Sekce 1]</a>
-                <a href="#how-it-works" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Sekce 2]</a>
-                <a href="#features" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Sekce 3]</a>
+                <a href="#problem" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 1]</a>
+                <a href="#how-it-works" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 2]</a>
+                <a href="#features" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 3]</a>
                 <a href="{route('login')}" class="block px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors">
-                    Přihlásit se
+                    Sign in
                 </a>
                 <a href="{route('register')}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    Registrace
+                    Sign up
                 </a>
             </div>
 
@@ -75,14 +75,14 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center ">
                 <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-900 mb-8 leading-tight">
-                    [Váš hlavní nadpis] <br class="hidden sm:block">
+                    [Your main headline] <br class="hidden sm:block">
                     <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        [Zvýrazněný text]
+                        [Highlighted text]
                     </span>
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto">
-                    [Váš přesvědčivý popis, který vysvětluje, co váš produkt dělá a pro koho je určen.
-                    Mělo by to být jasné a zaměřené na výhody.]
+                    [Your compelling description that explains what your product does and who it's for.
+                    It should be clear and benefit-focused.]
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                     <a
@@ -90,13 +90,13 @@
                         class="block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
                         style="line-height: 1.73rem;"
                     >
-                        Registrace
+                        Sign up
                     </a>
                     <a
                         href="#problem"
                         class="block border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
                     >
-                        [Zjistit více]
+                        [Learn more]
                     </a>
                 </div>
             </div>
@@ -110,17 +110,17 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    [Název problému]
+                    [Problem name]
                 </h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                    [Popište hlavní problém, který váš produkt řeší. Vysvětlete, proč současná řešení nejsou dostatečná
-                    a jaké výzvy uživatelé čelí bez vašeho produktu.]
+                    [Describe the main problem your product solves. Explain why current solutions are not sufficient
+                    and what challenges users face without your product.]
                 </p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">[Výzvy bez produktu]:</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">[Challenges without the product]:</h3>
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <div class="bg-red-100 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-1">
@@ -129,8 +129,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název problému 1]</strong>
-                                <p class="text-gray-600">[Popis prvního hlavního problému, kterému uživatelé čelí]</p>
+                                <strong class="text-gray-900">[Problem name 1]</strong>
+                                <p class="text-gray-600">[Description of the first major problem users face]</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -140,8 +140,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název problému 2]</strong>
-                                <p class="text-gray-600">[Popis druhého hlavního problému, kterému uživatelé čelí]</p>
+                                <strong class="text-gray-900">[Problem name 2]</strong>
+                                <p class="text-gray-600">[Description of the second major problem users face]</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -151,14 +151,14 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název problému 3]</strong>
-                                <p class="text-gray-600">[Popis třetího hlavního problému, kterému uživatelé čelí]</p>
+                                <strong class="text-gray-900">[Problem name 3]</strong>
+                                <p class="text-gray-600">[Description of the third major problem users face]</p>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="bg-gray-50 p-8 rounded-lg">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">[Název produktu] řešení:</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">[Product name] solution:</h3>
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <div class="bg-green-100 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-1">
@@ -167,8 +167,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název řešení 1]</strong>
-                                <p class="text-gray-600">[Jak váš produkt řeší první problém]</p>
+                                <strong class="text-gray-900">[Solution name 1]</strong>
+                                <p class="text-gray-600">[How your product solves the first problem]</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -178,8 +178,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název řešení 2]</strong>
-                                <p class="text-gray-600">[Jak váš produkt řeší druhý problém]</p>
+                                <strong class="text-gray-900">[Solution name 2]</strong>
+                                <p class="text-gray-600">[How your product solves the second problem]</p>
                             </div>
                         </li>
                         <li class="flex items-start">
@@ -189,8 +189,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <strong class="text-gray-900">[Název řešení 3]</strong>
-                                <p class="text-gray-600">[Jak váš produkt řeší třetí problém]</p>
+                                <strong class="text-gray-900">[Solution name 3]</strong>
+                                <p class="text-gray-600">[How your product solves the third problem]</p>
                             </div>
                         </li>
                     </ul>
@@ -206,10 +206,10 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    [Jak to funguje]
+                    [How it works]
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    [Stručný popis, jak váš produkt funguje - jednoduše a srozumitelně]
+                    [Brief description of how your product works - simple and clear]
                 </p>
             </div>
             
@@ -219,9 +219,9 @@
                     <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                         1
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Název kroku 1]</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Step 1 name]</h3>
                     <p class="text-gray-600">
-                        [Popis prvního kroku, který uživatelé potřebují udělat]
+                        [Description of the first step users need to take]
                     </p>
                 </div>
 
@@ -230,9 +230,9 @@
                     <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                         2
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Název kroku 2]</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Step 2 name]</h3>
                     <p class="text-gray-600">
-                        [Popis druhého kroku, který uživatelé potřebují udělat]
+                        [Description of the second step users need to take]
                     </p>
                 </div>
 
@@ -241,16 +241,16 @@
                     <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                         3
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Název kroku 3]</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">[Step 3 name]</h3>
                     <p class="text-gray-600">
-                        [Popis třetího kroku, který uživatelé potřebují udělat]
+                        [Description of the third step users need to take]
                     </p>
                 </div>
             </div>
             
             <!-- Data Flow Diagram -->
             <div class="bg-white px-8 py-16 rounded-lg shadow-sm hidden sm:block mt-16">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">[Název procesu]</h3>
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">[Process name]</h3>
                 <div class="flex items-center justify-center space-x-8">
                     <div class="text-center">
                         <div class="bg-blue-100 p-4 rounded-lg mb-2">
@@ -258,8 +258,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H9m0 0H5m14 0v2a1 1 0 01-1 1h-9.5a1 1 0 01-1-1v-2m2-4h4"></path>
                             </svg>
                         </div>
-                        <p class="font-semibold text-gray-900">[Název zdroje]</p>
-                        <p class="text-sm text-gray-600">[Detail zdroje]</p>
+                        <p class="font-semibold text-gray-900">[Source name]</p>
+                        <p class="text-sm text-gray-600">[Source detail]</p>
                     </div>
 
                     <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,8 +272,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
                         </div>
-                        <p class="font-semibold text-gray-900">[Název vašeho produktu]</p>
-                        <p class="text-sm text-gray-600">[Role produktu]</p>
+                        <p class="font-semibold text-gray-900">[Your product name]</p>
+                        <p class="text-sm text-gray-600">[Product role]</p>
                     </div>
 
                     <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -286,8 +286,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H9m0 0H5m14 0v2a1 1 0 01-1 1h-9.5a1 1 0 01-1-1v-2m2-4h4"></path>
                             </svg>
                         </div>
-                        <p class="font-semibold text-gray-900">[Název cíle]</p>
-                        <p class="text-sm text-gray-600">[Detail cíle]</p>
+                        <p class="font-semibold text-gray-900">[Goal name]</p>
+                        <p class="text-sm text-gray-600">[Goal detail]</p>
                     </div>
                 </div>
             </div>
@@ -301,10 +301,10 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    [Klíčové funkce]
+                    [Key features]
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    [Stručný popis možností vašeho produktu]
+                    [Brief description of your product's capabilities]
                 </p>
             </div>
             
@@ -316,9 +316,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 1]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 1]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis první klíčové funkce]
+                        [Description of the first key feature]
                     </p>
                 </div>
 
@@ -329,9 +329,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 2]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 2]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis druhé klíčové funkce]
+                        [Description of the second key feature]
                     </p>
                 </div>
 
@@ -342,12 +342,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 3]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 3]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis třetí klíčové funkce]
+                        [Description of the third key feature]
                     </p>
                 </div>
-                
+
                 <!-- Feature 4 -->
                 <div class="p-3 sm:p-6 border border-gray-200 rounded-lg">
                     <div class="bg-yellow-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
@@ -355,9 +355,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 4]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 4]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis čtvrté klíčové funkce]
+                        [Description of the fourth key feature]
                     </p>
                 </div>
 
@@ -368,9 +368,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 5]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 5]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis páté klíčové funkce]
+                        [Description of the fifth key feature]
                     </p>
                 </div>
 
@@ -381,9 +381,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Název funkce 6]</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-3">[Feature name 6]</h3>
                     <p class="text-gray-600 text-sm sm:text-base">
-                        [Popis šesté klíčové funkce]
+                        [Description of the sixth key feature]
                     </p>
                 </div>
             </div>
@@ -396,13 +396,13 @@
     <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-4xl font-bold text-white mb-6">
-                [Výzva k akci - nadpis]
+                [Call to action - headline]
             </h2>
             <p class="text-xl text-blue-100 mb-8">
-                [Přesvědčivý popis výzvy k akci, který povzbudí uživatele k registraci]
+                [Compelling description of the call to action that encourages users to sign up]
             </p>
             <a href="{route('register')}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
-                Registrace
+                Sign up
             </a>
         </div>
     </div>
@@ -414,32 +414,32 @@
         <div class="max-w-6xl mx-auto">
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
-                    <h3 class="text-xl font-bold text-white mb-4">[Název vaší aplikace]</h3>
+                    <h3 class="text-xl font-bold text-white mb-4">[Your application name]</h3>
                     <p class="text-gray-400 mb-4">
-                        [Stručný popis vašeho produktu a toho, co dělá pro uživatele.]
+                        [Brief description of your product and what it does for users.]
                     </p>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-semibold mb-4">[Název menu 1]</h4>
+                    <h4 class="text-white font-semibold mb-4">[Menu name 1]</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#problem" class="hover:text-white transition-colors">[Odkaz 1]</a></li>
-                        <li><a href="#how-it-works" class="hover:text-white transition-colors">[Odkaz 2]</a></li>
-                        <li><a href="#features" class="hover:text-white transition-colors">[Odkaz 3]</a></li>
+                        <li><a href="#problem" class="hover:text-white transition-colors">[Link 1]</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white transition-colors">[Link 2]</a></li>
+                        <li><a href="#features" class="hover:text-white transition-colors">[Link 3]</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="text-white font-semibold mb-4">[Název menu 2]</h4>
+                    <h4 class="text-white font-semibold mb-4">[Menu name 2]</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">[Odkaz 1]</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">[Odkaz 2]</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">[Link 1]</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">[Link 2]</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 [Název vaší aplikace]. [Váš slogan nebo popis].</p>
+                <p>&copy; 2024 [Your application name]. [Your slogan or description].</p>
             </div>
         </div>
     </div>
