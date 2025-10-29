@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Dashboard\Http\Request\Dto;
 
-use App\App\Serializer\Dto\RequestDtoInterface;
-
-readonly class DashboardUserDto implements RequestDtoInterface
+readonly class DashboardUserDto
 {
     public function __construct(
         public string $id,
