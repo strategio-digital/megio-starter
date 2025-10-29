@@ -5,6 +5,7 @@ namespace App\Dashboard\Http\Request;
 
 use App\App\Serializer\RequestSerializer;
 use App\Dashboard\Facade\DashboardFacade;
+use App\Dashboard\Http\Request\Dto\DashboardResponseDto;
 use App\User\Database\Entity\User;
 use Megio\Http\Request\Request;
 use Megio\Security\Auth\AuthUser;
@@ -31,8 +32,9 @@ class DashboardRequest extends Request
             return $this->error(['Uživatel není přihlášen'], Response::HTTP_UNAUTHORIZED);
         }
 
-        $responseDto = $this->dashboardFacade->createDashboardResponse($user);
+        $this->dashboardFacade->computeSomething();
+        $response = DashboardResponseDto::create($user);
 
-        return $this->requestSerializer->serialize($responseDto);
+        return $this->requestSerializer->serialize($response);
     }
 }
