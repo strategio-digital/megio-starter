@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build-stage-node
+FROM node:24-alpine AS build-stage-node
 WORKDIR /build
 
 COPY . ./
@@ -6,7 +6,7 @@ COPY . ./
 RUN yarn cache clean --mirror
 RUN yarn && yarn build
 
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 WORKDIR /var/www/html
 
 # Set timezone
@@ -74,6 +74,8 @@ COPY --from=build-stage-node /build/www/temp ./www/temp
 # Install composer & dependencies
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN composer update -W --no-scripts --prefer-dist --no-cache
+#RUN composer dump-autoload
 RUN composer install --no-cache --prefer-dist --no-scripts
 
 # Resolve permissions

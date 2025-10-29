@@ -22,22 +22,23 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.3",
-        "strategio/megio-core": "^0.11.0",
+        "php": "^8.4",
+        "strategio/megio-core": "dev-master",
         "symfony/serializer": "^7.3",
         "symfony/validator": "^7.3",
         "symfony/property-access": "^7.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.0",
-        "friendsofphp/php-cs-fixer": "^v3.87.2"
+        "friendsofphp/php-cs-fixer": "^v3.87.2",
+        "phpstan/phpstan": "^2.1"
     },
     "scripts": {
         "phpstan:baseline": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon -vv -b phpstan-baseline.neon --allow-empty-baseline",
         "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon",
         "neon": "vendor/bin/neon-lint config/",
         "latte": "vendor/bin/latte-lint view/",
-        "schema": "bin/console orm:validate-schema",
+        "schema": "bin/console orm:validate-schema -v",
         "test": "vendor/bin/phpunit",
         "test:unit": "vendor/bin/phpunit tests/Unit",
         "test:feature": "vendor/bin/phpunit tests/Feature",

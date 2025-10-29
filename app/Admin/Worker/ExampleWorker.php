@@ -19,13 +19,17 @@ class ExampleWorker implements IQueueWorker
     ) {}
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function process(
         Queue $queueJob,
         OutputInterface $output,
     ): ?QueueDelay {
         $admin_id = $queueJob->getPayload()['admin_id'];
+
+        if (is_string($admin_id) === false) {
+            throw new Exception('Admin ID must be a string.');
+        }
 
         if (Uuid::isValid($admin_id) === false) {
             throw new Exception('Invalid admin ID.');
