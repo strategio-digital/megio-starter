@@ -20,12 +20,18 @@ interface ReflectionHelperInterface
      *
      * @return class-string|null
      */
-    public function getDtoTypeForProperty(string $dtoClass, string $propertyName): ?string;
+    public function getDtoTypeForProperty(
+        string $dtoClass,
+        string $propertyName,
+    ): ?string;
 
     /**
      * @param class-string $dtoClass
      */
-    public function isArrayOfDtos(string $dtoClass, string $propertyName): bool;
+    public function isArrayOfDtos(
+        string $dtoClass,
+        string $propertyName,
+    ): bool;
 
     /**
      * @return class-string|null
@@ -35,5 +41,8 @@ interface ReflectionHelperInterface
     /**
      * @param class-string $dtoClass
      */
-    public function getDefaultValue(string $dtoClass, string $propertyName): mixed;
+    public function getDefaultValue(
+        string $dtoClass,
+        string $propertyName,
+    ): mixed;
 }

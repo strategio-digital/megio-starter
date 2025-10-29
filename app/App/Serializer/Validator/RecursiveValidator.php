@@ -17,8 +17,10 @@ readonly class RecursiveValidator implements ValidatorInterface
     /**
      * @return array<string, mixed>
      */
-    public function validate(string $dtoClass, array $data): array
-    {
+    public function validate(
+        string $dtoClass,
+        array $data,
+    ): array {
         // Convert numeric keys to string keys for consistency
         $stringKeyedData = [];
         foreach ($data as $key => $value) {
@@ -34,8 +36,11 @@ readonly class RecursiveValidator implements ValidatorInterface
      *
      * @return array<string, mixed>
      */
-    private function validateRecursively(string $dtoClass, array $data, string $path): array
-    {
+    private function validateRecursively(
+        string $dtoClass,
+        array $data,
+        string $path,
+    ): array {
         $errors = [];
 
         // Get constraints and validate each property
@@ -58,7 +63,11 @@ readonly class RecursiveValidator implements ValidatorInterface
                 foreach ($propertyValue as $key => $val) {
                     $stringKeyedValue[(string)$key] = $val;
                 }
-                $nestedErrors = $this->validateRecursively($dtoType, $stringKeyedValue, $this->buildFullPath($path, $propertyName));
+                $nestedErrors = $this->validateRecursively(
+                    $dtoType,
+                    $stringKeyedValue,
+                    $this->buildFullPath($path, $propertyName),
+                );
                 $errors = $this->mergeErrors($errors, $nestedErrors);
                 continue; // Skip Symfony validation for nested DTOs
             }
@@ -69,7 +78,11 @@ readonly class RecursiveValidator implements ValidatorInterface
                 if ($arrayElementType !== null) {
                     // Re-index array to ensure int keys
                     $intKeyedArray = array_values($propertyValue);
-                    $arrayErrors = $this->validateArrayOfDtos($arrayElementType, $intKeyedArray, $this->buildFullPath($path, $propertyName));
+                    $arrayErrors = $this->validateArrayOfDtos(
+                        $arrayElementType,
+                        $intKeyedArray,
+                        $this->buildFullPath($path, $propertyName),
+                    );
                     $errors = $this->mergeErrors($errors, $arrayErrors);
                 }
                 continue; // Skip Symfony validation for array DTOs
@@ -95,14 +108,74 @@ readonly class RecursiveValidator implements ValidatorInterface
         return $errors;
     }
 
+    private function buildFullPath(
+        string $basePath,
+        string $propertyPath,
+    ): string {
+        if ($basePath === '') {
+            return $propertyPath;
+        }
+
+        return $basePath . '.' . $propertyPath;
+    }
+
+    /**
+     * @param array<string, mixed> $errors1
+     * @param array<string, mixed> $errors2
+     *
+     * @return array<string, mixed>
+     */
+    private function mergeErrors(
+        array $errors1,
+        array $errors2,
+    ): array {
+        foreach ($errors2 as $key => $value) {
+            if (array_key_exists($key, $errors1) === true && is_array($errors1[$key]) === true && is_array(
+                $value,
+            ) === true) {
+                /** @var array<string, mixed> $existingValue */
+                $existingValue = $errors1[$key];
+                /** @var array<string, mixed> $newValue */
+                $newValue = $value;
+                $errors1[$key] = $this->mergeErrors($existingValue, $newValue);
+            } else {
+                $errors1[$key] = $value;
+            }
+        }
+
+        return $errors1;
+    }
+
+    /**
+     * @param class-string $dtoClass
+     *
+     * @return class-string|null
+     */
+    private function getArrayElementType(
+        string $dtoClass,
+        string $propertyName,
+    ): ?string {
+        $reflection = new ReflectionClass($dtoClass);
+
+        if ($reflection->hasProperty($propertyName) === false) {
+            return null;
+        }
+
+        $property = $reflection->getProperty($propertyName);
+        return $this->reflectionHelper->getArrayElementType($property);
+    }
+
     /**
      * @param class-string $dtoClass
      * @param array<int, mixed> $arrayData
      *
      * @return array<string, mixed>
      */
-    private function validateArrayOfDtos(string $dtoClass, array $arrayData, string $path): array
-    {
+    private function validateArrayOfDtos(
+        string $dtoClass,
+        array $arrayData,
+        string $path,
+    ): array {
         $errors = [];
 
         foreach ($arrayData as $index => $itemData) {
@@ -115,27 +188,25 @@ readonly class RecursiveValidator implements ValidatorInterface
             foreach ($itemData as $key => $val) {
                 $stringKeyedItemData[(string)$key] = $val;
             }
-            $itemErrors = $this->validateRecursively($dtoClass, $stringKeyedItemData, $this->buildFullPath($path, (string)$index));
+            $itemErrors = $this->validateRecursively(
+                $dtoClass,
+                $stringKeyedItemData,
+                $this->buildFullPath($path, (string)$index),
+            );
             $errors = $this->mergeErrors($errors, $itemErrors);
         }
 
         return $errors;
     }
 
-    private function buildFullPath(string $basePath, string $propertyPath): string
-    {
-        if ($basePath === '') {
-            return $propertyPath;
-        }
-
-        return $basePath . '.' . $propertyPath;
-    }
-
     /**
      * @param array<string, mixed> $errors
      */
-    private function setNestedError(array &$errors, string $path, string $message): void
-    {
+    private function setNestedError(
+        array &$errors,
+        string $path,
+        string $message,
+    ): void {
         $pathParts = explode('.', $path);
         $current = &$errors;
 
@@ -159,45 +230,5 @@ readonly class RecursiveValidator implements ValidatorInterface
         if (is_array($current) === true) {
             $current[$finalKey] = $message;
         }
-    }
-
-    /**
-     * @param array<string, mixed> $errors1
-     * @param array<string, mixed> $errors2
-     *
-     * @return array<string, mixed>
-     */
-    private function mergeErrors(array $errors1, array $errors2): array
-    {
-        foreach ($errors2 as $key => $value) {
-            if (array_key_exists($key, $errors1) === true && is_array($errors1[$key]) === true && is_array($value) === true) {
-                /** @var array<string, mixed> $existingValue */
-                $existingValue = $errors1[$key];
-                /** @var array<string, mixed> $newValue */
-                $newValue = $value;
-                $errors1[$key] = $this->mergeErrors($existingValue, $newValue);
-            } else {
-                $errors1[$key] = $value;
-            }
-        }
-
-        return $errors1;
-    }
-
-    /**
-     * @param class-string $dtoClass
-     *
-     * @return class-string|null
-     */
-    private function getArrayElementType(string $dtoClass, string $propertyName): ?string
-    {
-        $reflection = new ReflectionClass($dtoClass);
-
-        if ($reflection->hasProperty($propertyName) === false) {
-            return null;
-        }
-
-        $property = $reflection->getProperty($propertyName);
-        return $this->reflectionHelper->getArrayElementType($property);
     }
 }

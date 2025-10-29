@@ -10,6 +10,7 @@ use Megio\Database\Entity\Queue;
 use Megio\Queue\IQueueWorker;
 use Megio\Queue\QueueDelay;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Uid\Uuid;
 
 class ExampleWorker implements IQueueWorker
 {
@@ -17,9 +18,19 @@ class ExampleWorker implements IQueueWorker
         protected EntityManager $em,
     ) {}
 
-    public function process(Queue $queueJob, OutputInterface $output): ?QueueDelay
-    {
+    /**
+     * @throws \Exception
+     */
+    public function process(
+        Queue $queueJob,
+        OutputInterface $output,
+    ): ?QueueDelay {
         $admin_id = $queueJob->getPayload()['admin_id'];
+
+        if (Uuid::isValid($admin_id) === false) {
+            throw new Exception('Invalid admin ID.');
+        }
+
         $admin = $this->em->getAdminRepo()->findOneBy(['id' => $admin_id]);
 
         if ($admin === null) {

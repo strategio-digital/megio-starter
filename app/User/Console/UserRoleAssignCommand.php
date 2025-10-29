@@ -25,8 +25,10 @@ class UserRoleAssignCommand extends Command
         parent::__construct();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    protected function execute(
+        InputInterface $input,
+        OutputInterface $output,
+    ): int {
         $role = $this->em->getAuthRoleRepo()->findOneBy(['name' => self::DEFAULT_ROLE_NAME]);
 
         if ($role === null) {

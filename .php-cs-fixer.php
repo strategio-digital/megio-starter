@@ -65,6 +65,20 @@ return (new Config())
             'keep_multiple_spaces_after_comma' => false,
             'after_heredoc' => false,
         ],
+        'no_spaces_around_offset' => [
+            'positions' => [
+                'inside',
+                'outside'
+            ],
+        ],
+        'single_space_around_construct' => true,
+        'no_extra_blank_lines' => [
+            'tokens' => [
+                'extra',
+                'throw',
+                'use',
+            ],
+        ],
 
         // Classes
         'class_attributes_separation' => [

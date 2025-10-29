@@ -12,6 +12,23 @@ use Symfony\Component\Validator\Constraints\Type;
 
 readonly class ReflectionHelper implements ReflectionHelperInterface
 {
+    /** @var array<int, string> */
+    private const array BUILT_IN_TYPES = [
+        'string',
+        'int',
+        'float',
+        'bool',
+        'array',
+        'object',
+        'resource',
+        'null',
+        'callable',
+        'iterable',
+        'mixed',
+        'void',
+        'never',
+    ];
+
     public function getValidationConstraints(string $dtoClass): array
     {
         $reflection = new ReflectionClass($dtoClass);
@@ -36,8 +53,10 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         return $constraints;
     }
 
-    public function getDtoTypeForProperty(string $dtoClass, string $propertyName): ?string
-    {
+    public function getDtoTypeForProperty(
+        string $dtoClass,
+        string $propertyName,
+    ): ?string {
         $reflection = new ReflectionClass($dtoClass);
 
         if ($reflection->hasProperty($propertyName) === false) {
@@ -64,8 +83,10 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         return $typeName;
     }
 
-    public function isArrayOfDtos(string $dtoClass, string $propertyName): bool
-    {
+    public function isArrayOfDtos(
+        string $dtoClass,
+        string $propertyName,
+    ): bool {
         $reflection = new ReflectionClass($dtoClass);
 
         if ($reflection->hasProperty($propertyName) === false) {
@@ -82,7 +103,9 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
                 if (is_array($constraints) === true) {
                     foreach ($constraints as $constraint) {
                         if ($constraint instanceof Type && is_string($constraint->type)) {
-                            if ($this->isBuiltInType($constraint->type) === false && class_exists($constraint->type) === true) {
+                            if ($this->isBuiltInType($constraint->type) === false && class_exists(
+                                $constraint->type,
+                            ) === true) {
                                 return true;
                             }
                         }
@@ -116,8 +139,10 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         return null;
     }
 
-    public function getDefaultValue(string $dtoClass, string $propertyName): mixed
-    {
+    public function getDefaultValue(
+        string $dtoClass,
+        string $propertyName,
+    ): mixed {
         $reflection = new ReflectionClass($dtoClass);
         $constructor = $reflection->getConstructor();
 
@@ -139,12 +164,6 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
 
     private function isBuiltInType(string $typeName): bool
     {
-        $builtInTypes = [
-            'string', 'int', 'float', 'bool', 'array',
-            'object', 'resource', 'null', 'callable',
-            'iterable', 'mixed', 'void', 'never',
-        ];
-
-        return in_array($typeName, $builtInTypes, true);
+        return in_array($typeName, self::BUILT_IN_TYPES, true);
     }
 }

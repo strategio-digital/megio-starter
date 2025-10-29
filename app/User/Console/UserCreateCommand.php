@@ -28,8 +28,10 @@ class UserCreateCommand extends Command
         $this->addOption('role', 'r', InputArgument::OPTIONAL, 'Create role with all permissions');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    protected function execute(
+        InputInterface $input,
+        OutputInterface $output,
+    ): int {
         $email = $input->getArgument('email');
         $passwd = $input->getArgument('password');
         $roleName = $input->getOption('role');

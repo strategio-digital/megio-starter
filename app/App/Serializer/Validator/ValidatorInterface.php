@@ -14,5 +14,8 @@ interface ValidatorInterface
      *
      * @return ValidationErrors
      */
-    public function validate(string $dtoClass, array $data): array;
+    public function validate(
+        string $dtoClass,
+        array $data,
+    ): array;
 }

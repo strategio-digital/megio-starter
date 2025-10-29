@@ -37,58 +37,92 @@ class UserRecipe extends CollectionRecipe
         return 'user';
     }
 
-    public function search(SearchBuilder $builder, CollectionRequest $request): SearchBuilder
-    {
+    public function search(
+        SearchBuilder $builder,
+        CollectionRequest $request,
+    ): SearchBuilder {
         return $builder
             ->keepDefaults()
-            ->addSearchable(new Searchable(column: 'email', operator: 'LIKE', formatter: function (mixed $value): string {
-                assert(is_string($value));
-                return '%' . $value . '%';
-            }))
+            ->addSearchable(
+                new Searchable(column: 'email', operator: 'LIKE', formatter: function (
+                    mixed $value,
+                ): string {
+                    assert(is_string($value));
+                    return '%' . $value . '%';
+                }),
+            )
             ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
     }
 
-    public function read(ReadBuilder $builder, CollectionRequest $request): ReadBuilder
-    {
+    public function read(
+        ReadBuilder $builder,
+        CollectionRequest $request,
+    ): ReadBuilder {
         return $builder
-            ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
-            ->add(new EmailColumn(key: 'email', name: 'Email', formatters: [
-                new CallableFormatter(function (mixed $value): string {
-                    assert(is_string($value));
-                    return 'mailto:' . $value;
-                }),
-            ]));
+            ->buildByDbSchema(exclude: [
+                'password',
+                'email',
+            ], persist: true)
+            ->add(
+                new EmailColumn(key: 'email', name: 'Email', formatters: [
+                    new CallableFormatter(function (
+                        mixed $value,
+                    ): string {
+                        assert(is_string($value));
+                        return 'mailto:' . $value;
+                    }),
+                ]),
+            );
     }
 
-    public function readAll(ReadBuilder $builder, CollectionRequest $request): ReadBuilder
-    {
+    public function readAll(
+        ReadBuilder $builder,
+        CollectionRequest $request,
+    ): ReadBuilder {
         return $builder
-            ->buildByDbSchema(exclude: ['password', 'email'], persist: true)
+            ->buildByDbSchema(exclude: [
+                'password',
+                'email',
+            ], persist: true)
             ->add(col: new EmailColumn(key: 'email', name: 'Email', sortable: true), moveBeforeKey: 'lastLogin')
             ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'));
     }
 
-    public function create(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
-    {
+    public function create(
+        WriteBuilder $builder,
+        CollectionRequest $request,
+    ): WriteBuilder {
         return $builder
-            ->add(new EmailField(name: 'email', label: 'Email', rules: [
-                new RequiredRule(),
-                new UniqueRule(targetEntity: User::class, columnName: 'email', message: 'This email is already in use.'),
-            ]))
-            ->add(new PasswordField(name: 'password', label: 'Password', rules: [
-                new RequiredRule(),
-                new MinRule(6),
-                new MaxRule(32),
-            ]))
-            ->add(new PasswordField(name: 'password_check', label: 'Password again', rules: [
-                new RequiredRule(),
-                new EqualRule('password'),
-            ], mapToEntity: false))
+            ->add(
+                new EmailField(name: 'email', label: 'Email', rules: [
+                    new RequiredRule(),
+                    new UniqueRule(
+                        targetEntity: User::class,
+                        columnName: 'email',
+                        message: 'This email is already in use.',
+                    ),
+                ]),
+            )
+            ->add(
+                new PasswordField(name: 'password', label: 'Password', rules: [
+                    new RequiredRule(),
+                    new MinRule(6),
+                    new MaxRule(32),
+                ]),
+            )
+            ->add(
+                new PasswordField(name: 'password_check', label: 'Password again', rules: [
+                    new RequiredRule(),
+                    new EqualRule('password'),
+                ], mapToEntity: false),
+            )
             ->add(new ToManySelectField(name: 'roles', label: 'Roles', reverseEntity: Role::class));
     }
 
-    public function update(WriteBuilder $builder, CollectionRequest $request): WriteBuilder
-    {
+    public function update(
+        WriteBuilder $builder,
+        CollectionRequest $request,
+    ): WriteBuilder {
         $pwf = new PasswordField(name: 'password', label: 'Password');
 
         // Do not show password on form rendering
@@ -100,11 +134,13 @@ class UserRecipe extends CollectionRecipe
             ->add(new TextField(name: 'id', label: 'ID', attrs: ['fullWidth' => true], disabled: true))
             ->add(new EmailField(name: 'email', label: 'Email'))
             ->add($pwf)
-            ->add(new ToManySelectField(
-                name: 'roles',
-                label: 'Roles',
-                reverseEntity: Role::class,
-                attrs: ['fullWidth' => true],
-            ));
+            ->add(
+                new ToManySelectField(
+                    name: 'roles',
+                    label: 'Roles',
+                    reverseEntity: Role::class,
+                    attrs: ['fullWidth' => true],
+                ),
+            );
     }
 }
