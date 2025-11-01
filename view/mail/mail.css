@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Email client specific variants */
+@custom-variant outlook (.outlook &);
+@custom-variant gmail (.gmail &);
+@custom-variant apple-mail (.apple-mail &);
+
+/* Dark mode support for email clients */
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-gray-900 {
+    background-color: #111827 !important;
+  }
+}

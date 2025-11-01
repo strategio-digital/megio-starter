@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="{$template->getLocale()}" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+    <meta charset="UTF-8-8">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <style n:syntax="off">
+        td, th, div, p, a, h1, h2, h3, h4, h5, h6 {
+            font-family: "Segoe UI", sans-serif;
+            mso-line-height-rule: exactly;
+        }
+    </style>
+    <--![endif]-->
+
+    <title>{$template->getSubject()}</title>
+    <style>
+        {{{ page.css }}}
+    </style>
+    <stack name="head" />
+</head>
+<body class="m-0 p-0 w-full [word-break:break-word] [-webkit-font-smoothing:antialiased]">
+{if $template->getPreHeader()}
+<div class="hidden">
+    {$template->getPreHeader()} {for $i = 0; $i < 150; $i++}&#8199;&#65279;&#847; {/for}
+</div>
+{/if}
+<div role="article" aria-roledescription="email" aria-label="{$template->getSubject()}" lang="{$template->getLocale()}">
+    <div class="bg-slate-50 sm:px-4 font-sans py-10">
+        <table align="center">
+            <tr>
+                <td class="w-[552px] max-w-full">
+                    <table class="w-full">
+                        <tr>
+                            <td class="p-12 sm:px-6 text-base text-slate-700 bg-white rounded shadow-sm">
+                                <content />
+
+                                <x-divider space-y="32px" class="bg-slate-200"/>
+
+                                <p class="m-0 leading-6">
+                                    {$template->getParam('footer')['signature_text']|noescape}
+                                </p>
+
+                                <x-spacer height="24px" />
+
+                                <table class="w-full">
+                                    <tr>
+                                        <td class="w-[85px]">
+                                            <img src="{$template->getParam('footer')['signature_img']}" alt="{$template->getAppName()}" width="70" height="70">
+                                        </td>
+                                        <td>
+                                            <p class="m-0 leading-6">
+                                                <span class="font-bold">{$template->getParam('footer')['signature_title']}</span>
+                                                <br>{$template->getParam('footer')['signature_description']}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr role="separator">
+                            <td class="leading-12">&zwj;</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center text-slate-600 text-xs px-6">
+                                <p class="m-0 mb-4 uppercase">
+                                    {$template->getParam('footer')['socials_label']}
+                                </p>
+                                <p class="cursor-default">
+                                    {foreach $template->getParam('footer')['socials_links'] as $social}
+                                    <a href="{$social['href']}" class="text-indigo-700 [text-decoration:none] hover:![text-decoration:underline]">
+                                        {$social['name']}
+                                    </a>
+                                    {if !$iterator->isLast()}&bull;{/if}
+                                    {/foreach}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

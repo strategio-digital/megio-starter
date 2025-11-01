@@ -1,0 +1,23 @@
+{varType App\EmailTemplate $template}
+
+{var $activationLink = $template->getParam('activationLink')}
+{varType string $activationLink}
+
+<x-main>
+    <h1 class="m-0 mb-6 text-2xl sm:leading-8 text-black font-semibold">
+        {$template->getSubject()}
+    </h1>
+
+    <x-divider height="1px" class="bg-slate-200" spaceY="0px" />
+
+    <p class="m-0 leading-6">
+        <strong>Hello,</strong><br/>
+        your account has been registered successfully. Please activate your account by clicking the button below.
+    </p>
+
+    <x-spacer height="24px" />
+
+    <x-button href="{$activationLink}">
+        Activate Account
+    </x-button>
+</x-main>

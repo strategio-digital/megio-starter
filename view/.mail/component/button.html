@@ -1,0 +1,12 @@
+<script props>
+    // https://maizzle.com/docs/components/divider
+    module.exports = {
+        href: props.href
+    }
+</script>
+
+<if condition="href">
+    <a href="{{ href }}" class="inline-block py-4 px-6 text-base leading-none font-semibold rounded-xl text-slate-50 [text-decoration:none] bg-red-500 hover:bg-red-700">
+        <content/>
+    </a>
+</if>

@@ -1,9 +1,44 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+
 parameters:
     level: 10
     paths:
         - app
         - bin
         - router
+        - rules
         - tests
+
+    # Maximální striktnost - platné pro PHPStan 2.x
+    checkClassCaseSensitivity: true
+    checkExplicitMixed: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkMissingCallableSignature: true
+    checkUninitializedProperties: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkPhpDocMethodSignatures: true
+    reportMaybes: true
+    reportStaticMethodSignatures: true
+    reportWrongPhpDocTypeInVarTag: true
+    treatPhpDocTypesAsCertain: false
+
     ignoreErrors:
         - '#Trait App\\User\\Database\\Field\\TUserOwner is used zero times and is not analysed\.#'
+        - '#^Dynamic call to static method PHPUnit\\Framework\\Assert::#'
+        - '#has parameter \$context with no value type specified in iterable type array#'
+
+services:
+    # Custom pravidlo pro zákaz negace (!)
+    -
+        class: App\PhpStan\DisallowNegationRule
+        tags:
+            - phpstan.rules.rule
+
+    # Custom pravidlo pro vynutit === true/false
+    -
+        class: App\PhpStan\ExplicitBooleanComparisonRule
+        tags:
+            - phpstan.rules.rule

@@ -7,24 +7,24 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
 
-type LoginForm = {
+type RegisterForm = {
 	email: string;
 	password: string;
 };
 
-type LoginErrors = {
+type RegisterErrors = {
 	general?: string;
-} & Partial<Record<keyof LoginForm, string>>;
+} & Partial<Record<keyof RegisterForm, string>>;
 
-const form = reactive<LoginForm>({
+const form = reactive<RegisterForm>({
 	email: '',
 	password: '',
 });
 
-const errors = reactive<LoginErrors>({});
+const errors = reactive<RegisterErrors>({});
 const isLoading = ref<boolean>(false);
 
-const clearFieldError = (field: keyof LoginErrors) => {
+const clearFieldError = (field: keyof RegisterErrors) => {
 	errors[field] = undefined;
 };
 
@@ -32,21 +32,25 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.auth.loginByEmail(
-		form.email,
-		form.password,
-		'user',
-	);
+	const response = await megio.fetch('api/v1/user/register', {
+		method: 'POST',
+		body: JSON.stringify(form),
+	});
 
 	if (response.status === 200) {
+		await megio.auth.loginByEmail(form.email, form.password, 'user');
 		window.toast.asleep();
-		window.toast.add('success', 'Login successful.');
+		window.toast.add('success', 'Registration successful.');
 		window.location.replace('/dashboard');
 		return;
 	}
 
-	errors.general = 'Password or e-mail is incorrect.';
 	isLoading.value = false;
+
+	const err = response.errors as RegisterErrors;
+	Object.keys(err).forEach((key) => {
+		errors[key as keyof RegisterErrors] = err[key as keyof RegisterErrors];
+	});
 };
 </script>
 
@@ -59,10 +63,10 @@ const handleSubmit = async () => {
       <div class="max-w-md w-full space-y-8">
         <div class="text-center">
           <h2 class="text-3xl font-extrabold text-gray-900">
-            Login
+            Registration
           </h2>
           <p class="mt-2 text-sm text-gray-600">
-            Enter your login credentials
+            Enter your details to create an account
           </p>
         </div>
 
@@ -114,18 +118,18 @@ const handleSubmit = async () => {
             :disabled="isLoading"
             class="w-full"
         >
-          <span v-if="!isLoading">Sign in</span>
+          <span v-if="!isLoading">Sign up</span>
           <span v-else class="flex items-center">
             <Spinner size="sm" color="white" class="mr-2"/>
-            Signing in...
+            Registering...
           </span>
         </Button>
 
         <div class="text-center mt-4">
           <p class="text-sm text-gray-600">
-            Don't have an account?
-            <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+            Already have an account?
+            <a href="/user/login" class="font-medium text-blue-600 hover:text-blue-500">
+              Sign in
             </a>
           </p>
         </div>

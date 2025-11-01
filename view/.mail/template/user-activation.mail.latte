@@ -1,0 +1,18 @@
+{varType App\EmailTemplate $template}
+
+{var $userActivation = $template->getParam('userActivationDto')}
+{varType App\Contact\Http\Request\ContactForm\Object\Dto\LeadDto $leadDto}
+
+<x-main>
+    <h1 class="m-0 mb-6 text-2xl sm:leading-8 text-black font-semibold">
+        {$template->getSubject()}
+    </h1>
+
+    <x-divider height="1px" class="bg-slate-200" spaceY="0px" />
+
+    <p class="m-0 leading-6">
+        <strong>Soubory a fotografie ke stažení:</strong>
+        <x-spacer height="5px"/>
+        <a href="{$activationLink}">{$attachmentLink}</a>
+    </p>
+</x-main>
