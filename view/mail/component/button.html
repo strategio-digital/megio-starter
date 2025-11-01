@@ -1,3 +1,9 @@
-<a class="inline-block py-4 px-6 text-base leading-none font-semibold rounded-xl text-slate-50 text-decoration-none bg-red-500 hover-bg-red-700">
+<script props>
+module.exports = {
+    href: props.href
+}
+</script>
+
+<a href="{{ href }}" class="inline-block py-4 px-6 text-base leading-none font-semibold rounded-xl no-underline text-white bg-blue-600">
     <yield />
 </a>

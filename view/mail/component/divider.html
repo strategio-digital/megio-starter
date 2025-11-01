@@ -1,1 +1,8 @@
-<div role="separator">&zwj;</div>
+<script props>
+module.exports = {
+    height: props.height || '1px',
+    className: props.className
+}
+</script>
+
+<div role="separator" class="{{ className }}" style="height: {{ height }}; line-height: {{ height }};">&zwj;</div>

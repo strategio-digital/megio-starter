@@ -28,10 +28,11 @@ format-check:
 	yarn lint
 
 test:
-	docker compose exec app rm -rf temp/*
-	docker compose exec app composer analyse
+	docker compose exec app rm -rf temp/di/* temp/cache/*
 	yarn lint
 	yarn typecheck
+	yarn mail
+	docker compose exec app composer analyse
 
 db-restore:
 	docker compose exec postgres gunzip /var/lib/postgresql/temp/dump.sql.gz

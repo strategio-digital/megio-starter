@@ -7,6 +7,10 @@ export default {
             path: 'temp/latte-mail',
             extension: 'latte'
         },
+        templates: {
+            source: 'view',
+            filetypes: ['mail.latte', 'html'],
+        }
     },
     components: {
         folders: [
@@ -17,12 +21,15 @@ export default {
         fileExtension: 'html',
     },
     css: {
+        inline: {
+            enabled: true,
+            removeInlinedSelectors: false,
+        },
+        purge: false,
+        shorthand: true,
         tailwind: {
             config: './maizzle.tailwind.js',
         }
     },
-    inlineCSS: true,
-    removeUnusedCSS: true,
-    shorthandCSS: true,
-    prettify: true,
+    prettify: false,
 }

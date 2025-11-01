@@ -1,9 +1,0 @@
-{varType string $href}
-{varType string $label}
-{varType string $className}
-
-{php $className ??= ''}
-
-<a href="{$href}" n:class="'inline-block py-4 px-6 text-base leading-none font-semibold rounded-xl text-slate-50 text-decoration-none bg-red-500 hover-bg-red-700', $className">
-    {$label}
-</a>

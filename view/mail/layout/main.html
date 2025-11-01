@@ -30,7 +30,6 @@
         @tailwind components;
         @tailwind utilities;
     </style>
-    <stack name="head" />
 </head>
 <body class="m-0 p-0 w-full [word-break:break-word] [-webkit-font-smoothing:antialiased]">
 {if $template->getPreHeader()}
@@ -48,12 +47,7 @@
                             <td class="p-12 sm:px-6 text-base text-slate-700 bg-white rounded shadow-sm">
                                 <yield />
 
-                                <x-divider space-y="32px" class="bg-slate-200"/>
-
-                                <p class="m-0 leading-6">
-                                    {$template->getFooterParams()['signature_text']|noescape}
-                                </p>
-
+                                <x-divider height="1px" className="bg-slate-200" />
                                 <x-spacer height="24px" />
 
                                 <table class="w-full">
