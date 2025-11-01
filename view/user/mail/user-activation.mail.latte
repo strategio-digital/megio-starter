@@ -8,9 +8,9 @@
         {$template->getSubject()}
     </h1>
 
-    <x-divider height="1px" class="bg-slate-200" spaceY="0px" />
+    <x-divider height="1px" className="bg-slate-200" />
 
-    <p class="m-0 leading-6">
+    <p class="m-0 leading-6 mt-6">
         <strong>Hello,</strong><br/>
         your account has been registered successfully. Please activate your account by clicking the button below.
     </p>
@@ -20,4 +20,6 @@
     <x-button href="{$activationLink}">
         Activate Account
     </x-button>
+
+    <x-spacer height="24px" />
 </x-main>
