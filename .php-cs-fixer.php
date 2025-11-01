@@ -7,6 +7,7 @@ use PhpCsFixer\Finder;
 
 return (new Config())
     ->setRiskyAllowed(true)
+    ->setCacheFile(__DIR__ . '/temp/.php-cs-fixer.cache')
     //->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRules([
         // PER-CS3.0 standard

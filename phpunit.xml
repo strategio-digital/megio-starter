@@ -15,7 +15,8 @@
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
-         beStrictAboutCoverageMetadata="true">
+         beStrictAboutCoverageMetadata="true"
+         cacheDirectory="temp/.phpunit.cache">
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>

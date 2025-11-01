@@ -5,4 +5,4 @@
 /node_modules/
 /www/temp
 .php-cs-fixer.cache
-.phpunit.result.cache
+.phpunit.result.cache.DS_Store
