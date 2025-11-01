@@ -15,8 +15,28 @@ return (new Config())
 
         // Additional strict rules for your project
         'strict_param' => true,
+        // Vynutí strict=true u in_array(), array_search(), atd.
         'strict_comparison' => true,
+        // Vynutí === místo ==
         'declare_strict_types' => true,
+
+        // Modernization and strictness
+        'modernize_types_casting' => true,
+        // (int) místo intval()
+        'no_alias_functions' => true,
+        // sizeof() -> count()
+        'no_mixed_echo_print' => ['use' => 'echo'],
+        'is_null' => true,
+        // is_null($x) -> $x === null
+        'modernize_strpos' => true,
+        // strpos() !== false -> str_contains()
+
+        // Function calls
+        'native_function_invocation' => [
+            'include' => ['@all'],
+            'scope' => 'namespaced',
+            'strict' => true,
+        ],
 
         // Array formatting
         'array_syntax' => ['syntax' => 'short'],
@@ -68,7 +88,7 @@ return (new Config())
         'no_spaces_around_offset' => [
             'positions' => [
                 'inside',
-                'outside'
+                'outside',
             ],
         ],
         'single_space_around_construct' => true,
@@ -171,6 +191,7 @@ return (new Config())
                 __DIR__ . '/bin',
                 __DIR__ . '/migrations',
                 __DIR__ . '/router',
+                __DIR__ . '/rules',
                 __DIR__ . '/tests',
                 __DIR__ . '/www',
             ])
