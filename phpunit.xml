@@ -8,9 +8,14 @@
          stopOnError="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         failOnRisky="false"
-         failOnWarning="false"
-         beStrictAboutChangesToGlobalState="false">
+         failOnRisky="true"
+         failOnWarning="true"
+         failOnIncomplete="true"
+         failOnSkipped="true"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutCoverageMetadata="true">
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
