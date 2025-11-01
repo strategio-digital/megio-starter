@@ -40,7 +40,7 @@ RUN apk add --no-cache libpq-dev
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql
 
-# Isntall excimer (Sentry)
+# Install excimer (Sentry)
 #RUN apk add autoconf g++ make pcre-dev
 #RUN pecl install excimer
 #RUN docker-php-ext-enable excimer
@@ -69,7 +69,7 @@ RUN docker-php-ext-install pdo pdo_pgsql
 # Copy source code
 COPY . ./
 COPY --from=build-stage-node /build/www/temp ./www/temp
-#COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
+COPY --from=build-stage-node /build/temp/latte-mail ./temp/latte-mail
 
 # Install composer & dependencies
 ENV COMPOSER_ALLOW_SUPERUSER=1
