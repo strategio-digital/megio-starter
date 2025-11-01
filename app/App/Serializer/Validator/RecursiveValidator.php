@@ -7,6 +7,14 @@ use ReflectionClass;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidatorInterface;
 
+use function array_key_exists;
+use function array_values;
+use function count;
+use function explode;
+use function is_array;
+use function is_numeric;
+use function is_string;
+
 readonly class RecursiveValidator implements ValidatorInterface
 {
     public function __construct(
@@ -91,8 +99,8 @@ readonly class RecursiveValidator implements ValidatorInterface
             // Validate using Symfony constraints (but skip Type constraints for DTOs)
             foreach ($propertyConstraints as $constraint) {
                 // Skip Type constraints that reference DTO classes
-                if ($constraint instanceof Type) {
-                    if (is_string($constraint->type) && ($dtoType !== null || $isArrayOfDtos === true)) {
+                if (($constraint instanceof Type) === true) {
+                    if (is_string($constraint->type) === true && ($dtoType !== null || $isArrayOfDtos === true)) {
                         continue; // Skip DTO Type constraints - we handle them above
                     }
                 }
@@ -130,9 +138,11 @@ readonly class RecursiveValidator implements ValidatorInterface
         array $errors2,
     ): array {
         foreach ($errors2 as $key => $value) {
-            if (array_key_exists($key, $errors1) === true && is_array($errors1[$key]) === true && is_array(
-                $value,
-            ) === true) {
+            if (
+                array_key_exists($key, $errors1) === true
+                && is_array($errors1[$key]) === true
+                && is_array($value) === true
+            ) {
                 /** @var array<string, mixed> $existingValue */
                 $existingValue = $errors1[$key];
                 /** @var array<string, mixed> $newValue */
@@ -213,7 +223,7 @@ readonly class RecursiveValidator implements ValidatorInterface
         for ($i = 0; $i < count($pathParts) - 1; $i++) {
             $part = $pathParts[$i];
             // Convert numeric strings to integers for proper array indexing
-            $key = is_numeric($part) ? (int)$part : $part;
+            $key = is_numeric($part) === true ? (int)$part : $part;
 
             if (is_array($current) === false) {
                 return;
@@ -225,7 +235,7 @@ readonly class RecursiveValidator implements ValidatorInterface
         }
 
         $lastPart = $pathParts[count($pathParts) - 1];
-        $finalKey = is_numeric($lastPart) ? (int)$lastPart : $lastPart;
+        $finalKey = is_numeric($lastPart) === true ? (int)$lastPart : $lastPart;
 
         if (is_array($current) === true) {
             $current[$finalKey] = $message;

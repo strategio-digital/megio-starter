@@ -6,6 +6,8 @@ namespace App\App\Serializer;
 use App\App\Serializer\Validator\ValidatorInterface;
 use Exception;
 
+use function json_encode;
+
 /**
  * @phpstan-import-type ValidationErrors from ValidatorInterface
  */

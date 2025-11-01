@@ -12,6 +12,9 @@ use Megio\Queue\QueueDelay;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Uid\Uuid;
 
+use function is_string;
+use function sleep;
+
 class ExampleWorker implements IQueueWorker
 {
     public function __construct(

@@ -10,6 +10,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Type;
 
+use function class_exists;
+use function count;
+use function in_array;
+use function is_array;
+use function is_string;
+
 readonly class ReflectionHelper implements ReflectionHelperInterface
 {
     /** @var array<int, string> */
@@ -40,12 +46,12 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
 
             foreach ($property->getAttributes() as $attribute) {
                 $attributeInstance = $attribute->newInstance();
-                if ($attributeInstance instanceof Constraint) {
+                if (($attributeInstance instanceof Constraint) === true) {
                     $propertyConstraints[] = $attributeInstance;
                 }
             }
 
-            if (count($propertyConstraints) > 0) {
+            if (count($propertyConstraints) !== 0) {
                 $constraints[$propertyName] = $propertyConstraints;
             }
         }
@@ -98,11 +104,11 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         // Check for standard Symfony All constraint
         foreach ($property->getAttributes() as $attribute) {
             $attributeInstance = $attribute->newInstance();
-            if ($attributeInstance instanceof All) {
+            if (($attributeInstance instanceof All) === true) {
                 $constraints = $attributeInstance->constraints;
                 if (is_array($constraints) === true) {
                     foreach ($constraints as $constraint) {
-                        if ($constraint instanceof Type && is_string($constraint->type)) {
+                        if (($constraint instanceof Type) === true && is_string($constraint->type) === true) {
                             if ($this->isBuiltInType($constraint->type) === false && class_exists(
                                 $constraint->type,
                             ) === true) {
@@ -122,11 +128,11 @@ readonly class ReflectionHelper implements ReflectionHelperInterface
         // Check for standard Symfony All constraint
         foreach ($property->getAttributes() as $attribute) {
             $attributeInstance = $attribute->newInstance();
-            if ($attributeInstance instanceof All) {
+            if (($attributeInstance instanceof All) === true) {
                 $constraints = $attributeInstance->constraints;
                 if (is_array($constraints) === true) {
                     foreach ($constraints as $constraint) {
-                        if ($constraint instanceof Type && is_string($constraint->type)) {
+                        if (($constraint instanceof Type) === true && is_string($constraint->type) === true) {
                             if (class_exists($constraint->type) === true) {
                                 return $constraint->type;
                             }

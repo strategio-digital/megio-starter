@@ -13,6 +13,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use function assert;
+use function is_string;
+
 #[AsCommand(name: 'app:user:create', description: 'Create a new user account.', aliases: ['user'])]
 class UserCreateCommand extends Command
 {
@@ -36,16 +39,16 @@ class UserCreateCommand extends Command
         $passwd = $input->getArgument('password');
         $roleName = $input->getOption('role');
 
-        assert(is_string($email));
-        assert(is_string($passwd));
-        assert(is_string($roleName) || is_null($roleName));
+        assert(is_string($email) === true);
+        assert(is_string($passwd) === true);
+        assert(is_string($roleName) === true || $roleName === null);
 
         $user = new User();
 
-        if ($roleName) {
+        if ($roleName !== null) {
             $role = $this->em->getAuthRoleRepo()->findOneBy(['name' => $roleName]);
 
-            if (!$role) {
+            if ($role === null) {
                 $role = new Role();
                 $role->setName($roleName);
 

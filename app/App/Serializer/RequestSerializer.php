@@ -9,6 +9,7 @@ use App\App\Serializer\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -16,6 +17,9 @@ use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+
+use function assert;
+use function count;
 
 readonly class RequestSerializer
 {
@@ -54,7 +58,7 @@ readonly class RequestSerializer
     ) {
         $errors = $this->validator->validate($dtoClass, $data);
 
-        if (count($errors) > 0) {
+        if (count($errors) !== 0) {
             throw new RequestSerializerException($errors);
         }
 
@@ -64,10 +68,13 @@ readonly class RequestSerializer
             format: JsonEncoder::FORMAT,
         );
 
-        assert($dto instanceof $dtoClass);
+        assert($dto instanceof $dtoClass === true);
         return $dto;
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function serialize(ResponseDtoInterface $dto): JsonResponse
     {
         $json = $this->serializer->serialize($dto, 'json');

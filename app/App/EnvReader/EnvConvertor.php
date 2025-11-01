@@ -5,7 +5,12 @@ namespace App\App\EnvReader;
 
 use InvalidArgumentException;
 
-class EnvReader
+use function is_bool;
+use function is_int;
+use function is_string;
+use function strtolower;
+
+class EnvConvertor
 {
     public static function toString(mixed $value): string
     {
@@ -13,7 +18,7 @@ class EnvReader
             throw new InvalidArgumentException("Value is not a string.");
         }
 
-        return (string)$value;
+        return $value;
     }
 
     public static function toInt(mixed $value): int
@@ -22,6 +27,29 @@ class EnvReader
             throw new InvalidArgumentException("Value is not an integer.");
         }
 
-        return (int)$value;
+        return $value;
+    }
+
+    public static function toBool(mixed $value): bool
+    {
+        if (is_string($value) === true) {
+            $lower = strtolower($value);
+            if ($lower === 'true' || $lower === '1') {
+                return true;
+            }
+            if ($lower === 'false' || $lower === '0') {
+                return false;
+            }
+        }
+
+        if (is_int($value) === true) {
+            return $value !== 0;
+        }
+
+        if (is_bool($value) === true) {
+            return $value;
+        }
+
+        throw new InvalidArgumentException("Value is not a boolean.");
     }
 }

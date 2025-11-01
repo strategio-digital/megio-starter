@@ -25,6 +25,9 @@ use Megio\Collection\WriteBuilder\Rule\UniqueRule;
 use Megio\Collection\WriteBuilder\WriteBuilder;
 use Megio\Database\Entity\Auth\Role;
 
+use function assert;
+use function is_string;
+
 class UserRecipe extends CollectionRecipe
 {
     public function source(): string
@@ -47,7 +50,7 @@ class UserRecipe extends CollectionRecipe
                 new Searchable(column: 'email', operator: 'LIKE', formatter: function (
                     mixed $value,
                 ): string {
-                    assert(is_string($value));
+                    assert(is_string($value) === true);
                     return '%' . $value . '%';
                 }),
             )
@@ -68,7 +71,7 @@ class UserRecipe extends CollectionRecipe
                     new CallableFormatter(function (
                         mixed $value,
                     ): string {
-                        assert(is_string($value));
+                        assert(is_string($value) === true);
                         return 'mailto:' . $value;
                     }),
                 ]),
@@ -126,7 +129,7 @@ class UserRecipe extends CollectionRecipe
         $pwf = new PasswordField(name: 'password', label: 'Password');
 
         // Do not show password on form rendering
-        if ($request->isFormRendering()) {
+        if ($request->isFormRendering() === true) {
             $pwf->setValue(new EmptyValue());
         }
 

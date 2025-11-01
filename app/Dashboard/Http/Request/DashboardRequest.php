@@ -10,6 +10,7 @@ use App\User\Database\Entity\User;
 use Megio\Http\Request\Request;
 use Megio\Security\Auth\AuthUser;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class DashboardRequest extends Request
 {
@@ -24,6 +25,9 @@ class DashboardRequest extends Request
         return [];
     }
 
+    /**
+     * @throws ExceptionInterface
+     */
     public function process(array $data): Response
     {
         $user = $this->authUser->get();
