@@ -2,37 +2,47 @@
 
 namespace Tests\Feature\User;
 
-use App\EmailTemplate;
+use App\App\EnvReader\EnvConvertor;
+use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
 use App\User\Facade\UserFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
-use App\User\Mail\ActivationMail;
+use Megio\Helper\Path;
 use Tests\TestCase;
+
+use function password_verify;
 
 class UserRegistrationTest extends TestCase
 {
-    public function testRegistersUserAndSendsActivationEmail(): void
+    public function testRegistersUser(): void
     {
         // Arrange
         $facade = $this->getService(UserFacade::class);
+        $developerMail = EnvConvertor::toString($_ENV['APP_DEVELOPER_MAIL']);
 
         $dto = new UserRegisterDto(
-            email: $_ENV['MAIL_BCC_ADDRESS'],
+            email: $developerMail,
             password: 'SecurePass123!',
         );
 
         // Act
-        $user = $facade->registerUser($dto);
+        $user = $facade->registerUser(
+            userRegisterDto: $dto,
+            sendMail: false,
+        );
 
         // Assert - User was created with correct data
         $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('test@example.com', $user->getEmail());
+        $this->assertSame($developerMail, $user->getEmail());
         $this->assertNotEmpty($user->getId());
 
         // Assert - User has the correct role
         $roles = $user->getRoles();
+        $firstRole = $roles->first();
+
         $this->assertCount(1, $roles);
-        $this->assertSame(UserFacade::USER_ROLE_NAME, $roles->first()?->getName());
+        $this->assertNotFalse($firstRole, 'User should have at least one role');
+        $this->assertSame(UserFacade::USER_ROLE_NAME, $firstRole->getName());
 
         // Assert - Password is hashed (not plain text)
         $this->assertNotSame('SecurePass123!', $user->getPassword());
@@ -42,51 +52,35 @@ class UserRegistrationTest extends TestCase
         // so this test doesn't actually save to the database
     }
 
-    public function testActivationMailCanBeRendered(): void
+    public function testEmailTemplateSupportsAbsolutePaths(): void
     {
         // Arrange
-        $activationMail = $this->getService(ActivationMail::class);
+        $activationToken = 'test-token-xyz789';
 
-        $user = new User();
-        $user->setEmail('test@example.com');
-        $user->setPassword('password123');
-
-        // Act & Assert - Email rendering doesn't throw exception
-        // Note: We're not actually sending the email in tests
-        // In a real test environment, you'd mock SmtpMailer or use a mail catcher
-
-        $this->expectNotToPerformAssertions();
-
-        // This would send the email in production
-        // but for testing, you might want to mock SmtpMailer
-        // $activationMail->send($user, 'test-activation-token');
-    }
-
-    public function testEmailTemplateIsGeneratedCorrectly(): void
-    {
-        // Arrange
-        $user = new User();
-        $user->setEmail('test@example.com');
-        $user->setPassword('password123');
-
-        $activationToken = 'test-token-abc123';
-
-        // Act - Test that the email template can be created
-        // without actually sending it
-        $template = new EmailTemplate(
-            template: 'view/user/mail/user-activation.mail.latte',
+        // Act - Create template with absolute path using Path::viewDir()
+        $templateWithAbsolutePath = new EmailTemplate(
+            file: Path::viewDir() . '/user/mail/user-activation.mail.latte',
             subject: 'Activate your account',
             params: [
                 'activationLink' => 'https://example.com/activate?token=' . $activationToken,
             ],
         );
 
-        // Assert
-        $this->assertSame('Activate your account', $template->getSubject());
-        $this->assertSame('view/user/mail/user-activation.mail.latte', $template->getTemplate());
-        $this->assertSame(
-            'https://example.com/activate?token=test-token-abc123',
-            $template->getParam('activationLink'),
+        // Create template with relative path (existing behavior)
+        $templateWithRelativePath = new EmailTemplate(
+            file: 'view/user/mail/user-activation.mail.latte',
+            subject: 'Activate your account',
+            params: [
+                'activationLink' => 'https://example.com/activate?token=' . $activationToken,
+            ],
         );
+
+        // Assert - Both render successfully and produce same output
+        $absolutePathHtml = $templateWithAbsolutePath->render();
+        $relativePathHtml = $templateWithRelativePath->render();
+
+        $this->assertNotEmpty($absolutePathHtml);
+        $this->assertNotEmpty($relativePathHtml);
+        $this->assertSame($absolutePathHtml, $relativePathHtml);
     }
 }

@@ -10,6 +10,7 @@ services:
 
     - App\User\Console\UserCreateCommand
     - App\User\Console\UserRoleAssignCommand
+    - App\User\Mail\ActivationMailer
     - App\User\Facade\UserFacade
 
 includes:

@@ -11,14 +11,19 @@ return static function (RoutingConfigurator $routes): void {
         ->controller([HomeController::class, 'index'])
         ->options(['auth' => false]);
 
-    $routes->add('login', '/login')
+    $routes->add('user.login', '/user/login')
         ->methods(['GET'])
         ->controller([UserController::class, 'login'])
         ->options(['auth' => false]);
 
-    $routes->add('register', '/register')
+    $routes->add('user.register', '/user/register')
         ->methods(['GET'])
         ->controller([UserController::class, 'register'])
+        ->options(['auth' => false]);
+
+    $routes->add('user.activation', '/user/{uuid}/activate/{token}')
+        ->methods(['GET'])
+        ->controller([UserController::class, 'activate'])
         ->options(['auth' => false]);
 
     $routes->add('dashboard', '/dashboard')

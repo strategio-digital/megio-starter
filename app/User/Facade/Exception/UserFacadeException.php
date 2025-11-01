@@ -3,4 +3,6 @@ declare(strict_types=1);
 
 namespace App\User\Facade\Exception;
 
-class UserFacadeException {}
+use Exception;
+
+class UserFacadeException extends Exception {}

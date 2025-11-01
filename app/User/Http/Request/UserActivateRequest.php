@@ -8,6 +8,8 @@ use App\App\Serializer\RequestSerializerException;
 use App\User\Facade\Exception\UserFacadeException;
 use App\User\Facade\UserFacade;
 use App\User\Http\Request\Dto\UserActivateDto;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Megio\Http\Request\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +25,10 @@ class UserActivateRequest extends Request
         return [];
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function process(array $data): Response
     {
         try {
