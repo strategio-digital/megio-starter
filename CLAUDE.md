@@ -24,6 +24,7 @@ app/DomainName/
 - Dependency injection via constructor
 - Type safety with strict PHP types and Symfony validator with PHP attributes
 - Always use strict comparison (`===`, `!==`) - never use negations like `!`
+- Always use explicit boolean: `if ($x === true)`, `assert(($x instanceof Y) === true)`
 - Never use `empty()` function - use explicit checks instead
 - Never use `isset()` function - use explicit null checks instead
 - ID is always string - UUIDv6, never int
@@ -237,10 +238,10 @@ namespace App\ModuleName\Database\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @method \App\ModuleName\Database\Entity\EntityName|NULL find($id, ?int $lockMode = NULL, ?int $lockVersion = NULL)
- * @method \App\ModuleName\Database\Entity\EntityName|NULL findOneBy(array $criteria, array $orderBy = NULL)
- * @method \App\ModuleName\Database\Entity\EntityName[] findAll()
- * @method \App\ModuleName\Database\Entity\EntityName[] findBy(array $criteria, array $orderBy = NULL, ?int $limit = NULL, ?int $offset = NULL)
+ * @method EntityName|null find($id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method EntityName|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method EntityName[] findAll()
+ * @method EntityName[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
  *
  * @extends EntityRepository<EntityNameRepository>
  */
@@ -292,7 +293,7 @@ use App\ModuleName\Database\Repository\EntityNameRepository;
 public function getEntityNameRepo(): EntityNameRepository
 {
     $repo = $this->getRepository(EntityName::class);
-    assert($repo instanceof EntityNameRepository);
+    assert(($repo instanceof EntityNameRepository) === true);
     return $repo;
 }
 ```
