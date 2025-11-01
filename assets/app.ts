@@ -2,10 +2,11 @@
 import '@/assets/img/strategio.svg';
 import '@/assets/img/favicon.svg';
 import '@/assets/img/favicon.png';
+import '@/assets/img/mail-logo.png';
 import '@/assets/img/social.png';
 
 // Styles
-import '@/assets/scss/tailwind.css';
+import '@/assets/css/tailwind.css';
 
 // Plugins
 import MegioApi from '@/assets/ts/Plugins/MegioApi.ts';
@@ -43,18 +44,30 @@ window.toast = {
 	awake,
 };
 
-const loginEl = document.getElementById('vue-login-form');
-if (loginEl) {
-	const LoginForm = await import('@/assets/app/LoginForm/LoginForm.vue');
-	createApp(LoginForm.default).mount(loginEl);
+const userLoginEl = document.getElementById('vue-user-login-form');
+if (userLoginEl) {
+	const LoginForm = await import('@/assets/app/User/LoginForm/LoginForm.vue');
+	createApp(LoginForm.default).mount(userLoginEl);
 }
 
-const registerEl = document.getElementById('vue-register-form');
-if (registerEl) {
+const userRegisterEl = document.getElementById('vue-user-register-form');
+if (userRegisterEl) {
 	const RegisterForm = await import(
-		'@/assets/app/RegisterForm/RegisterForm.vue'
+		'@/assets/app/User/RegisterForm/RegisterForm.vue'
 	);
-	createApp(RegisterForm.default).mount(registerEl);
+	createApp(RegisterForm.default).mount(userRegisterEl);
+}
+
+const userActivationEl = document.getElementById('vue-user-activation');
+if (userActivationEl) {
+	const UserActivation = await import(
+		'@/assets/app/User/Activation/Activation.vue'
+	);
+	const userId = String(userActivationEl.getAttribute('data-user-id'));
+	const token = String(userActivationEl.getAttribute('data-token'));
+	createApp(UserActivation.default, { userId, token }).mount(
+		userActivationEl,
+	);
 }
 
 // Only authenticated users

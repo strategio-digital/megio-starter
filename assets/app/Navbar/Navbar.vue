@@ -15,7 +15,7 @@ const handleLogout = async () => {
 	megio.auth.logout();
 	window.toast.asleep();
 	window.toast.add('info', 'You have been logged out.');
-	window.location.replace('/login');
+	window.location.replace('/user/login');
 };
 
 const handleBack = () => {

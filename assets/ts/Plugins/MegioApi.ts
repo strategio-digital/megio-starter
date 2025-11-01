@@ -10,7 +10,7 @@ export default () => {
 		console.error(response.status, errors);
 		if (response.headers.has('X-Auth-Reject-Reason')) {
 			megio.auth.logout();
-			window.location.href = '/login';
+			window.location.href = '/user/login';
 		}
 	}
 };

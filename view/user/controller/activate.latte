@@ -1,4 +1,6 @@
 {varType string $description}
+{varType string $userId}
+{varType string $token}
 
 {extends ./../../@layout.latte}
 
@@ -8,5 +10,5 @@
 {/block}
 
 {block content}
-    <div id="vue-register-form"></div>
+    <div id="vue-user-activation" data-user-id="{$userId}" data-token="{$token}"></div>
 {/block}

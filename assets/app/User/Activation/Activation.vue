@@ -1,54 +1,54 @@
 <script setup lang="ts">
-import { megio } from 'megio-api'
-import { ref } from 'vue'
-import Spinner from '@/assets/app-ui/Loading/Spinner.vue'
-import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue'
-import Button from '@/assets/app-ui/Buttons/Button.vue'
-import Logo from '@/assets/app/Logo/Logo.vue'
+import { megio } from 'megio-api';
+import { ref } from 'vue';
+import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
+import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
+import Button from '@/assets/app-ui/Buttons/Button.vue';
+import Logo from '@/assets/app/Logo/Logo.vue';
 
 const { userId, token } = defineProps<{
-    userId: string;
-    token: string;
-}>()
+	userId: string;
+	token: string;
+}>();
 
-const isLoading = ref<boolean>(true)
-const error = ref<string>('')
+const isLoading = ref<boolean>(true);
+const error = ref<string>('');
 
 const activateUser = async () => {
-    isLoading.value = true
-    error.value = ''
+	isLoading.value = true;
+	error.value = '';
 
-    const response = await megio.fetch('api/v1/user/activate', {
-        method: 'POST',
-        body: JSON.stringify({ userId, token })
-    })
+	const response = await megio.fetch('api/v1/user/activate', {
+		method: 'POST',
+		body: JSON.stringify({ userId, token }),
+	});
 
-    isLoading.value = false
+	isLoading.value = false;
 
-    if (response.status === 200) {
-        window.toast.asleep()
-        window.toast.add(
-            'success',
-            'Your account has been successfully activated. You can now log in.',
-            20 * 1000
-        )
-        window.location.replace('/user/login')
-        return
-    }
+	if (response.status === 200) {
+		window.toast.asleep();
+		window.toast.add(
+			'success',
+			'Your account has been successfully activated. You can now log in.',
+			20 * 1000,
+		);
+		window.location.replace('/user/login');
+		return;
+	}
 
-    const err = response.errors as {
-        userId?: string;
-        token?: string;
-        general?: string;
-    }
-    error.value =
-        err.userId ??
-        err.token ??
-        err.general ??
-        'An error occurred during activation. Please try again.'
-}
+	const err = response.errors as {
+		userId?: string;
+		token?: string;
+		general?: string;
+	};
+	error.value =
+		err.userId ??
+		err.token ??
+		err.general ??
+		'An error occurred during activation. Please try again.';
+};
 
-activateUser()
+activateUser();
 </script>
 
 <template>
