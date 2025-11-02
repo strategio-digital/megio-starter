@@ -5,8 +5,11 @@ namespace Tests\Feature\User;
 use App\App\EnvReader\EnvConvertor;
 use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
+use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
+use Doctrine\ORM\Exception\ORMException;
+use Megio\Database\Entity\EntityException;
 use Megio\Helper\Path;
 use Tests\TestCase;
 
@@ -14,6 +17,11 @@ use function password_verify;
 
 class UserRegistrationTest extends TestCase
 {
+    /**
+     * @throws UserAuthFacadeException
+     * @throws EntityException
+     * @throws ORMException
+     */
     public function testRegistersUser(): void
     {
         // Arrange

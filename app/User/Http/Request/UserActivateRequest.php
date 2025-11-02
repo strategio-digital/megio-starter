@@ -33,12 +33,9 @@ class UserActivateRequest extends Request
     {
         try {
             $requestDto = $this->requestSerializer->denormalize(UserActivateDto::class, $data);
+            $this->userAuthFacade->activateUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
-        }
-
-        try {
-            $this->userAuthFacade->activateUser($requestDto);
         } catch (UserAuthFacadeException $e) {
             return $this->error(['general' => $e->getMessage()]);
         }

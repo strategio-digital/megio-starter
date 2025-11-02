@@ -33,12 +33,9 @@ class UserLoginRequest extends Request
     {
         try {
             $requestDto = $this->requestSerializer->denormalize(UserLoginDto::class, $data);
+            $authResult = $this->userFacade->loginUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
-        }
-
-        try {
-            $authResult = $this->userFacade->loginUser($requestDto);
         } catch (UserAuthFacadeException $e) {
             return $this->error(['general' => $e->getMessage()]);
         }

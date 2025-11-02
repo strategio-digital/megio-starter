@@ -41,9 +41,9 @@ final readonly class UserAuthFacade
 
     /**
      * @throws EntityException
-     * @throws UniqueConstraintViolationException
-     * @throws ORMException
+     * @throws UserAuthFacadeException
      * @throws Exception
+     * @throws ORMException
      */
     public function registerUser(
         UserRegisterDto $userRegisterDto,
@@ -60,8 +60,12 @@ final readonly class UserAuthFacade
         $user->setPassword($userRegisterDto->password);
         $user->addRole($role);
 
-        $this->em->persist($user);
-        $this->em->flush();
+        try {
+            $this->em->persist($user);
+            $this->em->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new UserAuthFacadeException('user.register.email-exists', 0, $e);
+        }
 
         $token = $this->userTokenResolver->generateUserToken($user);
         $user->setActivationToken($token);
