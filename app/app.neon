@@ -14,7 +14,6 @@ includes:
     - ./User/user.neon
 
 events:
-    - App\User\Subscriber\Collection\OnUserCreated
     #- Megio\Subscriber\RedirectToWww
 
 extensions:

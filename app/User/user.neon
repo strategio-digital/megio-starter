@@ -4,3 +4,6 @@ services:
     - App\User\Resolver\UserTokenResolver
     - App\User\Mail\UserRegistrationMailer
     - App\User\Facade\UserAuthFacade
+
+events:
+    - App\User\Subscriber\Kernel\DisableMegioUserLogin
