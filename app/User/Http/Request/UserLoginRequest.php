@@ -41,7 +41,7 @@ class UserLoginRequest extends Request
         }
 
         return $this->json([
-            'bearer_token' => $authResult->token,
+            'bearer_token' => $authResult->token->getToken(),
             ...$authResult->claims,
         ]);
     }
