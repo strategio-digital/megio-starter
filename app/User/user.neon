@@ -1,5 +1,6 @@
 services:
     - App\User\Console\UserCreateCommand
     - App\User\Console\UserRoleAssignCommand
+    - App\User\Resolver\UserTokenResolver
     - App\User\Mail\UserRegistrationMailer
     - App\User\Facade\UserFacade

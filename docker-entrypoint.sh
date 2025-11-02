@@ -12,7 +12,7 @@ start_queue_worker() {
 
   while true; do
     echo "Starting queue worker '$worker_command'..."
-    su-exec www-data nohup $worker_command >>"/var/www/html/log/queue-worker.log" 2>&1
+    su-exec www-data nohup "$worker_command" >>"/var/www/html/log/queue-worker.log" 2>&1
     sleep 5
   done &
 }

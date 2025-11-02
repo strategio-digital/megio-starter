@@ -9,7 +9,7 @@ use App\User\Database\Entity\User;
 use App\User\Facade\Exception\UserFacadeException;
 use App\User\Http\Request\Dto\UserActivateDto;
 use App\User\Http\Request\Dto\UserRegisterDto;
-use App\User\Mail\UserRegistrationMailer;
+use App\User\Resolver\UserTokenResolver;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -22,7 +22,7 @@ final readonly class UserFacade
 
     public function __construct(
         private EntityManager $em,
-        private UserRegistrationMailer $registrationMailer,
+        private UserTokenResolver $userTokenResolver,
     ) {}
 
     /**
@@ -49,6 +49,10 @@ final readonly class UserFacade
         $this->em->persist($user);
         $this->em->flush();
 
+        $token = $this->userTokenResolver->generateUserToken($user);
+        $user->setActivationToken($token);
+        $this->em->flush();
+
         $this->em->getQueueRepo()->add(
             worker: QueueWorker::USER_REGISTRATION_MAIL_WORKER,
             payload: ['user_id' => $user->getId()],
@@ -64,25 +68,30 @@ final readonly class UserFacade
      */
     public function activateUser(UserActivateDto $dto): User
     {
-        $user = $this->em->getUserRepo()->find($dto->userId);
+        $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
+
+        if ($userId === null) {
+            throw new UserFacadeException('user.activation.invalid.token');
+        }
+
+        $user = $this->em->getUserRepo()->find($userId);
 
         if ($user === null) {
             throw new UserFacadeException('user.not.found');
         }
 
-        // TODO: activation token verification logic
-        if ($dto->token !== 'test-token') {
+        if ($user->isSoftDeleted() === true) {
+            throw new UserFacadeException('user.not.found');
+        }
+
+        if ($user->getActivationToken() !== $dto->token) {
             throw new UserFacadeException('user.activation.invalid.token');
         }
 
-        $this->em->persist($user);
+        $user->setIsActive(true);
+        $user->setActivationToken(null);
         $this->em->flush();
 
         return $user;
-    }
-
-    public function sendRegistrationMail(User $user): void
-    {
-        $this->registrationMailer->send($user, 'test-token');
     }
 }

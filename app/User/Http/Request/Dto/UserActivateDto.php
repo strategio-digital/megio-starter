@@ -10,9 +10,6 @@ readonly class UserActivateDto implements RequestDtoInterface
 {
     public function __construct(
         #[Assert\NotBlank]
-        #[Assert\Uuid]
-        public string $userId,
-        #[Assert\NotBlank]
         public string $token,
     ) {}
 }

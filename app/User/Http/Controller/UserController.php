@@ -25,14 +25,11 @@ final class UserController extends Controller
         ]);
     }
 
-    public function activate(
-        string $uuid,
-        string $token,
-    ): Response {
+    public function activate(string $token): Response
+    {
         return $this->render(Path::viewDir() . '/user/controller/activate.latte', [
             'title' => 'Account Activation',
             'description' => 'Activate your account',
-            'userId' => $uuid,
             'token' => $token,
         ]);
     }

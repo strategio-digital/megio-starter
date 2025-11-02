@@ -39,7 +39,16 @@ class User implements ICrudable, IAuthenticable, IJoinable
     #[ORM\JoinTable(name: 'user_has_role')]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: "role_id", referencedColumnName: "id", onDelete: 'CASCADE')]
-    protected Collection $roles;
+    private Collection $roles;
+
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isActive = false;
+
+    #[ORM\Column(type: 'text', length: 64, nullable: true)]
+    private ?string $activationToken = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isSoftDeleted = false;
 
     public function __construct()
     {
@@ -52,5 +61,43 @@ class User implements ICrudable, IAuthenticable, IJoinable
             'fields' => ['email'],
             'format' => '%s',
         ];
+    }
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): void
+    {
+        $this->activationToken = $activationToken;
+    }
+
+    public function isSoftDeleted(): bool
+    {
+        return $this->isSoftDeleted;
+    }
+
+    public function setIsSoftDeleted(bool $isSoftDeleted): void
+    {
+        $this->isSoftDeleted = $isSoftDeleted;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
     }
 }

@@ -63,11 +63,8 @@ if (userActivationEl) {
 	const UserActivation = await import(
 		'@/assets/app/User/Activation/Activation.vue'
 	);
-	const userId = String(userActivationEl.getAttribute('data-user-id'));
 	const token = String(userActivationEl.getAttribute('data-token'));
-	createApp(UserActivation.default, { userId, token }).mount(
-		userActivationEl,
-	);
+	createApp(UserActivation.default, { token }).mount(userActivationEl);
 }
 
 // Only authenticated users

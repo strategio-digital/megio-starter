@@ -10,6 +10,7 @@ use Megio\Helper\Path;
 use Megio\Http\Resolver\LinkResolver;
 use Megio\Mailer\SmtpMailer;
 use Nette\Mail\Message;
+use RuntimeException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final readonly class UserRegistrationMailer
@@ -18,13 +19,16 @@ final readonly class UserRegistrationMailer
         private LinkResolver $linkResolver,
     ) {}
 
-    public function send(
-        User $user,
-        string $activationToken,
-    ): void {
+    public function send(User $user): void
+    {
+        $token = $user->getActivationToken();
+
+        if ($token === null) {
+            throw new RuntimeException('User activation token is missing.');
+        }
+
         $activationLink = $this->linkResolver->link('user.activation', [
-            'uuid' => $user->getId(),
-            'token' => $activationToken,
+            'token' => $token,
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = new EmailTemplate(

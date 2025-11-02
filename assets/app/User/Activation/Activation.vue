@@ -6,8 +6,7 @@ import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import Button from '@/assets/app-ui/Buttons/Button.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
 
-const { userId, token } = defineProps<{
-	userId: string;
+const { token } = defineProps<{
 	token: string;
 }>();
 
@@ -20,7 +19,7 @@ const activateUser = async () => {
 
 	const response = await megio.fetch('api/v1/user/activate', {
 		method: 'POST',
-		body: JSON.stringify({ userId, token }),
+		body: JSON.stringify({ token }),
 	});
 
 	isLoading.value = false;
@@ -37,12 +36,10 @@ const activateUser = async () => {
 	}
 
 	const err = response.errors as {
-		userId?: string;
 		token?: string;
 		general?: string;
 	};
 	error.value =
-		err.userId ??
 		err.token ??
 		err.general ??
 		'An error occurred during activation. Please try again.';

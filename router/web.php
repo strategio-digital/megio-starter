@@ -21,7 +21,7 @@ return static function (RoutingConfigurator $routes): void {
         ->controller([UserController::class, 'register'])
         ->options(['auth' => false]);
 
-    $routes->add('user.activation', '/user/{uuid}/activate/{token}')
+    $routes->add('user.activation', '/user/activate/{token}')
         ->methods(['GET'])
         ->controller([UserController::class, 'activate'])
         ->options(['auth' => false]);

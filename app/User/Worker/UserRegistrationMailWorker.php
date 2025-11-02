@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\Worker;
 
 use App\EntityManager;
-use App\User\Facade\UserFacade;
+use App\User\Mail\UserRegistrationMailer;
 use Exception;
 use Megio\Database\Entity\Queue;
 use Megio\Queue\IQueueWorker;
@@ -18,7 +18,7 @@ final readonly class UserRegistrationMailWorker implements IQueueWorker
 {
     public function __construct(
         private EntityManager $em,
-        private UserFacade $userFacade,
+        private UserRegistrationMailer $userRegistrationMailer,
     ) {}
 
     /**
@@ -44,7 +44,7 @@ final readonly class UserRegistrationMailWorker implements IQueueWorker
             throw new Exception('User not found.');
         }
 
-        $this->userFacade->sendRegistrationMail($user);
+        $this->userRegistrationMailer->send($user);
 
         return null;
     }
