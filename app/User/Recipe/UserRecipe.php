@@ -7,7 +7,10 @@ use App\User\Database\Entity\User;
 use Megio\Collection\CollectionRecipe;
 use Megio\Collection\CollectionRequest;
 use Megio\Collection\Formatter\CallableFormatter;
+use Megio\Collection\ReadBuilder\Column\BooleanColumn;
+use Megio\Collection\ReadBuilder\Column\DateTimeColumn;
 use Megio\Collection\ReadBuilder\Column\EmailColumn;
+use Megio\Collection\ReadBuilder\Column\StringColumn;
 use Megio\Collection\ReadBuilder\Column\ToManyColumn;
 use Megio\Collection\ReadBuilder\ReadBuilder;
 use Megio\Collection\SearchBuilder\Searchable;
@@ -16,6 +19,7 @@ use Megio\Collection\WriteBuilder\Field\Base\EmptyValue;
 use Megio\Collection\WriteBuilder\Field\EmailField;
 use Megio\Collection\WriteBuilder\Field\PasswordField;
 use Megio\Collection\WriteBuilder\Field\TextField;
+use Megio\Collection\WriteBuilder\Field\ToggleBtnField;
 use Megio\Collection\WriteBuilder\Field\ToManySelectField;
 use Megio\Collection\WriteBuilder\Rule\EqualRule;
 use Megio\Collection\WriteBuilder\Rule\MaxRule;
@@ -27,6 +31,8 @@ use Megio\Database\Entity\Auth\Role;
 
 use function assert;
 use function is_string;
+use function strlen;
+use function substr;
 
 class UserRecipe extends CollectionRecipe
 {
@@ -65,6 +71,10 @@ class UserRecipe extends CollectionRecipe
             ->buildByDbSchema(exclude: [
                 'password',
                 'email',
+                'lastLogin',
+                'isActive',
+                'activationToken',
+                'isSoftDeleted',
             ], persist: true)
             ->add(
                 new EmailColumn(key: 'email', name: 'Email', formatters: [
@@ -75,7 +85,11 @@ class UserRecipe extends CollectionRecipe
                         return 'mailto:' . $value;
                     }),
                 ]),
-            );
+            )
+            ->add(new DateTimeColumn(key: 'lastLogin', name: 'Last Login'))
+            ->add(new BooleanColumn(key: 'isActive', name: 'Active'))
+            ->add(new StringColumn(key: 'activationToken', name: 'Activation Token'))
+            ->add(new BooleanColumn(key: 'isSoftDeleted', name: 'Soft Deleted'));
     }
 
     public function readAll(
@@ -86,9 +100,31 @@ class UserRecipe extends CollectionRecipe
             ->buildByDbSchema(exclude: [
                 'password',
                 'email',
+                'activationToken',
+                'isActive',
+                'isSoftDeleted',
             ], persist: true)
             ->add(col: new EmailColumn(key: 'email', name: 'Email', sortable: true), moveBeforeKey: 'lastLogin')
-            ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'));
+            ->add(col: new BooleanColumn(key: 'isActive', name: 'Active'))
+            ->add(col: new BooleanColumn(key: 'isSoftDeleted', name: 'Soft Deleted'))
+            ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'))
+            ->add(
+                col: new StringColumn(key: 'activationToken', name: 'Activation Token', formatters: [
+                    new CallableFormatter(function (
+                        mixed $value,
+                    ): string {
+                        if ($value === null) {
+                            return '';
+                        }
+
+                        assert(is_string($value) === true);
+
+                        return (strlen($value) > 12) === true
+                            ? substr($value, 0, 12) . '...'
+                            : $value;
+                    }),
+                ]),
+            );
     }
 
     public function create(
@@ -104,7 +140,7 @@ class UserRecipe extends CollectionRecipe
                         columnName: 'email',
                         message: 'This email is already in use.',
                     ),
-                ]),
+                ], attrs: ['fullWidth' => true]),
             )
             ->add(
                 new PasswordField(name: 'password', label: 'Password', rules: [
@@ -119,7 +155,16 @@ class UserRecipe extends CollectionRecipe
                     new EqualRule('password'),
                 ], mapToEntity: false),
             )
-            ->add(new ToManySelectField(name: 'roles', label: 'Roles', reverseEntity: Role::class));
+            ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
+            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft Deleted'))
+            ->add(
+                new ToManySelectField(
+                    name: 'roles',
+                    label: 'Roles',
+                    reverseEntity: Role::class,
+                    attrs: ['fullWidth' => true],
+                ),
+            );
     }
 
     public function update(
@@ -137,6 +182,9 @@ class UserRecipe extends CollectionRecipe
             ->add(new TextField(name: 'id', label: 'ID', attrs: ['fullWidth' => true], disabled: true))
             ->add(new EmailField(name: 'email', label: 'Email'))
             ->add($pwf)
+            ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
+            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft Deleted'))
+            ->add(new TextField(name: 'activationToken', label: 'Activation Token', attrs: ['fullWidth' => true]))
             ->add(
                 new ToManySelectField(
                     name: 'roles',
