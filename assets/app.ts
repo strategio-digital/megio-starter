@@ -67,6 +67,27 @@ if (userActivationEl) {
 	createApp(UserActivation.default, { token }).mount(userActivationEl);
 }
 
+const userForgotPasswordEl = document.getElementById(
+	'vue-user-forgot-password-form',
+);
+if (userForgotPasswordEl) {
+	const ForgotPasswordForm = await import(
+		'@/assets/app/User/ForgotPasswordForm/ForgotPasswordForm.vue'
+	);
+	createApp(ForgotPasswordForm.default).mount(userForgotPasswordEl);
+}
+
+const userResetPasswordEl = document.getElementById(
+	'vue-user-reset-password-form',
+);
+if (userResetPasswordEl) {
+	const ResetPasswordForm = await import(
+		'@/assets/app/User/ResetPasswordForm/ResetPasswordForm.vue'
+	);
+	const token = String(userResetPasswordEl.getAttribute('data-token'));
+	createApp(ResetPasswordForm.default, { token }).mount(userResetPasswordEl);
+}
+
 // Only authenticated users
 if (megio.auth.user.hasRole('user')) {
 	const dashboardEl = document.getElementById('vue-dashboard');

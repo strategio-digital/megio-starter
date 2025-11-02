@@ -103,6 +103,12 @@ const handleSubmit = async () => {
                         />
                     </div>
 
+                    <div class="text-right -mt-3">
+                        <a href="/user/forgot-password" class="text-sm text-blue-600 hover:text-blue-500">
+                            Forgot password?
+                        </a>
+                    </div>
+
                     <div v-if="errors.general" class="bg-red-50 border border-red-200 rounded-lg p-4">
                         <div class="flex">
                             <div class="flex-shrink-0 text-red-800">

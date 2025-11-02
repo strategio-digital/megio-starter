@@ -11,16 +11,16 @@ use function is_string;
 
 final readonly class UserTokenResolver
 {
-    private const string TOKEN_EXPIRATION = '+1 day';
-
     public function __construct(
         private JWTResolver $jwtResolver,
     ) {}
 
-    public function generateUserToken(User $user): string
-    {
+    public function generateUserToken(
+        User $user,
+        DateTimeImmutable $expirationAt,
+    ): string {
         return $this->jwtResolver->createToken(
-            expirationAt: new DateTimeImmutable(self::TOKEN_EXPIRATION),
+            expirationAt: $expirationAt,
             claims: [
                 'user_id' => $user->getId(),
             ],

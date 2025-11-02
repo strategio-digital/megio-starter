@@ -26,6 +26,16 @@ return static function (RoutingConfigurator $routes): void {
         ->controller([UserController::class, 'activate'])
         ->options(['auth' => false]);
 
+    $routes->add('user.forgot-password', '/user/forgot-password')
+        ->methods(['GET'])
+        ->controller([UserController::class, 'forgotPassword'])
+        ->options(['auth' => false]);
+
+    $routes->add('user.reset-password', '/user/reset-password/{token}')
+        ->methods(['GET'])
+        ->controller([UserController::class, 'resetPassword'])
+        ->options(['auth' => false]);
+
     $routes->add('dashboard', '/dashboard')
         ->methods(['GET'])
         ->controller([DashboardController::class, 'dashboard'])

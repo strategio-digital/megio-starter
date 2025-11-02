@@ -33,4 +33,21 @@ final class UserController extends Controller
             'token' => $token,
         ]);
     }
+
+    public function forgotPassword(): Response
+    {
+        return $this->render(Path::viewDir() . '/user/controller/forgot-password.latte', [
+            'title' => 'Forgot Password',
+            'description' => 'Reset your password',
+        ]);
+    }
+
+    public function resetPassword(string $token): Response
+    {
+        return $this->render(Path::viewDir() . '/user/controller/reset-password.latte', [
+            'title' => 'Reset Password',
+            'description' => 'Set your new password',
+            'token' => $token,
+        ]);
+    }
 }

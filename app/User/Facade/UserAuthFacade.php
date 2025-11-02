@@ -10,8 +10,10 @@ use App\User\Database\Entity\User;
 use App\User\Dto\AuthenticatedUserClaimsDto;
 use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Http\Request\Dto\UserActivateDto;
+use App\User\Http\Request\Dto\UserForgotPasswordDto;
 use App\User\Http\Request\Dto\UserLoginDto;
 use App\User\Http\Request\Dto\UserRegisterDto;
+use App\User\Http\Request\Dto\UserResetPasswordDto;
 use App\User\Resolver\UserTokenResolver;
 use DateMalformedStringException;
 use DateTime;
@@ -31,6 +33,10 @@ use const PASSWORD_ARGON2ID;
 final readonly class UserAuthFacade
 {
     public const string USER_ROLE_NAME = 'user';
+
+    private const string ACTIVATION_TOKEN_EXPIRATION = '+1 day';
+
+    private const string RESET_PASSWORD_TOKEN_EXPIRATION = '+1 hour';
 
     public function __construct(
         private EntityManager $em,
@@ -67,7 +73,9 @@ final readonly class UserAuthFacade
             throw new UserAuthFacadeException('user.register.email-exists', 0, $e);
         }
 
-        $token = $this->userTokenResolver->generateUserToken($user);
+        $expirationAt = new DateTimeImmutable(self::ACTIVATION_TOKEN_EXPIRATION);
+        $token = $this->userTokenResolver->generateUserToken($user, $expirationAt);
+
         $user->setActivationToken($token);
         $this->em->flush();
 
@@ -89,21 +97,21 @@ final readonly class UserAuthFacade
         $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
 
         if ($userId === null) {
-            throw new UserAuthFacadeException('user.activation.invalid.token');
+            throw new UserAuthFacadeException('user.activation.invalid.token.1');
         }
 
         $user = $this->em->getUserRepo()->find($userId);
 
         if ($user === null) {
-            throw new UserAuthFacadeException('user.not.found');
+            throw new UserAuthFacadeException('user.activation.invalid.token.2');
         }
 
         if ($user->isSoftDeleted() === true) {
-            throw new UserAuthFacadeException('user.not.found');
+            throw new UserAuthFacadeException('user.activation.invalid.token.3');
         }
 
         if ($user->getActivationToken() !== $dto->token) {
-            throw new UserAuthFacadeException('user.activation.invalid.token');
+            throw new UserAuthFacadeException('user.activation.invalid.token.4');
         }
 
         $user->setIsActive(true);
@@ -123,15 +131,15 @@ final readonly class UserAuthFacade
         $user = $this->em->getUserRepo()->findOneBy(['email' => $dto->email]);
 
         if ($user === null || $user->isSoftDeleted() === true) {
-            throw new UserAuthFacadeException('user.login.invalid-credentials');
+            throw new UserAuthFacadeException('user.login.invalid-credentials.1');
         }
 
         if ($user->isActive() === false) {
-            throw new UserAuthFacadeException('user.login.inactive-account');
+            throw new UserAuthFacadeException('user.login.invalid-credentials.2');
         }
 
         if (new Passwords(PASSWORD_ARGON2ID)->verify($dto->password, $user->getPassword()) === false) {
-            throw new UserAuthFacadeException('user.login.invalid-credentials');
+            throw new UserAuthFacadeException('user.login.invalid-credentials.3');
         }
 
         $token = new Token();
@@ -153,5 +161,75 @@ final readonly class UserAuthFacade
         $this->em->flush();
 
         return new AuthenticatedUserClaimsDto($token, $user, $claims);
+    }
+
+    /**
+     * @throws ORMException
+     * @throws UserAuthFacadeException
+     * @throws Exception
+     */
+    public function forgotPassword(UserForgotPasswordDto $dto): User
+    {
+        $user = $this->em->getUserRepo()->findOneBy(['email' => $dto->email]);
+
+        if ($user === null || $user->isSoftDeleted() === true) {
+            throw new UserAuthFacadeException('user.forgot-password.invalid-credentials.1');
+        }
+
+        if ($user->isActive() === false) {
+            throw new UserAuthFacadeException('user.forgot-password.invalid-credentials.2');
+        }
+
+        $expirationAt = new DateTimeImmutable(self::RESET_PASSWORD_TOKEN_EXPIRATION);
+        $token = $this->userTokenResolver->generateUserToken($user, $expirationAt);
+
+        $user->setResetPasswordToken($token);
+        $this->em->flush();
+
+        $this->em->getQueueRepo()->add(
+            worker: QueueWorker::USER_PASSWORD_RESET_MAIL_WORKER,
+            payload: ['user_id' => $user->getId()],
+        );
+
+        return $user;
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws UserAuthFacadeException
+     * @throws EntityException
+     */
+    public function resetPassword(UserResetPasswordDto $dto): User
+    {
+        $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
+
+        if ($userId === null) {
+            throw new UserAuthFacadeException('user.reset-password.invalid-token.1');
+        }
+
+        $user = $this->em->getUserRepo()->find($userId);
+
+        if ($user === null) {
+            throw new UserAuthFacadeException('user.reset-password.invalid-token.2');
+        }
+
+        if ($user->isSoftDeleted() === true) {
+            throw new UserAuthFacadeException('user.reset-password.invalid-token.3');
+        }
+
+        if ($user->isActive() === false) {
+            throw new UserAuthFacadeException('user.reset-password.invalid-token.4');
+        }
+
+        if ($user->getResetPasswordToken() !== $dto->token) {
+            throw new UserAuthFacadeException('user.reset-password.invalid-token.5');
+        }
+
+        $user->setPassword($dto->password);
+        $user->setResetPasswordToken(null);
+        $this->em->flush();
+
+        return $user;
     }
 }

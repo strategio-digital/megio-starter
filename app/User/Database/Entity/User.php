@@ -49,6 +49,9 @@ class User implements ICrudable, IAuthenticable, IJoinable
     #[ORM\Column(type: 'text', length: 64, nullable: true)]
     private ?string $activationToken = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $resetPasswordToken = null;
+
     #[ORM\Column(options: ['default' => false])]
     private bool $isSoftDeleted = false;
 
@@ -93,6 +96,16 @@ class User implements ICrudable, IAuthenticable, IJoinable
     public function setIsSoftDeleted(bool $isSoftDeleted): void
     {
         $this->isSoftDeleted = $isSoftDeleted;
+    }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): void
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
     }
 
     /**

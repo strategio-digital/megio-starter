@@ -3,6 +3,8 @@ services:
     - App\User\Console\UserRoleAssignCommand
     - App\User\Resolver\UserTokenResolver
     - App\User\Mail\UserRegistrationMailer
+    - App\User\Mail\PasswordResetMailer
+    - App\User\Worker\UserPasswordResetMailWorker
     - App\User\Facade\UserAuthFacade
 
 events:
