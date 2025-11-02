@@ -34,6 +34,8 @@ class User implements ICrudable, IAuthenticable, IJoinable
     use TRoleMethods;
     use TResourceMethods;
 
+    public const string TABLE_NAME = 'user';
+
     /** @var Collection<int, Role> */
     #[ORM\ManyToMany(targetEntity: Role::class)]
     #[ORM\JoinTable(name: 'user_has_role')]

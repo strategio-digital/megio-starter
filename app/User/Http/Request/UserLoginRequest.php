@@ -7,16 +7,16 @@ use App\App\Serializer\RequestSerializer;
 use App\App\Serializer\RequestSerializerException;
 use App\User\Facade\Exception\UserFacadeException;
 use App\User\Facade\UserAuthFacade;
-use App\User\Http\Request\Dto\UserActivateDto;
+use App\User\Http\Request\Dto\UserLoginDto;
+use DateMalformedStringException;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
 use Megio\Http\Request\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserActivateRequest extends Request
+class UserLoginRequest extends Request
 {
     public function __construct(
-        private readonly UserAuthFacade $userAuthFacade,
+        private readonly UserAuthFacade $userFacade,
         private readonly RequestSerializer $requestSerializer,
     ) {}
 
@@ -26,23 +26,26 @@ class UserActivateRequest extends Request
     }
 
     /**
-     * @throws OptimisticLockException
      * @throws ORMException
+     * @throws DateMalformedStringException
      */
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserActivateDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalize(UserLoginDto::class, $data);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
         }
 
         try {
-            $this->userAuthFacade->activateUser($requestDto);
+            $authResult = $this->userFacade->loginUser($requestDto);
         } catch (UserFacadeException $e) {
             return $this->error(['general' => $e->getMessage()]);
         }
 
-        return $this->json(['message' => 'user.activation.success']);
+        return $this->json([
+            'bearer_token' => $authResult->token,
+            ...$authResult->claims,
+        ]);
     }
 }

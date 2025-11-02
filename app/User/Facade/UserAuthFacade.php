@@ -3,26 +3,40 @@ declare(strict_types=1);
 
 namespace App\User\Facade;
 
+use App\App\EnvReader\EnvConvertor;
 use App\EntityManager;
 use App\QueueWorker;
 use App\User\Database\Entity\User;
+use App\User\Dto\AuthenticatedUserClaimsDto;
 use App\User\Facade\Exception\UserFacadeException;
 use App\User\Http\Request\Dto\UserActivateDto;
+use App\User\Http\Request\Dto\UserLoginDto;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use App\User\Resolver\UserTokenResolver;
+use DateMalformedStringException;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Exception;
+use Megio\Database\Entity\Auth\Token;
 use Megio\Database\Entity\EntityException;
+use Megio\Security\JWT\ClaimsFormatter;
+use Megio\Security\JWT\JWTResolver;
+use Nette\Security\Passwords;
 
-final readonly class UserFacade
+use const PASSWORD_ARGON2ID;
+
+final readonly class UserAuthFacade
 {
     public const string USER_ROLE_NAME = 'user';
 
     public function __construct(
         private EntityManager $em,
         private UserTokenResolver $userTokenResolver,
+        private JWTResolver $jwtResolver,
+        private ClaimsFormatter $claimsFormatter,
     ) {}
 
     /**
@@ -93,5 +107,47 @@ final readonly class UserFacade
         $this->em->flush();
 
         return $user;
+    }
+
+    /**
+     * @throws ORMException
+     * @throws DateMalformedStringException
+     * @throws UserFacadeException
+     */
+    public function loginUser(UserLoginDto $dto): AuthenticatedUserClaimsDto
+    {
+        $user = $this->em->getUserRepo()->findOneBy(['email' => $dto->email]);
+
+        if ($user === null || $user->isSoftDeleted() === true) {
+            throw new UserFacadeException('user.login.invalid-credentials');
+        }
+
+        if ($user->isActive() === false) {
+            throw new UserFacadeException('user.login.inactive-account');
+        }
+
+        if (new Passwords(PASSWORD_ARGON2ID)->verify($dto->password, $user->getPassword()) === false) {
+            throw new UserFacadeException('user.login.invalid-credentials');
+        }
+
+        $token = new Token();
+        $token->setSource(User::TABLE_NAME);
+        $token->setSourceId($user->getId());
+        $this->em->persist($token);
+
+        $time = EnvConvertor::toString($_ENV['AUTH_EXPIRATION']);
+
+        $expiration = new DateTime()->modify('+' . $time);
+        $immutable = DateTimeImmutable::createFromMutable($expiration);
+        $claims = $this->claimsFormatter->format($user, $token);
+        $jwt = $this->jwtResolver->createToken($immutable, $claims);
+
+        $token->setExpiration($expiration);
+        $token->setToken($jwt);
+        $user->setLastLogin(new DateTime());
+
+        $this->em->flush();
+
+        return new AuthenticatedUserClaimsDto($token, $user, $claims);
     }
 }

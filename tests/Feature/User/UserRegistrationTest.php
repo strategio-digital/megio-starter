@@ -5,7 +5,7 @@ namespace Tests\Feature\User;
 use App\App\EnvReader\EnvConvertor;
 use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
-use App\User\Facade\UserFacade;
+use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Megio\Helper\Path;
 use Tests\TestCase;
@@ -17,7 +17,7 @@ class UserRegistrationTest extends TestCase
     public function testRegistersUser(): void
     {
         // Arrange
-        $facade = $this->getService(UserFacade::class);
+        $facade = $this->getService(UserAuthFacade::class);
         $developerMail = EnvConvertor::toString($_ENV['APP_DEVELOPER_MAIL']);
 
         $userRegisterDto = new UserRegisterDto(
@@ -39,7 +39,7 @@ class UserRegistrationTest extends TestCase
 
         $this->assertCount(1, $roles);
         $this->assertNotFalse($firstRole, 'User should have at least one role');
-        $this->assertSame(UserFacade::USER_ROLE_NAME, $firstRole->getName());
+        $this->assertSame(UserAuthFacade::USER_ROLE_NAME, $firstRole->getName());
 
         // Assert - Password is hashed (not plain text)
         $this->assertNotSame('SecurePass123!', $user->getPassword());

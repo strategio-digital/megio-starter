@@ -3,4 +3,4 @@ services:
     - App\User\Console\UserRoleAssignCommand
     - App\User\Resolver\UserTokenResolver
     - App\User\Mail\UserRegistrationMailer
-    - App\User\Facade\UserFacade
+    - App\User\Facade\UserAuthFacade

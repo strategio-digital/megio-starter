@@ -5,7 +5,7 @@ namespace App\User\Http\Request;
 
 use App\App\Serializer\RequestSerializer;
 use App\App\Serializer\RequestSerializerException;
-use App\User\Facade\UserFacade;
+use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\Exception\ORMException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserRegisterRequest extends Request
 {
     public function __construct(
-        private readonly UserFacade $userFacade,
+        private readonly UserAuthFacade $userAuthFacade,
         private readonly RequestSerializer $requestSerializer,
     ) {}
 
@@ -27,6 +27,7 @@ class UserRegisterRequest extends Request
 
     /**
      * @throws ORMException
+     * @throws EntityException
      */
     public function process(array $data): Response
     {
@@ -37,11 +38,9 @@ class UserRegisterRequest extends Request
         }
 
         try {
-            $this->userFacade->registerUser($requestDto);
-        } catch (EntityException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            $this->userAuthFacade->registerUser($requestDto);
         } catch (UniqueConstraintViolationException) {
-            return $this->error(['email' => 'User with this email already exists.']);
+            return $this->error(['email' => 'user.register.email-exists']);
         }
 
         return $this->json();
