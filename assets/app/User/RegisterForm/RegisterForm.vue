@@ -24,7 +24,7 @@ const form = reactive<RegisterForm>({
 
 const errors = reactive<RegisterErrors>({});
 const isLoading = ref<boolean>(false);
-const isRegistrationSuccessful = ref<boolean>(true);
+const isRegistrationSuccessful = ref<boolean>(false);
 
 const clearFieldError = (field: keyof RegisterErrors) => {
 	errors[field] = undefined;
