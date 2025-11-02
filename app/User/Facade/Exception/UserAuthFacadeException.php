@@ -5,4 +5,4 @@ namespace App\User\Facade\Exception;
 
 use Exception;
 
-class UserFacadeException extends Exception {}
+class UserAuthFacadeException extends Exception {}

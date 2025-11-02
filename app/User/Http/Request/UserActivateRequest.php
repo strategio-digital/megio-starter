@@ -5,7 +5,7 @@ namespace App\User\Http\Request;
 
 use App\App\Serializer\RequestSerializer;
 use App\App\Serializer\RequestSerializerException;
-use App\User\Facade\Exception\UserFacadeException;
+use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserActivateDto;
 use Doctrine\ORM\Exception\ORMException;
@@ -39,7 +39,7 @@ class UserActivateRequest extends Request
 
         try {
             $this->userAuthFacade->activateUser($requestDto);
-        } catch (UserFacadeException $e) {
+        } catch (UserAuthFacadeException $e) {
             return $this->error(['general' => $e->getMessage()]);
         }
 

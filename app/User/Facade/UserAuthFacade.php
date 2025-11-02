@@ -8,7 +8,7 @@ use App\EntityManager;
 use App\QueueWorker;
 use App\User\Database\Entity\User;
 use App\User\Dto\AuthenticatedUserClaimsDto;
-use App\User\Facade\Exception\UserFacadeException;
+use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Http\Request\Dto\UserActivateDto;
 use App\User\Http\Request\Dto\UserLoginDto;
 use App\User\Http\Request\Dto\UserRegisterDto;
@@ -78,28 +78,28 @@ final readonly class UserAuthFacade
     /**
      * @throws OptimisticLockException
      * @throws ORMException
-     * @throws UserFacadeException
+     * @throws UserAuthFacadeException
      */
     public function activateUser(UserActivateDto $dto): User
     {
         $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
 
         if ($userId === null) {
-            throw new UserFacadeException('user.activation.invalid.token');
+            throw new UserAuthFacadeException('user.activation.invalid.token');
         }
 
         $user = $this->em->getUserRepo()->find($userId);
 
         if ($user === null) {
-            throw new UserFacadeException('user.not.found');
+            throw new UserAuthFacadeException('user.not.found');
         }
 
         if ($user->isSoftDeleted() === true) {
-            throw new UserFacadeException('user.not.found');
+            throw new UserAuthFacadeException('user.not.found');
         }
 
         if ($user->getActivationToken() !== $dto->token) {
-            throw new UserFacadeException('user.activation.invalid.token');
+            throw new UserAuthFacadeException('user.activation.invalid.token');
         }
 
         $user->setIsActive(true);
@@ -112,22 +112,22 @@ final readonly class UserAuthFacade
     /**
      * @throws ORMException
      * @throws DateMalformedStringException
-     * @throws UserFacadeException
+     * @throws UserAuthFacadeException
      */
     public function loginUser(UserLoginDto $dto): AuthenticatedUserClaimsDto
     {
         $user = $this->em->getUserRepo()->findOneBy(['email' => $dto->email]);
 
         if ($user === null || $user->isSoftDeleted() === true) {
-            throw new UserFacadeException('user.login.invalid-credentials');
+            throw new UserAuthFacadeException('user.login.invalid-credentials');
         }
 
         if ($user->isActive() === false) {
-            throw new UserFacadeException('user.login.inactive-account');
+            throw new UserAuthFacadeException('user.login.inactive-account');
         }
 
         if (new Passwords(PASSWORD_ARGON2ID)->verify($dto->password, $user->getPassword()) === false) {
-            throw new UserFacadeException('user.login.invalid-credentials');
+            throw new UserAuthFacadeException('user.login.invalid-credentials');
         }
 
         $token = new Token();
