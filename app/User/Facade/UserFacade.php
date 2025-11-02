@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\User\Facade;
 
 use App\EntityManager;
+use App\QueueWorker;
 use App\User\Database\Entity\User;
 use App\User\Facade\Exception\UserFacadeException;
 use App\User\Http\Request\Dto\UserActivateDto;
 use App\User\Http\Request\Dto\UserRegisterDto;
-use App\User\Mail\ActivationMailer;
+use App\User\Mail\UserRegistrationMailer;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -21,7 +22,7 @@ final readonly class UserFacade
 
     public function __construct(
         private EntityManager $em,
-        private ActivationMailer $activationMailer,
+        private UserRegistrationMailer $registrationMailer,
     ) {}
 
     /**
@@ -32,7 +33,6 @@ final readonly class UserFacade
      */
     public function registerUser(
         UserRegisterDto $userRegisterDto,
-        bool $sendMail = true,
     ): User {
         $roleName = self::USER_ROLE_NAME;
         $role = $this->em->getAuthRoleRepo()->findOneBy(['name' => $roleName]);
@@ -49,9 +49,10 @@ final readonly class UserFacade
         $this->em->persist($user);
         $this->em->flush();
 
-        if ($sendMail === true) {
-            $this->activationMailer->send($user, 'test-token');
-        }
+        $this->em->getQueueRepo()->add(
+            worker: QueueWorker::USER_REGISTRATION_MAIL_WORKER,
+            payload: ['user_id' => $user->getId()],
+        );
 
         return $user;
     }
@@ -78,5 +79,10 @@ final readonly class UserFacade
         $this->em->flush();
 
         return $user;
+    }
+
+    public function sendRegistrationMail(User $user): void
+    {
+        $this->registrationMailer->send($user, 'test-token');
     }
 }

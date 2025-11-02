@@ -39,7 +39,7 @@
     "scripts": {
         "phpstan:baseline": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon -vv -b phpstan-baseline.neon --allow-empty-baseline",
         "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan analyse -c phpstan.neon",
-        "neon": "vendor/bin/neon-lint config/",
+        "neon": "vendor/bin/neon-lint app/",
         "latte": "vendor/bin/latte-lint view/",
         "schema": "bin/console orm:validate-schema -v",
         "test": "vendor/bin/phpunit",

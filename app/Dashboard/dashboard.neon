@@ -1,0 +1,2 @@
+services:
+    - App\Dashboard\Facade\DashboardFacade

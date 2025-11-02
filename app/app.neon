@@ -6,16 +6,12 @@ services:
         factory: App\App\Serializer\ValidatorFactory::create
     - App\App\Serializer\RequestSerializer(@validatorService)
 
-    - App\Dashboard\Facade\DashboardFacade
-
-    - App\User\Console\UserCreateCommand
-    - App\User\Console\UserRoleAssignCommand
-    - App\User\Mail\ActivationMailer
-    - App\User\Facade\UserFacade
-
 includes:
     - ./../vendor/strategio/megio-core/config/app.neon
     - ./../vendor/strategio/megio-core/config/events.neon
+
+    - ./Dashboard/dashboard.neon
+    - ./User/user.neon
 
 events:
     - App\User\Subscriber\Collection\OnUserCreated

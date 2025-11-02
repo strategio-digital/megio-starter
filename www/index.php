@@ -10,14 +10,14 @@ use Megio\Http\Kernel\App;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $startedAt = microtime(true);
-$container = (new Bootstrap())
+$container = new Bootstrap()
     ->projectRootPath(__DIR__ . '/../')
     ->logger(
         $_ENV['APP_ENVIRONMENT'] === 'develop'
             ? new JsonLogstashLogger()
             : new SentryLogger(),
     )
-    ->configure(Path::configDir() . '/app.neon', $startedAt);
+    ->configure(Path::appDir() . '/app.neon', $startedAt);
 
 /** @var App $app */
 $app = $container->getByType(App::class);

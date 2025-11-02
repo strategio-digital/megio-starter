@@ -8,6 +8,7 @@ use App\App\Serializer\RequestSerializerException;
 use App\User\Facade\UserFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\Exception\ORMException;
 use Megio\Database\Entity\EntityException;
 use Megio\Http\Request\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,9 @@ class UserRegisterRequest extends Request
         return [];
     }
 
+    /**
+     * @throws ORMException
+     */
     public function process(array $data): Response
     {
         try {

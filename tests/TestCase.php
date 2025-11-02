@@ -70,7 +70,7 @@ abstract class TestCase extends BaseTestCase
             ->projectRootPath(__DIR__ . '/../')
             ->logger(new JsonLogstashLogger())
             ->configure(
-                configPath: Path::configDir() . '/app.neon',
+                configPath: Path::appDir() . '/app.neon',
                 startedAt: microtime(true),
             );
     }

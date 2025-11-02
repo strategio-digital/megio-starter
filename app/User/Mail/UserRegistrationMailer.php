@@ -12,7 +12,7 @@ use Megio\Mailer\SmtpMailer;
 use Nette\Mail\Message;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final readonly class ActivationMailer
+final readonly class UserRegistrationMailer
 {
     public function __construct(
         private LinkResolver $linkResolver,
@@ -28,7 +28,7 @@ final readonly class ActivationMailer
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = new EmailTemplate(
-            file: Path::viewDir() . '/user/mail/user-activation.mail.latte',
+            file: Path::viewDir() . '/user/mail/user-registration.mail.latte',
             subject: 'Activate your account',
             params: [
                 'activationLink' => $activationLink,

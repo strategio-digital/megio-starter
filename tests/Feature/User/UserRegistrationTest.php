@@ -20,16 +20,13 @@ class UserRegistrationTest extends TestCase
         $facade = $this->getService(UserFacade::class);
         $developerMail = EnvConvertor::toString($_ENV['APP_DEVELOPER_MAIL']);
 
-        $dto = new UserRegisterDto(
+        $userRegisterDto = new UserRegisterDto(
             email: $developerMail,
             password: 'SecurePass123!',
         );
 
         // Act
-        $user = $facade->registerUser(
-            userRegisterDto: $dto,
-            sendMail: false,
-        );
+        $user = $facade->registerUser($userRegisterDto);
 
         // Assert - User was created with correct data
         $this->assertInstanceOf(User::class, $user);
@@ -59,7 +56,7 @@ class UserRegistrationTest extends TestCase
 
         // Act - Create template with absolute path using Path::viewDir()
         $templateWithAbsolutePath = new EmailTemplate(
-            file: Path::viewDir() . '/user/mail/user-activation.mail.latte',
+            file: Path::viewDir() . '/user/mail/user-registration.mail.latte',
             subject: 'Activate your account',
             params: [
                 'activationLink' => 'https://example.com/activate?token=' . $activationToken,
@@ -68,7 +65,7 @@ class UserRegistrationTest extends TestCase
 
         // Create template with relative path (existing behavior)
         $templateWithRelativePath = new EmailTemplate(
-            file: 'view/user/mail/user-activation.mail.latte',
+            file: 'view/user/mail/user-registration.mail.latte',
             subject: 'Activate your account',
             params: [
                 'activationLink' => 'https://example.com/activate?token=' . $activationToken,
