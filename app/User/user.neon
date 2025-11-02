@@ -2,10 +2,9 @@ services:
     - App\User\Console\UserCreateCommand
     - App\User\Console\UserRoleAssignCommand
     - App\User\Resolver\UserTokenResolver
+    - App\User\Facade\UserAuthFacade
     - App\User\Mail\UserRegistrationMailer
     - App\User\Mail\PasswordResetMailer
-    - App\User\Worker\UserPasswordResetMailWorker
-    - App\User\Facade\UserAuthFacade
 
 events:
     - App\User\Subscriber\Kernel\DisableMegioUserLogin

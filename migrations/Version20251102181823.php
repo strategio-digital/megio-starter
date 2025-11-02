@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251102014256 extends AbstractMigration
+final class Version20251102181823 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -31,9 +31,9 @@ final class Version20251102014256 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_2923B54F89329D25 ON "auth_role_has_resource" (resource_id)');
         $this->addSql('CREATE TABLE "auth_token" (source VARCHAR(32) NOT NULL, source_id UUID NOT NULL, expiration TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, token TEXT NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_9315F04E5F8A7F73953C1C61 ON "auth_token" (source, source_id)');
-        $this->addSql('CREATE TABLE "queue" (id UUID NOT NULL, worker VARCHAR(255) NOT NULL, priority INT DEFAULT 0 NOT NULL, status VARCHAR(255) NOT NULL, payload JSON NOT NULL, delay_until TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, delay_reason VARCHAR(255) DEFAULT NULL, worker_id INT DEFAULT NULL, error_retries INT DEFAULT 0 NOT NULL, error_message TEXT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE "queue" (worker VARCHAR(255) NOT NULL, priority INT DEFAULT 0 NOT NULL, status VARCHAR(255) NOT NULL, payload JSON NOT NULL, delay_until TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, delay_reason VARCHAR(255) DEFAULT NULL, worker_id INT DEFAULT NULL, error_retries INT DEFAULT 0 NOT NULL, error_message TEXT DEFAULT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_7FFD7F639FB2BF6262A6DC27 ON "queue" (worker, priority)');
-        $this->addSql('CREATE TABLE "user" (is_active BOOLEAN DEFAULT false NOT NULL, activation_token TEXT DEFAULT NULL, is_soft_deleted BOOLEAN DEFAULT false NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, email VARCHAR(64) NOT NULL, password VARCHAR(255) NOT NULL, last_login TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE "user" (is_active BOOLEAN DEFAULT false NOT NULL, activation_token TEXT DEFAULT NULL, reset_password_token TEXT DEFAULT NULL, is_soft_deleted BOOLEAN DEFAULT false NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, email VARCHAR(64) NOT NULL, password VARCHAR(255) NOT NULL, last_login TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
         $this->addSql('CREATE TABLE user_has_role (user_id UUID NOT NULL, role_id UUID NOT NULL, PRIMARY KEY (user_id, role_id))');
         $this->addSql('CREATE INDEX IDX_EAB8B535A76ED395 ON user_has_role (user_id)');
