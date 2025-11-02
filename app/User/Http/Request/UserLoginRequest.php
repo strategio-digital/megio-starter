@@ -37,7 +37,7 @@ class UserLoginRequest extends Request
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            return $this->error(['general' => $e->getMessage()], 403);
         }
 
         return $this->json([
