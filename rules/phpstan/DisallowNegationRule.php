@@ -9,6 +9,7 @@ use PhpParser\Node\Expr\BooleanNot;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
+use PHPStan\ShouldNotHappenException;
 
 /**
  * @implements Rule<BooleanNot>
@@ -20,6 +21,9 @@ class DisallowNegationRule implements Rule
         return BooleanNot::class;
     }
 
+    /**
+     * @throws ShouldNotHappenException
+     */
     public function processNode(
         Node $node,
         Scope $scope,
