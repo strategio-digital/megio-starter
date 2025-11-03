@@ -38,15 +38,18 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.fetch('api/v1/user/reset-password', {
-		method: 'POST',
-		body: JSON.stringify({
-			token: token,
-			password: form.password,
-		}),
-	});
+	const response = await megio.fetch<{}, ResetPasswordErrors>(
+		'api/v1/user/reset-password',
+		{
+			method: 'POST',
+			body: JSON.stringify({
+				token: token,
+				password: form.password,
+			}),
+		},
+	);
 
-	if (response.status === 200) {
+	if (response.success) {
 		isPasswordReset.value = true;
 		isLoading.value = false;
 		return;
@@ -54,11 +57,10 @@ const handleSubmit = async () => {
 
 	isLoading.value = false;
 
-	const err = response.errors as ResetPasswordErrors;
-	Object.keys(err).forEach((key) => {
+	for (const key in Object.keys(response.data)) {
 		errors[key as keyof ResetPasswordErrors] =
-			err[key as keyof ResetPasswordErrors];
-	});
+			response.data[key as keyof ResetPasswordErrors];
+	}
 };
 </script>
 

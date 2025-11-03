@@ -34,12 +34,15 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.fetch('api/v1/user/register', {
-		method: 'POST',
-		body: JSON.stringify(form),
-	});
+	const response = await megio.fetch<{}, RegisterErrors>(
+		'api/v1/user/register',
+		{
+			method: 'POST',
+			body: JSON.stringify(form),
+		},
+	);
 
-	if (response.status === 200) {
+	if (response.success) {
 		isRegistrationSuccessful.value = true;
 		isLoading.value = false;
 		return;
@@ -47,10 +50,10 @@ const handleSubmit = async () => {
 
 	isLoading.value = false;
 
-	const err = response.errors as RegisterErrors;
-	Object.keys(err).forEach((key) => {
-		errors[key as keyof RegisterErrors] = err[key as keyof RegisterErrors];
-	});
+	for (const key in Object.keys(response.data)) {
+		errors[key as keyof RegisterErrors] =
+			response.data[key as keyof RegisterErrors];
+	}
 };
 </script>
 

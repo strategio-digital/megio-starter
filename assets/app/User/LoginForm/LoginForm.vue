@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 	errors.email = undefined;
 	errors.password = undefined;
 
-	const response = await megio.fetch('api/v1/user/login', {
+	const response = await megio.fetch<{}, LoginErrors>('api/v1/user/login', {
 		method: 'POST',
 		body: JSON.stringify({
 			email: form.email,
@@ -42,7 +42,7 @@ const handleSubmit = async () => {
 		}),
 	});
 
-	if (response.status === 200) {
+	if (response.success) {
 		localStorage.setItem('megio_user', JSON.stringify(response.data));
 		window.toast.asleep();
 		window.toast.add('success', 'Login successful.');
@@ -50,13 +50,12 @@ const handleSubmit = async () => {
 		return;
 	}
 
-	if (response.data?.errors) {
-		Object.assign(errors, response.data.errors);
-	} else {
-		errors.general = 'An error occurred during login.';
-	}
-
 	isLoading.value = false;
+
+	for (const key in Object.keys(response.data)) {
+		errors[key as keyof LoginErrors] =
+			response.data[key as keyof LoginErrors];
+	}
 };
 </script>
 

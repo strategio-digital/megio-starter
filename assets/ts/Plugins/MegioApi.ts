@@ -6,8 +6,8 @@ export default () => {
 
 	setup(baseUrl, errorHandler);
 
-	function errorHandler(response: Response, errors: string[]) {
-		console.error(response.status, errors);
+	function errorHandler(response: Response, errorData: unknown) {
+		console.error(response.status, errorData);
 		if (response.headers.has('X-Auth-Reject-Reason')) {
 			megio.auth.logout();
 			window.location.href = '/user/login';

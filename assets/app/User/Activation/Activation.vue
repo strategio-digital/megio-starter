@@ -10,6 +10,11 @@ const { token } = defineProps<{
 	token: string;
 }>();
 
+type ActivationErrors = {
+	general?: string;
+	token?: string;
+};
+
 const isLoading = ref<boolean>(true);
 const error = ref<string>('');
 
@@ -17,14 +22,17 @@ const activateUser = async () => {
 	isLoading.value = true;
 	error.value = '';
 
-	const response = await megio.fetch('api/v1/user/activate', {
-		method: 'POST',
-		body: JSON.stringify({ token }),
-	});
+	const response = await megio.fetch<{}, ActivationErrors>(
+		'api/v1/user/activate',
+		{
+			method: 'POST',
+			body: JSON.stringify({ token }),
+		},
+	);
 
 	isLoading.value = false;
 
-	if (response.status === 200) {
+	if (response.success) {
 		window.toast.asleep();
 		window.toast.add(
 			'success',
@@ -35,13 +43,9 @@ const activateUser = async () => {
 		return;
 	}
 
-	const err = response.errors as {
-		token?: string;
-		general?: string;
-	};
 	error.value =
-		err.token ??
-		err.general ??
+		response.data.token ??
+		response.data.general ??
 		'An error occurred during activation. Please try again.';
 };
 
