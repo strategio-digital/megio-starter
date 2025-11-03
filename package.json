@@ -16,20 +16,20 @@
         "lint": "npx @biomejs/biome check"
     },
     "dependencies": {
-        "megio-api": "^0.13.0",
-        "megio-panel": "^0.13.1",
+        "megio-api": "^1.0.0",
+        "megio-panel": "^1.0.1",
         "tailwindcss": "^4.1.16",
         "vue": "^3.5.22"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.3.2",
-        "@maizzle/framework": "5.3.0",
+        "@biomejs/biome": "^2.3.3",
+        "@maizzle/framework": "5.3.1",
         "@tailwindcss/vite": "^4.1.16",
         "@vitejs/plugin-vue": "^6.0.1",
         "laravel-vite-plugin": "^2.0.1",
         "typescript": "^5.9.3",
         "vite": "7.1.12",
-        "vue-tsc": "^3.1.2"
+        "vue-tsc": "^3.1.3"
     },
     "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
