@@ -38,7 +38,7 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.fetch<{}, ResetPasswordErrors>(
+	const response = await megio.fetch<null, ResetPasswordErrors>(
 		'api/v1/user/reset-password',
 		{
 			method: 'POST',

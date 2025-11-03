@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 	errors.email = undefined;
 	errors.password = undefined;
 
-	const response = await megio.fetch<{}, LoginErrors>('api/v1/user/login', {
+	const response = await megio.fetch<null, LoginErrors>('api/v1/user/login', {
 		method: 'POST',
 		body: JSON.stringify({
 			email: form.email,

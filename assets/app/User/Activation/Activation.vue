@@ -22,7 +22,7 @@ const activateUser = async () => {
 	isLoading.value = true;
 	error.value = '';
 
-	const response = await megio.fetch<{}, ActivationErrors>(
+	const response = await megio.fetch<null, ActivationErrors>(
 		'api/v1/user/activate',
 		{
 			method: 'POST',

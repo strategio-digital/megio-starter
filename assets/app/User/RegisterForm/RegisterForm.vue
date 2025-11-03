@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.general = undefined;
 
-	const response = await megio.fetch<{}, RegisterErrors>(
+	const response = await megio.fetch<null, RegisterErrors>(
 		'api/v1/user/register',
 		{
 			method: 'POST',
