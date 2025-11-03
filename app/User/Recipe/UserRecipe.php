@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\User\Recipe;
 
 use App\User\Database\Entity\User;
+use App\User\Recipe\Formatter\SubstrFormatter;
 use Megio\Collection\CollectionRecipe;
 use Megio\Collection\CollectionRequest;
 use Megio\Collection\Formatter\CallableFormatter;
@@ -31,8 +32,6 @@ use Megio\Database\Entity\Auth\Role;
 
 use function assert;
 use function is_string;
-use function strlen;
-use function substr;
 
 class UserRecipe extends CollectionRecipe
 {
@@ -73,8 +72,9 @@ class UserRecipe extends CollectionRecipe
                 'email',
                 'lastLogin',
                 'isActive',
-                'activationToken',
                 'isSoftDeleted',
+                'activationToken',
+                'resetPasswordToken',
             ], persist: true)
             ->add(
                 new EmailColumn(key: 'email', name: 'Email', formatters: [
@@ -101,30 +101,33 @@ class UserRecipe extends CollectionRecipe
                 'password',
                 'email',
                 'activationToken',
+                'resetPasswordToken',
                 'isActive',
                 'isSoftDeleted',
             ], persist: true)
             ->add(col: new EmailColumn(key: 'email', name: 'Email', sortable: true), moveBeforeKey: 'lastLogin')
             ->add(col: new BooleanColumn(key: 'isActive', name: 'Active'))
-            ->add(col: new BooleanColumn(key: 'isSoftDeleted', name: 'Soft Deleted'))
+            ->add(col: new BooleanColumn(key: 'isSoftDeleted', name: 'Soft deleted'))
             ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'))
             ->add(
-                col: new StringColumn(key: 'activationToken', name: 'Activation Token', formatters: [
-                    new CallableFormatter(function (
-                        mixed $value,
-                    ): string {
-                        if ($value === null) {
-                            return '';
-                        }
-
-                        assert(is_string($value) === true);
-
-                        return (strlen($value) > 12) === true
-                            ? substr($value, 0, 12) . '...'
-                            : $value;
-                    }),
-                ]),
+                col: new StringColumn(
+                    key: 'activationToken',
+                    name: 'Activation token',
+                    formatters: [
+                        new SubstrFormatter(),
+                    ],
+                ),
+            )
+            ->add(
+                col: new StringColumn(
+                    key: 'resetPasswordToken',
+                    name: 'Reset password token',
+                    formatters: [
+                        new SubstrFormatter(),
+                    ],
+                ),
             );
+
     }
 
     public function create(
@@ -156,7 +159,7 @@ class UserRecipe extends CollectionRecipe
                 ], mapToEntity: false),
             )
             ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
-            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft Deleted'))
+            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft deleted'))
             ->add(
                 new ToManySelectField(
                     name: 'roles',
@@ -171,7 +174,7 @@ class UserRecipe extends CollectionRecipe
         WriteBuilder $builder,
         CollectionRequest $request,
     ): WriteBuilder {
-        $pwf = new PasswordField(name: 'password', label: 'Password');
+        $pwf = new PasswordField(name: 'password', label: 'assword');
 
         // Do not show password on form rendering
         if ($request->isFormRendering() === true) {
@@ -183,8 +186,11 @@ class UserRecipe extends CollectionRecipe
             ->add(new EmailField(name: 'email', label: 'Email'))
             ->add($pwf)
             ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
-            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft Deleted'))
-            ->add(new TextField(name: 'activationToken', label: 'Activation Token', attrs: ['fullWidth' => true]))
+            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft deleted'))
+            ->add(new TextField(name: 'activationToken', label: 'Activation token', attrs: ['fullWidth' => true]))
+            ->add(
+                new TextField(name: 'passwordResetToken', label: 'Password reset token', attrs: ['fullWidth' => true]),
+            )
             ->add(
                 new ToManySelectField(
                     name: 'roles',
