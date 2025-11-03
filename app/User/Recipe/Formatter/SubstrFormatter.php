@@ -8,8 +8,8 @@ use Megio\Collection\ReadBuilder\Column\Base\ShowOnlyOn;
 
 use function assert;
 use function is_string;
-use function strlen;
-use function substr;
+use function mb_strlen;
+use function mb_substr;
 
 class SubstrFormatter extends BaseFormatter
 {
@@ -30,10 +30,10 @@ class SubstrFormatter extends BaseFormatter
 
         assert(is_string($value) === true);
 
-        if (strlen($value) <= $this->length) {
+        if ((mb_strlen($value) <= $this->length) === true) {
             return $value;
         }
 
-        return substr($value, 0, $this->length) . '...';
+        return mb_substr($value, 0, $this->length) . '...';
     }
 }
