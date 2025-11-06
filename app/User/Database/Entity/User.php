@@ -46,7 +46,7 @@ class User implements ICrudable, IAuthenticable, IJoinable
     #[ORM\Column(options: ['default' => false])]
     private bool $isActive = false;
 
-    #[ORM\Column(type: 'text', length: 64, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $activationToken = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
