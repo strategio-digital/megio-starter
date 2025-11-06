@@ -5,38 +5,35 @@ namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Facade\UserAuthFacade;
-use App\User\Http\Request\Dto\UserLoginDto;
-use DateMalformedStringException;
+use App\User\Http\Request\Dto\UserActivateDto;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Megio\Http\Request\AbstractRequest;
 use Megio\Http\Serializer\RequestSerializerException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserLoginAbstractRequest extends AbstractRequest
+class ActivateRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userFacade,
+        private readonly UserAuthFacade $userAuthFacade,
     ) {}
 
     /**
+     * @throws OptimisticLockException
      * @throws ORMException
-     * @throws DateMalformedStringException
      * @throws RequestSerializerException
      */
     public function process(Request $request): Response
     {
-        $requestDto = $this->requestToDto(UserLoginDto::class);
+        $requestDto = $this->requestToDto(UserActivateDto::class);
 
         try {
-            $authResult = $this->userFacade->loginUser($requestDto);
+            $this->userAuthFacade->activateUser($requestDto);
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()], 403);
+            return $this->error(['general' => $e->getMessage()]);
         }
 
-        return $this->json([
-            'bearer_token' => $authResult->token->getToken(),
-            ...$authResult->claims,
-        ]);
+        return $this->json();
     }
 }

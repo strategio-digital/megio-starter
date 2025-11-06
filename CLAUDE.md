@@ -66,12 +66,11 @@ When adding new functionality (e.g., user registration), follow this complete ch
 
 #### Request Handler (for API endpoints)
 
-- Create Request class in `app/Domain/Http/Request/` extending `Megio\Http\Request\Request`
+- Create Request class in `app/Domain/Http/Request/` extending `AbstractRequest`
 - Create corresponding DTO class in `app/Domain/Dto/` with Symfony validation attributes
-- Inject `RequestSerializer` via constructor for deserialization and validation
-- Implement `schema()` returning empty array `[]`
-- Implement `process()` with proper error handling using try/catch
-- Use `$this->requestSerializer->deserialize(DtoClass::class, $data)` for validation
+- Inject required services (like Facade) via constructor
+- Implement `process(Request $request): Response` method with proper error handling using try/catch
+- Use `$this->requestToDto(DtoClass::class)` for validation and deserialization
 - Return `$this->json()` for success, `$this->error()` for errors
 
 #### Request Validation & Mapping

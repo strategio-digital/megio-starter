@@ -5,16 +5,14 @@ namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Facade\UserAuthFacade;
-use App\User\Http\Request\Dto\UserResetPasswordDto;
+use App\User\Http\Request\Dto\UserForgotPasswordDto;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
-use Megio\Database\Entity\EntityException;
 use Megio\Http\Request\AbstractRequest;
 use Megio\Http\Serializer\RequestSerializerException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserResetPasswordAbstractRequest extends AbstractRequest
+class ForgotPasswordRequest extends AbstractRequest
 {
     public function __construct(
         private readonly UserAuthFacade $userAuthFacade,
@@ -22,18 +20,16 @@ class UserResetPasswordAbstractRequest extends AbstractRequest
 
     /**
      * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws EntityException
      * @throws RequestSerializerException
      */
     public function process(Request $request): Response
     {
-        $requestDto = $this->requestToDto(UserResetPasswordDto::class);
+        $requestDto = $this->requestToDto(UserForgotPasswordDto::class);
 
         try {
-            $this->userAuthFacade->resetPassword($requestDto);
-        } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            $this->userAuthFacade->forgotPassword($requestDto);
+        } catch (UserAuthFacadeException) {
+            // To prevent user enumeration, we do not disclose whether the email exists.
         }
 
         return $this->json();
