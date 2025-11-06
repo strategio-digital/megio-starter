@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Dashboard\Http\Request\Dto;
 
-use App\App\Serializer\Dto\ResponseDtoInterface;
 use App\User\Database\Entity\User;
+use Megio\Http\Serializer\Dto\ResponseDtoInterface;
 
 readonly class DashboardResponseDto implements ResponseDtoInterface
 {

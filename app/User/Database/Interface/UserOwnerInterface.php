@@ -5,7 +5,7 @@ namespace App\User\Database\Interface;
 
 use App\User\Database\Entity\User;
 
-interface IUserOwner
+interface UserOwnerInterface
 {
     public function getUser(): User;
 

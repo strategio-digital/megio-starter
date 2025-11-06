@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Dashboard\Http\Request;
 
-use App\App\Serializer\RequestSerializer;
 use App\Dashboard\Facade\DashboardFacade;
 use App\Dashboard\Http\Request\Dto\DashboardResponseDto;
 use App\User\Database\Entity\User;
@@ -17,7 +16,6 @@ class DashboardAbstractRequest extends AbstractRequest
 {
     public function __construct(
         private readonly AuthUser $authUser,
-        private readonly RequestSerializer $requestSerializer,
         private readonly DashboardFacade $dashboardFacade,
     ) {}
 

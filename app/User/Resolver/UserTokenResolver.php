@@ -27,7 +27,7 @@ final readonly class UserTokenResolver
         );
     }
 
-    public function resolveUserIdFromToken(string $token): ?string
+    public function extractUserIdFromToken(string $token): ?string
     {
         if ($token === '') {
             return null;

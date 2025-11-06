@@ -24,10 +24,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.4",
-        "strategio/megio-core": "dev-master",
-        "symfony/serializer": "^7.3",
-        "symfony/validator": "^7.3",
-        "symfony/property-access": "^7.3"
+        "strategio/megio-core": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.0",

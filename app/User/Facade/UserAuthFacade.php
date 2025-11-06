@@ -94,7 +94,7 @@ final readonly class UserAuthFacade
      */
     public function activateUser(UserActivateDto $dto): User
     {
-        $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
+        $userId = $this->userTokenResolver->extractUserIdFromToken($dto->token);
 
         if ($userId === null) {
             throw new UserAuthFacadeException('user.activation.invalid.token.1');
@@ -202,7 +202,7 @@ final readonly class UserAuthFacade
      */
     public function resetPassword(UserResetPasswordDto $dto): User
     {
-        $userId = $this->userTokenResolver->resolveUserIdFromToken($dto->token);
+        $userId = $this->userTokenResolver->extractUserIdFromToken($dto->token);
 
         if ($userId === null) {
             throw new UserAuthFacadeException('user.reset-password.invalid-token.1');

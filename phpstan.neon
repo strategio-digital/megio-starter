@@ -26,9 +26,10 @@ parameters:
     treatPhpDocTypesAsCertain: false
 
     ignoreErrors:
-        - '#Trait App\\User\\Database\\Field\\TUserOwner is used zero times and is not analysed\.#'
         - '#^Dynamic call to static method PHPUnit\\Framework\\Assert::#'
-        - '#has parameter \$context with no value type specified in iterable type array#'
+
+        # Remove this or remove code
+        - '#Trait App\\User\\Database\\Field\\TUserOwner is used zero times and is not analysed\.#'
 
 services:
     # Custom pravidlo pro zákaz negace (!)
