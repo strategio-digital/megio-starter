@@ -25,6 +25,7 @@ use Megio\Collection\WriteBuilder\Field\ToManySelectField;
 use Megio\Collection\WriteBuilder\Rule\EqualRule;
 use Megio\Collection\WriteBuilder\Rule\MaxRule;
 use Megio\Collection\WriteBuilder\Rule\MinRule;
+use Megio\Collection\WriteBuilder\Rule\NullableRule;
 use Megio\Collection\WriteBuilder\Rule\RequiredRule;
 use Megio\Collection\WriteBuilder\Rule\UniqueRule;
 use Megio\Collection\WriteBuilder\WriteBuilder;
@@ -174,7 +175,7 @@ class UserRecipe extends CollectionRecipe
         WriteBuilder $builder,
         CollectionRequest $request,
     ): WriteBuilder {
-        $pwf = new PasswordField(name: 'password', label: 'assword');
+        $pwf = new PasswordField(name: 'password', label: 'Password');
 
         // Do not show password on form rendering
         if ($request->isFormRendering() === true) {
@@ -187,9 +188,25 @@ class UserRecipe extends CollectionRecipe
             ->add($pwf)
             ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
             ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft deleted'))
-            ->add(new TextField(name: 'activationToken', label: 'Activation token', attrs: ['fullWidth' => true]))
             ->add(
-                new TextField(name: 'passwordResetToken', label: 'Password reset token', attrs: ['fullWidth' => true]),
+                new TextField(
+                    name: 'activationToken',
+                    label: 'Activation token',
+                    rules: [
+                        new NullableRule(),
+                    ],
+                    attrs: ['fullWidth' => true],
+                ),
+            )
+            ->add(
+                new TextField(
+                    name: 'resetPasswordToken',
+                    label: 'Password reset token',
+                    rules: [
+                        new NullableRule(),
+                    ],
+                    attrs: ['fullWidth' => true],
+                ),
             )
             ->add(
                 new ToManySelectField(

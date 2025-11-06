@@ -27,7 +27,9 @@ class DashboardAbstractRequest extends AbstractRequest
         $user = $this->authUser->get();
 
         if ($user instanceof User === false) {
-            return $this->error(['Uživatel není přihlášen'], Response::HTTP_UNAUTHORIZED);
+            return $this->error([
+                'general' => 'user.not_authenticated',
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $this->dashboardFacade->computeSomething();
