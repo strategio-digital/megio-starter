@@ -2817,12 +2817,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/strategio-digital/megio-core.git",
-                "reference": "cb2c40aa41fc17be2496e27da910b873ca72877a"
+                "reference": "5e7eb7090e1bbef880a600d01c88940e7deeb0ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/cb2c40aa41fc17be2496e27da910b873ca72877a",
-                "reference": "cb2c40aa41fc17be2496e27da910b873ca72877a",
+                "url": "https://api.github.com/repos/strategio-digital/megio-core/zipball/5e7eb7090e1bbef880a600d01c88940e7deeb0ce",
+                "reference": "5e7eb7090e1bbef880a600d01c88940e7deeb0ce",
                 "shasum": ""
             },
             "require": {
@@ -2885,7 +2885,7 @@
                 "issues": "https://github.com/strategio-digital/megio-core/issues",
                 "source": "https://github.com/strategio-digital/megio-core/tree/master"
             },
-            "time": "2025-11-06T20:34:37+00:00"
+            "time": "2025-11-06T21:51:13+00:00"
         },
         {
             "name": "symfony/cache",
