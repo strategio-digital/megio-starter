@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\User\Facade;
 
-use Megio\Helper\EnvConvertor;
 use App\EntityManager;
 use App\QueueWorker;
 use App\User\Database\Entity\User;
@@ -24,6 +23,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Exception;
 use Megio\Database\Entity\Auth\Token;
 use Megio\Database\Entity\EntityException;
+use Megio\Helper\EnvConvertor;
 use Megio\Security\JWT\ClaimsFormatter;
 use Megio\Security\JWT\JWTResolver;
 use Nette\Security\Passwords;

@@ -11,30 +11,29 @@ use App\User\Http\Request\Dto\UserResetPasswordDto;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Megio\Database\Entity\EntityException;
-use Megio\Http\Request\Request;
+use Megio\Http\Request\AbstractRequest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserResetPasswordRequest extends Request
+class UserResetPasswordAbstractRequest extends AbstractRequest
 {
     public function __construct(
         private readonly UserAuthFacade $userAuthFacade,
         private readonly RequestSerializer $requestSerializer,
     ) {}
 
-    public function schema(array $data): array
-    {
-        return [];
-    }
-
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws EntityException
      */
-    public function process(array $data): Response
+    public function process(Request $request): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalizeFromArray(UserResetPasswordDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalize(
+                class: UserResetPasswordDto::class,
+                json: $request->getContent(),
+            );
             $this->userAuthFacade->resetPassword($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());

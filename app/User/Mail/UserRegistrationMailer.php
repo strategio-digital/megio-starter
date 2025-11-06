@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\User\Mail;
 
-use Megio\Helper\EnvConvertor;
-use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
+use Megio\Helper\EnvConvertor;
 use Megio\Helper\Path;
 use Megio\Http\Resolver\LinkResolver;
+use Megio\Mailer\EmailTemplate;
 use Megio\Mailer\SmtpMailer;
 use Nette\Mail\Message;
 use RuntimeException;

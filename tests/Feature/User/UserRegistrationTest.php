@@ -2,15 +2,13 @@
 
 namespace Tests\Feature\User;
 
-use Megio\Helper\EnvConvertor;
-use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
 use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Doctrine\ORM\Exception\ORMException;
 use Megio\Database\Entity\EntityException;
-use Megio\Helper\Path;
+use Megio\Helper\EnvConvertor;
 use Tests\TestCase;
 
 use function password_verify;
@@ -55,37 +53,5 @@ class UserRegistrationTest extends TestCase
 
         // Note: Transaction is automatically rolled back in tearDown()
         // so this test doesn't actually save to the database
-    }
-
-    public function testEmailTemplateSupportsAbsolutePaths(): void
-    {
-        // Arrange
-        $activationToken = 'test-token-xyz789';
-
-        // Act - Create template with absolute path using Path::viewDir()
-        $templateWithAbsolutePath = new EmailTemplate(
-            file: Path::viewDir() . '/user/mail/user-registration.mail.latte',
-            subject: 'Activate your account',
-            params: [
-                'activationLink' => 'https://example.com/activate?token=' . $activationToken,
-            ],
-        );
-
-        // Create template with relative path (existing behavior)
-        $templateWithRelativePath = new EmailTemplate(
-            file: 'view/user/mail/user-registration.mail.latte',
-            subject: 'Activate your account',
-            params: [
-                'activationLink' => 'https://example.com/activate?token=' . $activationToken,
-            ],
-        );
-
-        // Assert - Both render successfully and produce same output
-        $absolutePathHtml = $templateWithAbsolutePath->render();
-        $relativePathHtml = $templateWithRelativePath->render();
-
-        $this->assertNotEmpty($absolutePathHtml);
-        $this->assertNotEmpty($relativePathHtml);
-        $this->assertSame($absolutePathHtml, $relativePathHtml);
     }
 }

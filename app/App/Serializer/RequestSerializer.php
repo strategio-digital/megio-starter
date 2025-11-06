@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\Serializer;
 
 use function assert;
 use function count;
+use function is_array;
 
 readonly class RequestSerializer
 {
@@ -45,7 +46,29 @@ readonly class RequestSerializer
     /**
      * @template T
      *
-     * @param class-string<T> $dtoClass
+     * @param class-string<T> $class
+     *
+     * @throws RequestSerializerException
+     *
+     * @return T
+     */
+    public function denormalize(
+        string $class,
+        string $json,
+    ) {
+        $data = $this->serializer->decode($json, JsonEncoder::FORMAT);
+        assert(is_array($data) === true);
+
+        $dto = $this->denormalizeFromArray($class, $data);
+        assert($dto instanceof $class === true);
+
+        return $dto;
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $class
      * @param array<int|string, mixed> $data
      *
      * @throws RequestSerializerException
@@ -53,10 +76,10 @@ readonly class RequestSerializer
      * @return T
      */
     public function denormalizeFromArray(
-        string $dtoClass,
+        string $class,
         array $data,
     ) {
-        $errors = $this->validator->validate($dtoClass, $data);
+        $errors = $this->validator->validate($class, $data);
 
         if (count($errors) !== 0) {
             throw new RequestSerializerException($errors);
@@ -64,11 +87,11 @@ readonly class RequestSerializer
 
         $dto = $this->serializer->denormalize(
             data: $data,
-            type: $dtoClass,
+            type: $class,
             format: JsonEncoder::FORMAT,
         );
 
-        assert($dto instanceof $dtoClass === true);
+        assert($dto instanceof $class === true);
         return $dto;
     }
 

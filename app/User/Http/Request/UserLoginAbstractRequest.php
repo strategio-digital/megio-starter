@@ -10,29 +10,28 @@ use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserLoginDto;
 use DateMalformedStringException;
 use Doctrine\ORM\Exception\ORMException;
-use Megio\Http\Request\Request;
+use Megio\Http\Request\AbstractRequest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserLoginRequest extends Request
+class UserLoginAbstractRequest extends AbstractRequest
 {
     public function __construct(
         private readonly UserAuthFacade $userFacade,
         private readonly RequestSerializer $requestSerializer,
     ) {}
 
-    public function schema(array $data): array
-    {
-        return [];
-    }
-
     /**
      * @throws ORMException
      * @throws DateMalformedStringException
      */
-    public function process(array $data): Response
+    public function process(Request $request): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalizeFromArray(UserLoginDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalize(
+                class: UserLoginDto::class,
+                json: $request->getContent(),
+            );
             $authResult = $this->userFacade->loginUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
