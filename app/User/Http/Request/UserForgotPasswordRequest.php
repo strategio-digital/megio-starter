@@ -32,7 +32,7 @@ class UserForgotPasswordRequest extends Request
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserForgotPasswordDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalizeFromArray(UserForgotPasswordDto::class, $data);
             $this->userAuthFacade->forgotPassword($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());

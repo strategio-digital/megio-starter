@@ -32,7 +32,7 @@ class UserRegisterRequest extends Request
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserRegisterDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalizeFromArray(UserRegisterDto::class, $data);
             $this->userAuthFacade->registerUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());

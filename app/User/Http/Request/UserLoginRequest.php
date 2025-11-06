@@ -32,7 +32,7 @@ class UserLoginRequest extends Request
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserLoginDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalizeFromArray(UserLoginDto::class, $data);
             $authResult = $this->userFacade->loginUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());

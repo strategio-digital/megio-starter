@@ -52,7 +52,7 @@ readonly class RequestSerializer
      *
      * @return T
      */
-    public function denormalize(
+    public function denormalizeFromArray(
         string $dtoClass,
         array $data,
     ) {

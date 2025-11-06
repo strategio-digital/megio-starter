@@ -34,7 +34,7 @@ class UserResetPasswordRequest extends Request
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserResetPasswordDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalizeFromArray(UserResetPasswordDto::class, $data);
             $this->userAuthFacade->resetPassword($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());

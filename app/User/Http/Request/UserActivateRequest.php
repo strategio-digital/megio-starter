@@ -32,7 +32,7 @@ class UserActivateRequest extends Request
     public function process(array $data): Response
     {
         try {
-            $requestDto = $this->requestSerializer->denormalize(UserActivateDto::class, $data);
+            $requestDto = $this->requestSerializer->denormalizeFromArray(UserActivateDto::class, $data);
             $this->userAuthFacade->activateUser($requestDto);
         } catch (RequestSerializerException $e) {
             return $this->error($e->getErrors());
