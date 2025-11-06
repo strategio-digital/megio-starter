@@ -70,7 +70,7 @@ final readonly class UserAuthFacade
             $this->em->persist($user);
             $this->em->flush();
         } catch (UniqueConstraintViolationException $e) {
-            throw new UserAuthFacadeException('user.register.email-exists', 0, $e);
+            throw new UserAuthFacadeException('user.registration.email-exists', 0, $e);
         }
 
         $expirationAt = new DateTimeImmutable(self::ACTIVATION_TOKEN_EXPIRATION);
