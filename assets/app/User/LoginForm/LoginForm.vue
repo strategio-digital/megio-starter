@@ -49,7 +49,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-    errors.value = response.data;
+	errors.value = response.data;
 };
 </script>
 

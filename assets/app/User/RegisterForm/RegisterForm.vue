@@ -32,7 +32,7 @@ const clearFieldError = (field: keyof RegisterErrors) => {
 
 const handleSubmit = async () => {
 	isLoading.value = true;
-	errors.value = {}
+	errors.value = {};
 
 	const response = await megio.fetch<null, RegisterErrors>(
 		'api/v1/user/register',
@@ -49,7 +49,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-    errors.value = response.data;
+	errors.value = response.data;
 };
 </script>
 
