@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\User\Mail;
 
-use App\App\EnvReader\EnvConvertor;
+use Megio\Helper\EnvConvertor;
 use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
 use Megio\Helper\Path;

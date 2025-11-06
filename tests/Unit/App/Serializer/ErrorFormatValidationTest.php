@@ -30,7 +30,7 @@ class ErrorFormatValidationTest extends TestCase
         ];
 
         try {
-            $serializer->denormalize(TestUserDto::class, $invalidData);
+            $serializer->denormalizeFromArray(TestUserDto::class, $invalidData);
             $this->fail('Exception should have been thrown');
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
@@ -80,7 +80,7 @@ class ErrorFormatValidationTest extends TestCase
         ];
 
         try {
-            $serializer->denormalize(TestComplexNestedDto::class, $invalidData);
+            $serializer->denormalizeFromArray(TestComplexNestedDto::class, $invalidData);
             $this->fail('Exception should have been thrown');
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
@@ -132,7 +132,7 @@ class ErrorFormatValidationTest extends TestCase
         ];
 
         try {
-            $serializer->denormalize(TestComplexNestedDto::class, $invalidData);
+            $serializer->denormalizeFromArray(TestComplexNestedDto::class, $invalidData);
             $this->fail('Exception should have been thrown');
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
@@ -189,7 +189,7 @@ class ErrorFormatValidationTest extends TestCase
         ];
 
         try {
-            $serializer->denormalize(TestComplexNestedDto::class, $invalidData);
+            $serializer->denormalizeFromArray(TestComplexNestedDto::class, $invalidData);
             $this->fail('Exception should have been thrown');
         } catch (RequestSerializerException $e) {
             $errors = $e->getErrors();
@@ -240,7 +240,7 @@ class ErrorFormatValidationTest extends TestCase
             ],
         ];
 
-        $result = $serializer->denormalize(TestComplexNestedDto::class, $validData);
+        $result = $serializer->denormalizeFromArray(TestComplexNestedDto::class, $validData);
 
         $this->assertInstanceOf(TestComplexNestedDto::class, $result);
         $this->assertSame('Valid Name', $result->name);

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\User;
 
-use App\App\EnvReader\EnvConvertor;
+use Megio\Helper\EnvConvertor;
 use App\App\Mail\EmailTemplate;
 use App\User\Database\Entity\User;
 use App\User\Facade\Exception\UserAuthFacadeException;

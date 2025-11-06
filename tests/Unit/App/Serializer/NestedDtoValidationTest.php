@@ -31,7 +31,7 @@ class NestedDtoValidationTest extends TestCase
             ],
         ];
 
-        $result = $serializer->denormalize(TestNestedDto::class, $dataWithNestedArray);
+        $result = $serializer->denormalizeFromArray(TestNestedDto::class, $dataWithNestedArray);
 
         $this->assertInstanceOf(TestNestedDto::class, $result);
         $this->assertSame('Test entry', $result->name);
@@ -59,7 +59,7 @@ class NestedDtoValidationTest extends TestCase
             'sharedWith' => $sharedWithInstance,
         ];
 
-        $dto = $serializer->denormalize(TestNestedDto::class, $dataWithValidInstance);
+        $dto = $serializer->denormalizeFromArray(TestNestedDto::class, $dataWithValidInstance);
 
         $this->assertInstanceOf(TestNestedDto::class, $dto);
         $this->assertSame('Test entry', $dto->name);
@@ -86,6 +86,6 @@ class NestedDtoValidationTest extends TestCase
 
         // The new recursive validator catches nested validation errors
         $this->expectException(RequestSerializerException::class);
-        $serializer->denormalize(TestNestedDto::class, $dataWithInvalidNestedData);
+        $serializer->denormalizeFromArray(TestNestedDto::class, $dataWithInvalidNestedData);
     }
 }

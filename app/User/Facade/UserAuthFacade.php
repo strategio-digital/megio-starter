@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\User\Facade;
 
-use App\App\EnvReader\EnvConvertor;
+use Megio\Helper\EnvConvertor;
 use App\EntityManager;
 use App\QueueWorker;
 use App\User\Database\Entity\User;

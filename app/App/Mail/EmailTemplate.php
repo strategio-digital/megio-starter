@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\App\Mail;
 
-use App\App\EnvReader\EnvConvertor;
+use Megio\Helper\EnvConvertor;
 use InvalidArgumentException;
 use Latte\Engine;
 use Megio\Extension\Latte\Helper\Vite;
