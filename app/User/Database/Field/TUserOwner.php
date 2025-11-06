@@ -10,22 +10,22 @@ use Megio\Database\Interface\IAuthenticable;
 trait TUserOwner
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    private User $user;
+    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id', nullable: false)]
+    private User $owner;
 
-    public function getUser(): User
+    public function getOwner(): User
     {
-        return $this->user;
+        return $this->owner;
     }
 
-    public function setUser(User $user): self
+    public function setOwner(User $owner): self
     {
-        $this->user = $user;
+        $this->owner = $owner;
         return $this;
     }
 
     public function belongsTo(?IAuthenticable $user): bool
     {
-        return $this->user->getId() === $user?->getId();
+        return $this->owner->getId() === $user?->getId();
     }
 }
