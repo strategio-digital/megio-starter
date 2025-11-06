@@ -26,17 +26,17 @@ const form = reactive<ResetPasswordForm>({
 	password: '',
 });
 
-const errors = reactive<ResetPasswordErrors>({});
+const errors = ref<ResetPasswordErrors>({});
 const isLoading = ref<boolean>(false);
 const isPasswordReset = ref<boolean>(false);
 
 const clearFieldError = (field: keyof ResetPasswordErrors) => {
-	errors[field] = undefined;
+	errors.value[field] = undefined;
 };
 
 const handleSubmit = async () => {
 	isLoading.value = true;
-	errors.general = undefined;
+	errors.value = {};
 
 	const response = await megio.fetch<null, ResetPasswordErrors>(
 		'api/v1/user/reset-password',
@@ -56,11 +56,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-
-	for (const key in Object.keys(response.data)) {
-		errors[key as keyof ResetPasswordErrors] =
-			response.data[key as keyof ResetPasswordErrors];
-	}
+    errors.value = response.data;
 };
 </script>
 

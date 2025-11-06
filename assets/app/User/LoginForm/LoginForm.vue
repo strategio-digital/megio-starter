@@ -21,18 +21,16 @@ const form = reactive<LoginForm>({
 	password: '',
 });
 
-const errors = reactive<LoginErrors>({});
+const errors = ref<LoginErrors>({});
 const isLoading = ref<boolean>(false);
 
 const clearFieldError = (field: keyof LoginErrors) => {
-	errors[field] = undefined;
+	errors.value[field] = undefined;
 };
 
 const handleSubmit = async () => {
 	isLoading.value = true;
-	errors.general = undefined;
-	errors.email = undefined;
-	errors.password = undefined;
+	errors.value = {};
 
 	const response = await megio.fetch<null, LoginErrors>('api/v1/user/login', {
 		method: 'POST',
@@ -51,11 +49,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-
-	for (const key in Object.keys(response.data)) {
-		errors[key as keyof LoginErrors] =
-			response.data[key as keyof LoginErrors];
-	}
+    errors.value = response.data;
 };
 </script>
 

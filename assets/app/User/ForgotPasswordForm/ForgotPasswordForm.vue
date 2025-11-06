@@ -20,17 +20,17 @@ const form = reactive<ForgotPasswordForm>({
 	email: '',
 });
 
-const errors = reactive<ForgotPasswordErrors>({});
+const errors = ref<ForgotPasswordErrors>({});
 const isLoading = ref<boolean>(false);
 const isEmailSent = ref<boolean>(false);
 
 const clearFieldError = (field: keyof ForgotPasswordErrors) => {
-	errors[field] = undefined;
+	errors.value[field] = undefined;
 };
 
 const handleSubmit = async () => {
 	isLoading.value = true;
-	errors.general = undefined;
+	errors.value = {};
 
 	const response = await megio.fetch<null, ForgotPasswordErrors>(
 		'api/v1/user/forgot-password',
@@ -47,11 +47,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-
-	for (const key in Object.keys(response.data)) {
-		errors[key as keyof ForgotPasswordErrors] =
-			response.data[key as keyof ForgotPasswordErrors];
-	}
+    errors.value = response.data;
 };
 </script>
 

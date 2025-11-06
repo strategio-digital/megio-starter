@@ -22,17 +22,17 @@ const form = reactive<RegisterForm>({
 	password: '',
 });
 
-const errors = reactive<RegisterErrors>({});
+const errors = ref<RegisterErrors>({});
 const isLoading = ref<boolean>(false);
 const isRegistrationSuccessful = ref<boolean>(false);
 
 const clearFieldError = (field: keyof RegisterErrors) => {
-	errors[field] = undefined;
+	errors.value[field] = undefined;
 };
 
 const handleSubmit = async () => {
 	isLoading.value = true;
-	errors.general = undefined;
+	errors.value = {}
 
 	const response = await megio.fetch<null, RegisterErrors>(
 		'api/v1/user/register',
@@ -49,11 +49,7 @@ const handleSubmit = async () => {
 	}
 
 	isLoading.value = false;
-
-	for (const key in Object.keys(response.data)) {
-		errors[key as keyof RegisterErrors] =
-			response.data[key as keyof RegisterErrors];
-	}
+    errors.value = response.data;
 };
 </script>
 
