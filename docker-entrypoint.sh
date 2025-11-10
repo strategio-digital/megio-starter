@@ -5,6 +5,7 @@ su-exec www-data php bin/console migration:migrate --no-interaction
 su-exec www-data php bin/console orm:generate-proxies
 su-exec www-data php bin/console app:auth:resources:update
 su-exec www-data php bin/console app:user:role:assign
+su-exec www-data php bin/console translation:import
 
 # rescuable queue worker
 start_queue_worker() {

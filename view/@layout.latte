@@ -1,8 +1,10 @@
+{varType Megio\Translation\Translator $translator}
 {varType string $title}
 {varType string[] $_ENV}
 {varType string[] $_SERVER}
+
 <!doctype html>
-<html lang="cs" class="{block html}{/block}">
+<html lang="{$translator->getLocale()}" class="{block html}{/block}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +19,7 @@
         <meta property="og:image" content="{$_ENV['APP_URL'] . vite('assets/img/social.png')}">
     {/block}
     {block title}
-        <title>{ifset $title}{$title} | {/ifset}WebAppName</title>
+        <title>{ifset $title}{$title} | {/ifset}{_app.name}</title>
     {/block}
     {block assets}
         <link rel="preconnect" href="https://fonts.googleapis.com">

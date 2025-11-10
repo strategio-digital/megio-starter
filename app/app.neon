@@ -16,3 +16,4 @@ extensions:
     doctrine: Megio\Extension\Doctrine\DoctrineExtension
     events: Megio\Extension\Events\EventsExtension
     latte: Megio\Extension\Latte\LatteExtension
+    translation: Megio\Translation\Extension\TranslationExtension
