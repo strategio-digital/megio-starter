@@ -28,7 +28,7 @@ class DashboardAbstractRequest extends AbstractRequest
 
         if ($user instanceof User === false) {
             return $this->error([
-                'general' => 'user.not_authenticated',
+                'general' => 'user.message.not_authenticated',
             ], Response::HTTP_UNAUTHORIZED);
         }
 

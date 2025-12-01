@@ -56,7 +56,7 @@ readonly class DisableMegioUserLogin implements EventSubscriberInterface
             $source = $data['source'] ?? null;
 
             if ($source === User::TABLE_NAME) {
-                $event->setResponse(new JsonResponse(['errors' => ['megio.user.login.disabled']], 403));
+                $event->setResponse(new JsonResponse(['errors' => ['user.message.login_disabled']], 403));
                 $event->stopPropagation();
             }
         }

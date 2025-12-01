@@ -5,15 +5,20 @@ namespace App\Dashboard\Http\Controller;
 
 use Megio\Helper\Path;
 use Megio\Http\Controller\Base\Controller;
+use Megio\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 
-class DashboardController extends Controller
+final class DashboardController extends Controller
 {
+    public function __construct(
+        private readonly Translator $translator,
+    ) {}
+
     public function dashboard(): Response
     {
         return $this->render(Path::viewDir() . '/dashboard/controller/dashboard.latte', [
-            'title' => 'Dashboard',
-            'description' => 'Přehled vašich projektů',
+            'title' => $this->translator->translate('dashboard.page.title'),
+            'description' => $this->translator->translate('dashboard.page.description'),
         ]);
     }
 }

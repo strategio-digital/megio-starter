@@ -10,15 +10,19 @@ use Megio\Http\Resolver\LinkResolver;
 use Megio\Mailer\EmailTemplate;
 use Megio\Mailer\EmailTemplateFactory;
 use Megio\Mailer\SmtpMailer;
+use Megio\Translation\Translator;
 use Nette\Mail\Message;
 use RuntimeException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+use function substr;
 
 final readonly class PasswordResetMailer
 {
     public function __construct(
         private LinkResolver $linkResolver,
         private EmailTemplateFactory $emailTemplateFactory,
+        private Translator $translator,
     ) {}
 
     public function send(User $user): void
@@ -26,16 +30,17 @@ final readonly class PasswordResetMailer
         $token = $user->getResetPasswordToken();
 
         if ($token === null) {
-            throw new RuntimeException('User reset password token is missing.');
+            throw new RuntimeException($this->translator->translate('user.error.reset_token_missing'));
         }
 
         $resetLink = $this->linkResolver->link('user.reset-password', [
+            'locale' => substr($this->translator->getLocale(), 0, 2),
             'token' => $token,
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = new EmailTemplate(
             file: Path::viewDir() . '/user/mail/password-reset.mail.latte',
-            subject: 'Reset your password',
+            subject: $this->translator->translate('user.mail.password_reset.subject'),
             params: [
                 'resetLink' => $resetLink,
             ],

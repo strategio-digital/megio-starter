@@ -30,12 +30,17 @@ use Megio\Collection\WriteBuilder\Rule\RequiredRule;
 use Megio\Collection\WriteBuilder\Rule\UniqueRule;
 use Megio\Collection\WriteBuilder\WriteBuilder;
 use Megio\Database\Entity\Auth\Role;
+use Megio\Translation\Translator;
 
 use function assert;
 use function is_string;
 
 class UserRecipe extends CollectionRecipe
 {
+    public function __construct(
+        private readonly Translator $translator,
+    ) {}
+
     public function source(): string
     {
         return User::class;
@@ -53,14 +58,21 @@ class UserRecipe extends CollectionRecipe
         return $builder
             ->keepDefaults()
             ->addSearchable(
-                new Searchable(column: 'email', operator: 'LIKE', formatter: function (
-                    mixed $value,
-                ): string {
-                    assert(is_string($value) === true);
-                    return '%' . $value . '%';
-                }),
+                new Searchable(
+                    column: 'email',
+                    operator: 'LIKE',
+                    formatter: function (
+                        mixed $value,
+                    ): string {
+                        assert(is_string($value) === true);
+                        return '%' . $value . '%';
+                    },
+                ),
             )
-            ->addSearchable(new Searchable(column: 'name', relation: 'roles'));
+            ->addSearchable(new Searchable(
+                column: 'name',
+                relation: 'roles',
+            ));
     }
 
     public function read(
@@ -78,19 +90,35 @@ class UserRecipe extends CollectionRecipe
                 'resetPasswordToken',
             ], persist: true)
             ->add(
-                new EmailColumn(key: 'email', name: 'Email', formatters: [
-                    new CallableFormatter(function (
-                        mixed $value,
-                    ): string {
-                        assert(is_string($value) === true);
-                        return 'mailto:' . $value;
-                    }),
-                ]),
+                new EmailColumn(
+                    key: 'email',
+                    name: $this->translator->translate('user.field.email'),
+                    formatters: [
+                        new CallableFormatter(function (
+                            mixed $value,
+                        ): string {
+                            assert(is_string($value) === true);
+                            return 'mailto:' . $value;
+                        }),
+                    ],
+                ),
             )
-            ->add(new DateTimeColumn(key: 'lastLogin', name: 'Last Login'))
-            ->add(new BooleanColumn(key: 'isActive', name: 'Active'))
-            ->add(new StringColumn(key: 'activationToken', name: 'Activation Token'))
-            ->add(new BooleanColumn(key: 'isSoftDeleted', name: 'Soft Deleted'));
+            ->add(new DateTimeColumn(
+                key: 'lastLogin',
+                name: $this->translator->translate('user.field.last_login'),
+            ))
+            ->add(new BooleanColumn(
+                key: 'isActive',
+                name: $this->translator->translate('user.field.active'),
+            ))
+            ->add(new StringColumn(
+                key: 'activationToken',
+                name: $this->translator->translate('user.field.activation_token'),
+            ))
+            ->add(new BooleanColumn(
+                key: 'isSoftDeleted',
+                name: $this->translator->translate('user.field.soft_deleted'),
+            ));
     }
 
     public function readAll(
@@ -106,14 +134,27 @@ class UserRecipe extends CollectionRecipe
                 'isActive',
                 'isSoftDeleted',
             ], persist: true)
-            ->add(col: new EmailColumn(key: 'email', name: 'Email', sortable: true), moveBeforeKey: 'lastLogin')
-            ->add(col: new BooleanColumn(key: 'isActive', name: 'Active'))
-            ->add(col: new BooleanColumn(key: 'isSoftDeleted', name: 'Soft deleted'))
-            ->add(col: new ToManyColumn(key: 'roles', name: 'Roles'))
+            ->add(col: new EmailColumn(
+                key: 'email',
+                name: $this->translator->translate('user.field.email'),
+                sortable: true,
+            ), moveBeforeKey: 'lastLogin')
+            ->add(col: new BooleanColumn(
+                key: 'isActive',
+                name: $this->translator->translate('user.field.active'),
+            ))
+            ->add(col: new BooleanColumn(
+                key: 'isSoftDeleted',
+                name: $this->translator->translate('user.field.soft_deleted'),
+            ))
+            ->add(col: new ToManyColumn(
+                key: 'roles',
+                name: $this->translator->translate('user.field.roles'),
+            ))
             ->add(
                 col: new StringColumn(
                     key: 'activationToken',
-                    name: 'Activation token',
+                    name: $this->translator->translate('user.field.activation_token'),
                     formatters: [
                         new SubstrFormatter(),
                     ],
@@ -122,7 +163,7 @@ class UserRecipe extends CollectionRecipe
             ->add(
                 col: new StringColumn(
                     key: 'resetPasswordToken',
-                    name: 'Reset password token',
+                    name: $this->translator->translate('user.field.reset_password_token'),
                     formatters: [
                         new SubstrFormatter(),
                     ],
@@ -137,34 +178,54 @@ class UserRecipe extends CollectionRecipe
     ): WriteBuilder {
         return $builder
             ->add(
-                new EmailField(name: 'email', label: 'Email', rules: [
-                    new RequiredRule(),
-                    new UniqueRule(
-                        targetEntity: User::class,
-                        columnName: 'email',
-                        message: 'This email is already in use.',
-                    ),
-                ], attrs: ['fullWidth' => true]),
+                new EmailField(
+                    name: 'email',
+                    label: $this->translator->translate('user.field.email'),
+                    rules: [
+                        new RequiredRule(),
+                        new UniqueRule(
+                            targetEntity: User::class,
+                            columnName: 'email',
+                            message: $this->translator->translate('user.validation.email_exists'),
+                        ),
+                    ],
+                    attrs: ['fullWidth' => true],
+                ),
             )
             ->add(
-                new PasswordField(name: 'password', label: 'Password', rules: [
-                    new RequiredRule(),
-                    new MinRule(6),
-                    new MaxRule(32),
-                ]),
+                new PasswordField(
+                    name: 'password',
+                    label: $this->translator->translate('user.field.password'),
+                    rules: [
+                        new RequiredRule(),
+                        new MinRule(6),
+                        new MaxRule(32),
+                    ],
+                ),
             )
             ->add(
-                new PasswordField(name: 'password_check', label: 'Password again', rules: [
-                    new RequiredRule(),
-                    new EqualRule('password'),
-                ], mapToEntity: false),
+                new PasswordField(
+                    name: 'password_check',
+                    label: $this->translator->translate('user.field.password_again'),
+                    rules: [
+                        new RequiredRule(),
+                        new EqualRule('password'),
+                    ],
+                    mapToEntity: false,
+                ),
             )
-            ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
-            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft deleted'))
+            ->add(new ToggleBtnField(
+                name: 'isActive',
+                label: $this->translator->translate('user.field.active'),
+            ))
+            ->add(new ToggleBtnField(
+                name: 'isSoftDeleted',
+                label: $this->translator->translate('user.field.soft_deleted'),
+            ))
             ->add(
                 new ToManySelectField(
                     name: 'roles',
-                    label: 'Roles',
+                    label: $this->translator->translate('user.field.roles'),
                     reverseEntity: Role::class,
                     attrs: ['fullWidth' => true],
                 ),
@@ -175,7 +236,7 @@ class UserRecipe extends CollectionRecipe
         WriteBuilder $builder,
         CollectionRequest $request,
     ): WriteBuilder {
-        $pwf = new PasswordField(name: 'password', label: 'Password');
+        $pwf = new PasswordField(name: 'password', label: $this->translator->translate('user.field.password'));
 
         // Do not show password on form rendering
         if ($request->isFormRendering() === true) {
@@ -183,15 +244,29 @@ class UserRecipe extends CollectionRecipe
         }
 
         return $builder
-            ->add(new TextField(name: 'id', label: 'ID', attrs: ['fullWidth' => true], disabled: true))
-            ->add(new EmailField(name: 'email', label: 'Email'))
+            ->add(new TextField(
+                name: 'id',
+                label: $this->translator->translate('app.field.id'),
+                attrs: ['fullWidth' => true],
+                disabled: true,
+            ))
+            ->add(new EmailField(
+                name: 'email',
+                label: $this->translator->translate('user.field.email'),
+            ))
             ->add($pwf)
-            ->add(new ToggleBtnField(name: 'isActive', label: 'Active'))
-            ->add(new ToggleBtnField(name: 'isSoftDeleted', label: 'Soft deleted'))
+            ->add(new ToggleBtnField(
+                name: 'isActive',
+                label: $this->translator->translate('user.field.active'),
+            ))
+            ->add(new ToggleBtnField(
+                name: 'isSoftDeleted',
+                label: $this->translator->translate('user.field.soft_deleted'),
+            ))
             ->add(
                 new TextField(
                     name: 'activationToken',
-                    label: 'Activation token',
+                    label: $this->translator->translate('user.field.activation_token'),
                     rules: [
                         new NullableRule(),
                     ],
@@ -201,7 +276,7 @@ class UserRecipe extends CollectionRecipe
             ->add(
                 new TextField(
                     name: 'resetPasswordToken',
-                    label: 'Password reset token',
+                    label: $this->translator->translate('user.field.reset_password_token'),
                     rules: [
                         new NullableRule(),
                     ],
@@ -211,7 +286,7 @@ class UserRecipe extends CollectionRecipe
             ->add(
                 new ToManySelectField(
                     name: 'roles',
-                    label: 'Roles',
+                    label: $this->translator->translate('user.field.roles'),
                     reverseEntity: Role::class,
                     attrs: ['fullWidth' => true],
                 ),
