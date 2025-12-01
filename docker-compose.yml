@@ -37,3 +37,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - $PWD/docker/temp:/var/lib/postgresql/temp
+
+  documan:
+    build:
+      context: .
+      dockerfile: ./docker/documan/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${DOCUMAN_HTTP_PORT}:${DOCUMAN_HTTP_PORT}"
+    volumes:
+      - ./docs:/documan/data/docs
+      - ./README.md:/documan/data/README.md
