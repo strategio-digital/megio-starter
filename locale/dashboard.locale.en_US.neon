@@ -1,0 +1,6 @@
+page:
+    title: 'Dashboard'
+    description: 'Overview of your projects'
+
+section:
+    user: 'User'

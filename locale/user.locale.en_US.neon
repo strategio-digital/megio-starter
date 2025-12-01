@@ -1,0 +1,114 @@
+page:
+    login:
+        title: 'Login'
+        description: 'Sign in to your account'
+    register:
+        title: 'Registration'
+        description: 'Create a new account'
+    activation:
+        title: 'Account Activation'
+        description: 'Activate your account'
+    forgot_password:
+        title: 'Forgot Password'
+        description: 'Reset your password'
+    reset_password:
+        title: 'Reset Password'
+        description: 'Set your new password'
+
+field:
+    email: 'Email'
+    email_placeholder: 'your@email.com'
+    password: 'Password'
+    password_placeholder: 'Enter password'
+    password_again: 'Password again'
+    new_password: 'New Password'
+    new_password_placeholder: 'Enter new password'
+    active: 'Active'
+    soft_deleted: 'Soft deleted'
+    roles: 'Roles'
+    last_login: 'Last Login'
+    activation_token: 'Activation token'
+    reset_password_token: 'Reset password token'
+
+button:
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    logout: 'Log out'
+    send_reset_link: 'Send reset link'
+    reset_password: 'Reset password'
+    go_to_login: 'Go to login'
+
+message:
+    signing_in: 'Signing in...'
+    registering: 'Registering...'
+    resetting: 'Resetting...'
+    activating: 'Activating your account...'
+    login_success: 'Login successful.'
+    logged_out: 'You have been logged out.'
+    register_success_title: 'Registration successful!'
+    register_success_message: 'You will receive an activation email shortly. Please click on the activation link in the email to complete your registration.'
+    email_sent_title: 'Email sent!'
+    email_sent_message: 'If an account exists with this email address, you will receive a password reset link shortly. Please check your inbox.'
+    reset_success_title: 'Password reset successful!'
+    reset_success_message: 'Your password has been successfully reset. You can now log in with your new password.'
+    activation_success: 'Your account has been successfully activated. You can now log in.'
+    activation_failed: 'Activation Failed'
+    activation_error: 'An error occurred during activation. Please try again.'
+    not_authenticated: 'You are not authenticated.'
+    login_disabled: 'Login via this method is disabled.'
+
+link:
+    forgot_password: 'Forgot password?'
+    no_account: "Don't have an account?"
+    have_account: 'Already have an account?'
+    remember_password: 'Remember your password?'
+
+subtitle:
+    login: 'Enter your login credentials'
+    register: 'Enter your details to create an account'
+    forgot_password: "Enter your email address and we'll send you a link to reset your password"
+    reset_password: 'Enter your new password'
+
+error:
+    role_not_found: "Role '{role}' not found."
+    activation_token_missing: 'User activation token is missing.'
+    reset_token_missing: 'User reset password token is missing.'
+    user_id_invalid_type: 'User ID must be a string.'
+    user_id_invalid: 'Invalid user ID.'
+    user_not_found: 'User not found.'
+    target_route_not_found: 'Target route "megio.auth.email" not found'
+    registration:
+        email_exists: 'This email address is already registered.'
+    activation:
+        invalid_token_1: 'Invalid activation token.'
+        invalid_token_2: 'Activation token has expired.'
+        invalid_token_3: 'User account not found.'
+        invalid_token_4: 'Account is already activated.'
+    login:
+        invalid_credentials_1: 'Invalid email or password.'
+        invalid_credentials_2: 'Account is not activated.'
+        invalid_credentials_3: 'Account has been deleted.'
+    forgot_password:
+        invalid_credentials_1: 'No account found with this email.'
+        invalid_credentials_2: 'Account is not activated.'
+    reset_password:
+        invalid_token_1: 'Invalid reset token.'
+        invalid_token_2: 'Reset token has expired.'
+        invalid_token_3: 'User account not found.'
+        invalid_token_4: 'Account is not activated.'
+        invalid_token_5: 'Account has been deleted.'
+
+validation:
+    email_exists: 'This email is already in use.'
+
+mail:
+    greeting: 'Hello,'
+    registration:
+        subject: 'Activate your account'
+        body: 'Thank you for registering an account with us. Please click the button below to activate your account.'
+        button: 'Activate Account'
+    password_reset:
+        subject: 'Reset your password'
+        body: 'We received a request to reset your password. Please click the button below to reset your password. This link will expire in 1 hour.'
+        button: 'Reset Password'
+        ignore_notice: "If you didn't request a password reset, you can safely ignore this email."

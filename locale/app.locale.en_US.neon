@@ -1,1 +1,21 @@
 name: 'WebAppName'
+
+button:
+    confirm: 'Confirm'
+    cancel: 'Cancel'
+    try_again: 'Try Again'
+    close: 'Close'
+    back: 'Back'
+    back_to_home: 'Back to home'
+    back_to_login: 'Back to login'
+
+message:
+    loading: 'Loading data...'
+    sending: 'Sending...'
+
+field:
+    id: 'ID'
+
+auth:
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
