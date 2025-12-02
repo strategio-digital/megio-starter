@@ -15,6 +15,7 @@ serve:
 	docker compose exec app bin/console orm:generate-proxies
 	docker compose exec app bin/console app:auth:resources:update
 	docker compose exec app bin/console app:user:role:assign
+	docker compose exec app bin/console translation:import
 	docker compose exec -t documan /documan/bin/documan import
 
 sh:
