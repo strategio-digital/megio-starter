@@ -23,7 +23,7 @@ services:
       - $PWD:/var/www/html
 
   postgres:
-    image: postgres:16
+    image: postgres:18
     #restart: on-failure because postgres shutdown on first creation (permissions problem)
     restart: "on-failure"
     environment:
@@ -35,7 +35,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
       - $PWD/docker/temp:/var/lib/postgresql/temp
 
   documan:
