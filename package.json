@@ -16,6 +16,7 @@
         "lint": "npx @biomejs/biome check"
     },
     "dependencies": {
+        "intl-messageformat": "^10.7.18",
         "megio-api": "^1.1.0",
         "megio-panel": "^1.1.0",
         "tailwindcss": "^4.1.17",

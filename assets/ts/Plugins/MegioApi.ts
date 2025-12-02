@@ -1,4 +1,5 @@
 import { megio, setup } from 'megio-api';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
 
 export default () => {
 	const developMode = window.location.hostname === 'localhost';
@@ -8,8 +9,9 @@ export default () => {
 
 	function errorHandler(response: Response) {
 		if (response.headers.has('X-Auth-Reject-Reason')) {
+			const { shortCode } = useTranslation();
 			megio.auth.logout();
-			window.location.href = '/user/login';
+			window.location.href = `/${shortCode.value}/user/login`;
 		}
 	}
 };

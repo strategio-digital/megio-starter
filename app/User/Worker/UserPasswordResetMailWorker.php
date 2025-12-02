@@ -32,13 +32,13 @@ final readonly class UserPasswordResetMailWorker implements IQueueWorker
     ): ?QueueDelay {
         $payload = $queueJob->getPayload();
         $user_id = $payload['user_id'] ?? null;
-        $locale = $payload['locale'] ?? null;
+        $posix = $payload['posix'] ?? null;
 
-        if (is_string($locale) === false) {
-            throw new Exception('Locale is missing in the job payload.');
+        if (is_string($posix) === false) {
+            throw new Exception('Posix locale is missing in the job payload.');
         }
 
-        $this->translator->setLocale($locale);
+        $this->translator->setPosix($posix);
 
         if (is_string($user_id) === false) {
             throw new Exception($this->translator->translate('user.error.user_id_invalid_type'));

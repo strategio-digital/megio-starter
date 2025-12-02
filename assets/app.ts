@@ -12,6 +12,11 @@ import '@/assets/css/tailwind.css';
 import MegioApi from '@/assets/ts/Plugins/MegioApi.ts';
 MegioApi();
 
+// Translations
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+const { load } = useTranslation();
+load();
+
 import { megio } from 'megio-api';
 import { createApp } from 'vue';
 

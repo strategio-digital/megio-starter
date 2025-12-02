@@ -5,6 +5,9 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import Button from '@/assets/app-ui/Buttons/Button.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix, shortCode } = useTranslation();
 
 const { token } = defineProps<{
 	token: string;
@@ -23,7 +26,7 @@ const activateUser = async () => {
 	error.value = '';
 
 	const response = await megio.fetch<null, ActivationErrors>(
-		'api/v1/user/activate',
+		`api/v1/${posix.value}/user/activate`,
 		{
 			method: 'POST',
 			body: JSON.stringify({ token }),
@@ -36,17 +39,17 @@ const activateUser = async () => {
 		window.toast.asleep();
 		window.toast.add(
 			'success',
-			'Your account has been successfully activated. You can now log in.',
+			t('user.message.activation_success'),
 			20 * 1000,
 		);
-		window.location.replace('/user/login');
+		window.location.replace(`/${shortCode.value}/user/login`);
 		return;
 	}
 
 	error.value =
 		response.data.token ??
 		response.data.general ??
-		'An error occurred during activation. Please try again.';
+		t('user.message.activation_error');
 };
 
 activateUser();
@@ -62,13 +65,13 @@ activateUser();
                 <!-- Loading State -->
                 <div v-if="isLoading" class="text-center">
                     <Spinner class="mx-auto h-12 w-12 text-blue-600" />
-                    <p class="mt-4 text-gray-600">Activating your account...</p>
+                    <p class="mt-4 text-gray-600">{{ t('user.message.activating') }}</p>
                 </div>
 
                 <!-- Error State -->
                 <div v-else-if="error" class="space-y-6">
                     <div class="text-center">
-                        <h2 class="text-3xl font-extrabold text-gray-900">Activation Failed</h2>
+                        <h2 class="text-3xl font-extrabold text-gray-900">{{ t('user.message.activation_failed') }}</h2>
                     </div>
 
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -90,12 +93,12 @@ activateUser();
                         size="lg"
                         class="w-full"
                     >
-                        Try Again
+                        {{ t('app.button.try_again') }}
                     </Button>
 
                     <div class="text-center">
-                        <a href="/user/login" class="text-sm text-gray-500 hover:text-gray-700">
-                            ← Back to login
+                        <a :href="`/${shortCode}/user/login`" class="text-sm text-gray-500 hover:text-gray-700">
+                            {{ t('app.button.back_to_login') }}
                         </a>
                     </div>
                 </div>

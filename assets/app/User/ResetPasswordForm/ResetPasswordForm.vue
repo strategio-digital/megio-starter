@@ -7,6 +7,9 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import SuccessIcon from '@/assets/app-ui/Icons/SuccessIcon.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix, shortCode } = useTranslation();
 
 type Props = {
 	token: string;
@@ -39,7 +42,7 @@ const handleSubmit = async () => {
 	errors.value = {};
 
 	const response = await megio.fetch<null, ResetPasswordErrors>(
-		'api/v1/user/reset-password',
+		`api/v1/${posix.value}/user/reset-password`,
 		{
 			method: 'POST',
 			body: JSON.stringify({
@@ -75,15 +78,15 @@ const handleSubmit = async () => {
                         </div>
                     </div>
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
-                        Password reset successful!
+                        {{ t('user.message.reset_success_title') }}
                     </h2>
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                         <p class="text-base text-gray-700">
-                            Your password has been successfully reset. You can now log in with your new password.
+                            {{ t('user.message.reset_success_message') }}
                         </p>
                     </div>
-                    <a href="/user/login" class="text-sm text-gray-500 hover:text-gray-700">
-                        Go to login →
+                    <a :href="`/${shortCode}/user/login`" class="text-sm text-gray-500 hover:text-gray-700">
+                        {{ t('user.button.go_to_login') }}
                     </a>
                 </div>
 
@@ -91,10 +94,10 @@ const handleSubmit = async () => {
                 <div v-else>
                     <div class="text-center">
                         <h2 class="text-3xl font-extrabold text-gray-900">
-                            Reset Password
+                            {{ t('user.page.reset_password.title') }}
                         </h2>
                         <p class="mt-2 text-sm text-gray-600">
-                            Enter your new password
+                            {{ t('user.subtitle.reset_password') }}
                         </p>
                     </div>
 
@@ -104,8 +107,8 @@ const handleSubmit = async () => {
                                 v-model="form.password"
                                 name="password"
                                 type="password"
-                                label="New Password"
-                                placeholder="Enter new password"
+                                :label="t('user.field.new_password')"
+                                :placeholder="t('user.field.new_password_placeholder')"
                                 :error="errors.password"
                                 required
                                 :disabled="isLoading"
@@ -134,16 +137,16 @@ const handleSubmit = async () => {
                             :disabled="isLoading"
                             class="w-full"
                         >
-                            <span v-if="!isLoading">Reset password</span>
+                            <span v-if="!isLoading">{{ t('user.button.reset_password') }}</span>
                             <span v-else class="flex items-center">
                                 <Spinner size="sm" color="white" class="mr-2" />
-                                Resetting...
+                                {{ t('user.message.resetting') }}
                             </span>
                         </Button>
 
                         <div class="text-center my-6">
-                            <a href="/user/login" class="text-sm text-gray-500 hover:text-gray-700">
-                                ← Back to login
+                            <a :href="`/${shortCode}/user/login`" class="text-sm text-gray-500 hover:text-gray-700">
+                                {{ t('app.button.back_to_login') }}
                             </a>
                         </div>
                     </form>

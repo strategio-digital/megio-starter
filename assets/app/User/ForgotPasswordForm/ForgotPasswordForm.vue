@@ -7,6 +7,9 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import SuccessIcon from '@/assets/app-ui/Icons/SuccessIcon.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix, shortCode } = useTranslation();
 
 type ForgotPasswordForm = {
 	email: string;
@@ -33,7 +36,7 @@ const handleSubmit = async () => {
 	errors.value = {};
 
 	const response = await megio.fetch<null, ForgotPasswordErrors>(
-		'api/v1/user/forgot-password',
+		`api/v1/${posix.value}/user/forgot-password`,
 		{
 			method: 'POST',
 			body: JSON.stringify(form),
@@ -66,16 +69,15 @@ const handleSubmit = async () => {
                         </div>
                     </div>
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
-                        Email sent!
+                        {{ t('user.message.email_sent_title') }}
                     </h2>
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                         <p class="text-base text-gray-700">
-                            If an account exists with this email address, you will receive a password reset link shortly.
-                            Please check your inbox.
+                            {{ t('user.message.email_sent_message') }}
                         </p>
                     </div>
-                    <a href="/user/login" class="text-sm text-gray-500 hover:text-gray-700">
-                        ← Back to login
+                    <a :href="`/${shortCode}/user/login`" class="text-sm text-gray-500 hover:text-gray-700">
+                        {{ t('app.button.back_to_login') }}
                     </a>
                 </div>
 
@@ -83,10 +85,10 @@ const handleSubmit = async () => {
                 <div v-else>
                     <div class="text-center">
                         <h2 class="text-3xl font-extrabold text-gray-900">
-                            Forgot Password
+                            {{ t('user.page.forgot_password.title') }}
                         </h2>
                         <p class="mt-2 text-sm text-gray-600">
-                            Enter your email address and we'll send you a link to reset your password
+                            {{ t('user.subtitle.forgot_password') }}
                         </p>
                     </div>
 
@@ -96,8 +98,8 @@ const handleSubmit = async () => {
                                 v-model="form.email"
                                 name="email"
                                 type="email"
-                                label="Email"
-                                placeholder="your@email.com"
+                                :label="t('user.field.email')"
+                                :placeholder="t('user.field.email_placeholder')"
                                 :error="errors.email"
                                 required
                                 :disabled="isLoading"
@@ -126,25 +128,25 @@ const handleSubmit = async () => {
                             :disabled="isLoading"
                             class="w-full"
                         >
-                            <span v-if="!isLoading">Send reset link</span>
+                            <span v-if="!isLoading">{{ t('user.button.send_reset_link') }}</span>
                             <span v-else class="flex items-center">
                                 <Spinner size="sm" color="white" class="mr-2" />
-                                Sending...
+                                {{ t('app.message.sending') }}
                             </span>
                         </Button>
 
                         <div class="text-center mt-4">
                             <p class="text-sm text-gray-600">
-                                Remember your password?
-                                <a href="/user/login" class="font-medium text-blue-600 hover:text-blue-500">
-                                    Sign in
+                                {{ t('user.link.remember_password') }}
+                                <a :href="`/${shortCode}/user/login`" class="font-medium text-blue-600 hover:text-blue-500">
+                                    {{ t('user.button.sign_in') }}
                                 </a>
                             </p>
                         </div>
 
                         <div class="text-center my-6">
                             <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-                                ← Back to home
+                                {{ t('app.button.back_to_home') }}
                             </a>
                         </div>
                     </form>

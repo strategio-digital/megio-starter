@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { megio } from 'megio-api';
 import Button from '@/assets/app-ui/Buttons/Button.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, shortCode } = useTranslation();
 
 type Props = {
 	title?: string;
@@ -9,17 +13,22 @@ type Props = {
 	backUrl?: string;
 };
 
-const { showBackButton = false, backUrl = '/dashboard' } = defineProps<Props>();
+const props = defineProps<Props>();
+
+const showBackButton = computed(() => props.showBackButton ?? false);
+const backUrl = computed(
+	() => props.backUrl ?? `/${shortCode.value}/dashboard`,
+);
 
 const handleLogout = async () => {
 	megio.auth.logout();
 	window.toast.asleep();
-	window.toast.add('info', 'You have been logged out.');
-	window.location.replace('/user/login');
+	window.toast.add('info', t('user.message.logged_out'));
+	window.location.replace(`/${shortCode.value}/user/login`);
 };
 
 const handleBack = () => {
-	window.location.href = backUrl;
+	window.location.href = backUrl.value;
 };
 </script>
 
@@ -28,7 +37,7 @@ const handleBack = () => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-6">
         <div class="flex items-center">
-          <Logo linkTo="/dashboard" size="sm" />
+          <Logo :linkTo="`/${shortCode}/dashboard`" size="sm" />
         </div>
         <Button
             v-if="showBackButton"
@@ -36,7 +45,7 @@ const handleBack = () => {
             size="sm"
             @click="handleBack"
         >
-          ← Back
+          {{ t('app.button.back') }}
         </Button>
         <Button
             v-else
@@ -44,7 +53,7 @@ const handleBack = () => {
             size="sm"
             @click="handleLogout"
         >
-          Log out
+          {{ t('user.button.logout') }}
         </Button>
       </div>
     </div>

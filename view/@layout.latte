@@ -2,9 +2,13 @@
 {varType string $title}
 {varType string[] $_ENV}
 {varType string[] $_SERVER}
-
 <!doctype html>
-<html lang="{$translator->getLocale()}" class="{block html}{/block}">
+<html
+    lang="{$translator->getBcp47Locale()}"
+    data-posix="{$translator->getPosix()}"
+    data-posix-fallback="{=json_encode($translator->getPosixFallbacks())}"
+    class="{block html}{/block}"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

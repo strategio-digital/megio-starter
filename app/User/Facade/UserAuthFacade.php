@@ -85,7 +85,7 @@ final readonly class UserAuthFacade
             worker: QueueWorker::USER_REGISTRATION_MAIL_WORKER,
             payload: [
                 'user_id' => $user->getId(),
-                'locale' => $this->translator->getLocale(),
+                'posix' => $this->translator->getPosix(),
             ],
         );
 
@@ -195,7 +195,7 @@ final readonly class UserAuthFacade
             worker: QueueWorker::USER_PASSWORD_RESET_MAIL_WORKER,
             payload: [
                 'user_id' => $user->getId(),
-                'locale' => $this->translator->getLocale(),
+                'posix' => $this->translator->getPosix(),
             ],
         );
 

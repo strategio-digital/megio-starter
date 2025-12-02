@@ -6,6 +6,9 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import UserInfo from '@/assets/app/Dashboard/components/UserInfo.vue';
 import type { User } from '@/assets/ts/Entities/User';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix } = useTranslation();
 
 type DashboardData = {
 	user: User;
@@ -19,7 +22,7 @@ const loadDashboardData = async () => {
 	isLoading.value = true;
 	error.value = '';
 
-	const response = await megio.fetch('api/v1/dashboard/data', {
+	const response = await megio.fetch(`api/v1/${posix.value}/dashboard/data`, {
 		method: 'GET',
 	});
 
@@ -36,13 +39,13 @@ loadDashboardData();
 
 <template>
     <div class="min-h-screen bg-gray-50">
-        <Navbar :user="dashboardData?.user" title="Dashboard" />
+        <Navbar :user="dashboardData?.user" :title="t('dashboard.page.title')" />
 
         <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div class="px-4 py-6 sm:px-0">
                 <div v-if="isLoading" class="flex justify-center items-center py-12">
                     <Spinner size="lg" />
-                    <span class="ml-3 text-gray-600">Loading data...</span>
+                    <span class="ml-3 text-gray-600">{{ t('app.message.loading') }}</span>
                 </div>
 
                 <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4">

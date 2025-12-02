@@ -30,6 +30,7 @@ app/DomainName/
 - ID is always string - UUIDv6, never int
 - Latte templates for views
 - Vue.js components for interactivity
+- Always use `@/` alias for imports in TypeScript/Vue files - never use relative paths
 - RequestSerializer with DTO classes instead of Nette Schema and `assert()`
 
 ## SOLID Principles

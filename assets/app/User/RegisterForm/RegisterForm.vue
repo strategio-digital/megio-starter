@@ -7,6 +7,9 @@ import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import SuccessIcon from '@/assets/app-ui/Icons/SuccessIcon.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix, shortCode } = useTranslation();
 
 type RegisterForm = {
 	email: string;
@@ -35,7 +38,7 @@ const handleSubmit = async () => {
 	errors.value = {};
 
 	const response = await megio.fetch<null, RegisterErrors>(
-		'api/v1/user/register',
+		`api/v1/${posix.value}/user/register`,
 		{
 			method: 'POST',
 			body: JSON.stringify(form),
@@ -68,16 +71,15 @@ const handleSubmit = async () => {
                         </div>
                     </div>
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
-                        Registration successful!
+                        {{ t('user.message.register_success_title') }}
                     </h2>
                     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                         <p class="text-base text-gray-700">
-                            You will receive an activation email shortly. Please click on the activation link in the
-                            email to complete your registration.
+                            {{ t('user.message.register_success_message') }}
                         </p>
                     </div>
                     <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-                        ← Back to home
+                        {{ t('app.button.back_to_home') }}
                     </a>
                 </div>
 
@@ -85,10 +87,10 @@ const handleSubmit = async () => {
                 <div v-else>
                     <div class="text-center">
                         <h2 class="text-3xl font-extrabold text-gray-900">
-                            Registration
+                            {{ t('user.page.register.title') }}
                         </h2>
                         <p class="mt-2 text-sm text-gray-600">
-                            Enter your details to create an account
+                            {{ t('user.subtitle.register') }}
                         </p>
                     </div>
 
@@ -98,8 +100,8 @@ const handleSubmit = async () => {
                                 v-model="form.email"
                                 name="email"
                                 type="email"
-                                label="Email"
-                                placeholder="your@email.com"
+                                :label="t('user.field.email')"
+                                :placeholder="t('user.field.email_placeholder')"
                                 :error="errors.email"
                                 required
                                 :disabled="isLoading"
@@ -110,8 +112,8 @@ const handleSubmit = async () => {
                                 v-model="form.password"
                                 name="password"
                                 type="password"
-                                label="Password"
-                                placeholder="Enter password"
+                                :label="t('user.field.password')"
+                                :placeholder="t('user.field.password_placeholder')"
                                 :error="errors.password"
                                 required
                                 :disabled="isLoading"
@@ -140,25 +142,25 @@ const handleSubmit = async () => {
                             :disabled="isLoading"
                             class="w-full"
                         >
-                            <span v-if="!isLoading">Sign up</span>
+                            <span v-if="!isLoading">{{ t('user.button.sign_up') }}</span>
                             <span v-else class="flex items-center">
                                 <Spinner size="sm" color="white" class="mr-2" />
-                                Registering...
+                                {{ t('user.message.registering') }}
                             </span>
                         </Button>
 
                         <div class="text-center mt-4">
                             <p class="text-sm text-gray-600">
-                                Already have an account?
-                                <a href="/user/login" class="font-medium text-blue-600 hover:text-blue-500">
-                                    Sign in
+                                {{ t('user.link.have_account') }}
+                                <a :href="`/${shortCode}/user/login`" class="font-medium text-blue-600 hover:text-blue-500">
+                                    {{ t('user.button.sign_in') }}
                                 </a>
                             </p>
                         </div>
 
                         <div class="text-center my-6">
                             <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-                                ← Back to home
+                                {{ t('app.button.back_to_home') }}
                             </a>
                         </div>
                     </form>

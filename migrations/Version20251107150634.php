@@ -31,8 +31,8 @@ final class Version20251107150634 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_2923B54F89329D25 ON "auth_role_has_resource" (resource_id)');
         $this->addSql('CREATE TABLE "auth_token" (source VARCHAR(32) NOT NULL, source_id UUID NOT NULL, expiration TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, token TEXT NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_9315F04E5F8A7F73953C1C61 ON "auth_token" (source, source_id)');
-        $this->addSql('CREATE TABLE language (code VARCHAR(20) NOT NULL, name VARCHAR(255) NOT NULL, is_default BOOLEAN NOT NULL, is_enabled BOOLEAN NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D4DB71B577153098 ON language (code)');
+        $this->addSql('CREATE TABLE language (posix VARCHAR(20) NOT NULL, short_code VARCHAR(5) NOT NULL, name VARCHAR(255) NOT NULL, is_default BOOLEAN NOT NULL, is_enabled BOOLEAN NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_D4DB71B5E0E30F6E ON language (posix)');
         $this->addSql('CREATE TABLE language_translation (key VARCHAR(255) NOT NULL, domain VARCHAR(50) NOT NULL, value TEXT NOT NULL, is_from_source BOOLEAN NOT NULL, is_deleted BOOLEAN NOT NULL, id UUID NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, language_id UUID NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE INDEX IDX_D72F30DDA7A91E0B ON language_translation (domain)');
         $this->addSql('CREATE INDEX IDX_D72F30DD82F1BAF4 ON language_translation (language_id)');

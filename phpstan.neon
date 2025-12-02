@@ -32,13 +32,10 @@ parameters:
         - '#Trait App\\User\\Database\\Field\\TUserOwner is used zero times and is not analysed\.#'
 
 services:
-    # Custom pravidlo pro zákaz negace (!)
     -
         class: App\PhpStan\DisallowNegationRule
         tags:
             - phpstan.rules.rule
-
-    # Custom pravidlo pro vynutit === true/false
     -
         class: App\PhpStan\ExplicitBooleanComparisonRule
         tags:

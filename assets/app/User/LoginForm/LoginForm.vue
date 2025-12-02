@@ -6,6 +6,9 @@ import Input from '@/assets/app-ui/Inputs/Input.vue';
 import Spinner from '@/assets/app-ui/Loading/Spinner.vue';
 import ErrorIcon from '@/assets/app-ui/Icons/ErrorIcon.vue';
 import Logo from '@/assets/app/Logo/Logo.vue';
+import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
+
+const { t, posix, shortCode } = useTranslation();
 
 type LoginForm = {
 	email: string;
@@ -32,19 +35,22 @@ const handleSubmit = async () => {
 	isLoading.value = true;
 	errors.value = {};
 
-	const response = await megio.fetch<null, LoginErrors>('api/v1/user/login', {
-		method: 'POST',
-		body: JSON.stringify({
-			email: form.email,
-			password: form.password,
-		}),
-	});
+	const response = await megio.fetch<null, LoginErrors>(
+		`api/v1/${posix.value}/user/login`,
+		{
+			method: 'POST',
+			body: JSON.stringify({
+				email: form.email,
+				password: form.password,
+			}),
+		},
+	);
 
 	if (response.success) {
 		localStorage.setItem('megio_user', JSON.stringify(response.data));
 		window.toast.asleep();
-		window.toast.add('success', 'Login successful.');
-		window.location.replace('/dashboard');
+		window.toast.add('success', t('user.message.login_success'));
+		window.location.replace(`/${shortCode.value}/dashboard`);
 		return;
 	}
 
@@ -62,10 +68,10 @@ const handleSubmit = async () => {
             <div class="max-w-md w-full space-y-8">
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-gray-900">
-                        Login
+                        {{ t('user.page.login.title') }}
                     </h2>
                     <p class="mt-2 text-sm text-gray-600">
-                        Enter your login credentials
+                        {{ t('user.subtitle.login') }}
                     </p>
                 </div>
 
@@ -75,8 +81,8 @@ const handleSubmit = async () => {
                             v-model="form.email"
                             name="email"
                             type="email"
-                            label="Email"
-                            placeholder="your@email.com"
+                            :label="t('user.field.email')"
+                            :placeholder="t('user.field.email_placeholder')"
                             :error="errors.email"
                             required
                             :disabled="isLoading"
@@ -87,8 +93,8 @@ const handleSubmit = async () => {
                             v-model="form.password"
                             name="password"
                             type="password"
-                            label="Password"
-                            placeholder="Enter password"
+                            :label="t('user.field.password')"
+                            :placeholder="t('user.field.password_placeholder')"
                             :error="errors.password"
                             required
                             :disabled="isLoading"
@@ -97,8 +103,8 @@ const handleSubmit = async () => {
                     </div>
 
                     <div class="text-right -mt-3">
-                        <a href="/user/forgot-password" class="text-sm text-blue-600 hover:text-blue-500">
-                            Forgot password?
+                        <a :href="`/${shortCode}/user/forgot-password`" class="text-sm text-blue-600 hover:text-blue-500">
+                            {{ t('user.link.forgot_password') }}
                         </a>
                     </div>
 
@@ -123,25 +129,25 @@ const handleSubmit = async () => {
                         :disabled="isLoading"
                         class="w-full"
                     >
-                        <span v-if="!isLoading">Sign in</span>
+                        <span v-if="!isLoading">{{ t('user.button.sign_in') }}</span>
                         <span v-else class="flex items-center">
                             <Spinner size="sm" color="white" class="mr-2" />
-                            Signing in...
+                            {{ t('user.message.signing_in') }}
                         </span>
                     </Button>
 
                     <div class="text-center mt-4">
                         <p class="text-sm text-gray-600">
-                            Don't have an account?
-                            <a href="/user/register" class="font-medium text-blue-600 hover:text-blue-500">
-                                Sign up
+                            {{ t('user.link.no_account') }}
+                            <a :href="`/${shortCode}/user/register`" class="font-medium text-blue-600 hover:text-blue-500">
+                                {{ t('user.button.sign_up') }}
                             </a>
                         </p>
                     </div>
 
                     <div class="text-center my-6">
                         <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
-                            ← Back to home
+                            {{ t('app.button.back_to_home') }}
                         </a>
                     </div>
                 </form>

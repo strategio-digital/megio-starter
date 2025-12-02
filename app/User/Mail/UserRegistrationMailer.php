@@ -34,7 +34,7 @@ final readonly class UserRegistrationMailer
         }
 
         $activationLink = $this->linkResolver->link('user.activation', [
-            'locale' => substr($this->translator->getLocale(), 0, 2),
+            'locale' => $this->translator->getShortCode(),
             'token' => $token,
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
