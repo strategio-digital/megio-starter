@@ -1,0 +1,207 @@
+# Symfony Validator messages in ICU MessageFormat (138 messages)
+# Keys are short identifiers, values use ICU MessageFormat syntax
+
+# Boolean constraints
+is_false: 'This value should be false.'
+is_true: 'This value should be true.'
+
+# Type constraint
+type: 'This value should be of type {type}.'
+
+# Blank / NotBlank / Null
+blank: 'This value should be blank.'
+not_blank: 'This value should not be blank.'
+not_null: 'This value should not be null.'
+is_null: 'This value should be null.'
+
+# Choice constraints
+choice_invalid: 'The value you selected is not a valid choice.'
+choice_min: '{limit, plural, one {You must select at least # choice.} other {You must select at least # choices.}}'
+choice_max: '{limit, plural, one {You must select at most # choice.} other {You must select at most # choices.}}'
+choice_multiple_invalid: 'One or more of the given values is invalid.'
+
+# Field constraints
+field_unexpected: 'This field was not expected.'
+field_missing: 'This field is missing.'
+
+# Date / Time
+date: 'This value is not a valid date.'
+datetime: 'This value is not a valid datetime.'
+time: 'This value is not a valid time.'
+
+# Email
+email: 'This value is not a valid email address.'
+
+# File constraints
+file_not_found: 'The file could not be found.'
+file_not_readable: 'The file is not readable.'
+file_too_large: 'The file is too large ({size} {suffix}). Allowed maximum size is {limit} {suffix}.'
+file_invalid_mime: 'The mime type of the file is invalid ({type}). Allowed mime types are {types}.'
+file_too_large_limit: 'The file is too large. Allowed maximum size is {limit} {suffix}.'
+file_too_large_simple: 'The file is too large.'
+file_upload_failed: 'The file could not be uploaded.'
+file_empty: 'An empty file is not allowed.'
+file_upload_partial: 'The file was only partially uploaded.'
+file_upload_none: 'No file was uploaded.'
+file_no_temp_folder: 'No temporary folder was configured in php.ini.'
+file_write_failed: 'Cannot write temporary file to disk.'
+file_upload_php_extension: 'A PHP extension caused the upload to fail.'
+file_invalid_extension: 'The extension of the file is invalid ({extension}). Allowed extensions are {extensions}.'
+filename_too_long: '{filenameMaxLength, plural, one {The filename is too long. It should have # character or less.} other {The filename is too long. It should have # characters or less.}}'
+filename_charset: 'This filename does not match the expected charset.'
+
+# Range / Comparison
+range_max: 'This value should be {limit} or less.'
+range_min: 'This value should be {limit} or more.'
+range: 'This value should be between {min} and {max}.'
+equal_to: 'This value should be equal to {comparedValue}.'
+greater_than: 'This value should be greater than {comparedValue}.'
+greater_than_or_equal: 'This value should be greater than or equal to {comparedValue}.'
+identical_to: 'This value should be identical to {comparedValueType} {comparedValue}.'
+less_than: 'This value should be less than {comparedValue}.'
+less_than_or_equal: 'This value should be less than or equal to {comparedValue}.'
+not_equal_to: 'This value should not be equal to {comparedValue}.'
+not_identical_to: 'This value should not be identical to {comparedValueType} {comparedValue}.'
+divisible_by: 'This value should be a multiple of {comparedValue}.'
+two_values_equal: 'The two values should be equal.'
+
+# Length constraints
+length_max: '{limit, plural, one {This value is too long. It should have # character or less.} other {This value is too long. It should have # characters or less.}}'
+length_min: '{limit, plural, one {This value is too short. It should have # character or more.} other {This value is too short. It should have # characters or more.}}'
+length_exact: '{limit, plural, one {This value should have exactly # character.} other {This value should have exactly # characters.}}'
+
+# General
+invalid: 'This value is not valid.'
+number: 'This value should be a valid number.'
+
+# URL
+url: 'This value is not a valid URL.'
+url_missing_tld: 'This URL is missing a top-level domain.'
+
+# Image constraints
+image_invalid: 'This file is not a valid image.'
+image_size_not_detected: 'The size of the image could not be detected.'
+image_width_too_big: 'The image width is too big ({width}px). Allowed maximum width is {maxWidth}px.'
+image_width_too_small: 'The image width is too small ({width}px). Minimum width expected is {minWidth}px.'
+image_height_too_big: 'The image height is too big ({height}px). Allowed maximum height is {maxHeight}px.'
+image_height_too_small: 'The image height is too small ({height}px). Minimum height expected is {minHeight}px.'
+image_ratio_too_big: 'The image ratio is too big ({ratio}). Allowed maximum ratio is {maxRatio}.'
+image_ratio_too_small: 'The image ratio is too small ({ratio}). Minimum ratio expected is {minRatio}.'
+image_square_not_allowed: 'The image is square ({width}x{height}px). Square images are not allowed.'
+image_landscape_not_allowed: 'The image is landscape oriented ({width}x{height}px). Landscape oriented images are not allowed.'
+image_portrait_not_allowed: 'The image is portrait oriented ({width}x{height}px). Portrait oriented images are not allowed.'
+image_corrupted: 'The image file is corrupted.'
+image_too_few_pixels: 'The image has too few pixels ({pixels} pixels). Minimum amount expected is {minPixels} pixels.'
+image_too_many_pixels: 'The image has too many pixels ({pixels} pixels). Maximum amount expected is {maxPixels} pixels.'
+
+# Video constraints
+video_invalid: 'This file is not a valid video.'
+video_size_not_detected: 'The size of the video could not be detected.'
+video_width_too_big: 'The video width is too big ({width}px). Allowed maximum width is {maxWidth}px.'
+video_width_too_small: 'The video width is too small ({width}px). Minimum width expected is {minWidth}px.'
+video_height_too_big: 'The video height is too big ({height}px). Allowed maximum height is {maxHeight}px.'
+video_height_too_small: 'The video height is too small ({height}px). Minimum height expected is {minHeight}px.'
+video_too_few_pixels: 'The video has too few pixels ({pixels} pixels). Minimum amount expected is {minPixels} pixels.'
+video_too_many_pixels: 'The video has too many pixels ({pixels} pixels). Maximum amount expected is {maxPixels} pixels.'
+video_ratio_too_big: 'The video ratio is too big ({ratio}). Allowed maximum ratio is {maxRatio}.'
+video_ratio_too_small: 'The video ratio is too small ({ratio}). Minimum ratio expected is {minRatio}.'
+video_square_not_allowed: 'The video is square ({width}x{height}px). Square videos are not allowed.'
+video_landscape_not_allowed: 'The video is landscape oriented ({width}x{height}px). Landscape oriented videos are not allowed.'
+video_portrait_not_allowed: 'The video is portrait oriented ({width}x{height}px). Portrait oriented videos are not allowed.'
+video_corrupted: 'The video file is corrupted.'
+video_multiple_streams: 'The video contains multiple streams. Only one stream is allowed.'
+video_unsupported_codec: 'Unsupported video codec "{codec}".'
+video_unsupported_container: 'Unsupported video container "{container}".'
+
+# Password
+password_current: "This value should be the user's current password."
+password_leaked: 'This password has been leaked in a data breach, it must not be used. Please use another password.'
+password_strength: 'The password strength is too low. Please use a stronger password.'
+
+# Collection constraints
+count_min: '{limit, plural, one {This collection should contain # element or more.} other {This collection should contain # elements or more.}}'
+count_max: '{limit, plural, one {This collection should contain # element or less.} other {This collection should contain # elements or less.}}'
+count_exact: '{limit, plural, one {This collection should contain exactly # element.} other {This collection should contain exactly # elements.}}'
+count_divisible_by: 'The number of elements in this collection should be a multiple of {comparedValue}.'
+unique: 'This collection should contain only unique elements.'
+
+# Card / Banking
+card_invalid: 'Invalid card number.'
+card_unsupported: 'Unsupported card type or invalid card number.'
+iban: 'This is not a valid International Bank Account Number (IBAN).'
+bic: 'This is not a valid Business Identifier Code (BIC).'
+bic_iban_mismatch: 'This Business Identifier Code (BIC) is not associated with IBAN {iban}.'
+
+# ISBN / ISSN / ISIN
+isbn_10: 'This value is not a valid ISBN-10.'
+isbn_13: 'This value is not a valid ISBN-13.'
+isbn: 'This value is neither a valid ISBN-10 nor a valid ISBN-13.'
+issn: 'This value is not a valid ISSN.'
+isin: 'This value is not a valid International Securities Identification Number (ISIN).'
+
+# Country / Language / Locale / Currency / Timezone
+language: 'This value is not a valid language.'
+locale: 'This value is not a valid locale.'
+country: 'This value is not a valid country.'
+currency: 'This value is not a valid currency.'
+timezone: 'This value is not a valid timezone.'
+
+# Positive / Negative
+positive: 'This value should be positive.'
+positive_or_zero: 'This value should be either positive or zero.'
+negative: 'This value should be negative.'
+negative_or_zero: 'This value should be either negative or zero.'
+
+# IP / Hostname / Network
+ip: 'This is not a valid IP address.'
+hostname: 'This value is not a valid hostname.'
+cidr: 'This value is not a valid CIDR notation.'
+netmask_range: 'The value of the netmask should be between {min} and {max}.'
+mac_address: 'This value is not a valid MAC address.'
+host_not_resolved: 'The host could not be resolved.'
+
+# UUID / ULID
+uuid: 'This is not a valid UUID.'
+ulid: 'This is not a valid ULID.'
+
+# JSON
+json: 'This value should be valid JSON.'
+
+# Already used
+already_used: 'This value is already used.'
+
+# Charset / Encoding
+charset: 'This value does not match the expected {charset} charset.'
+encoding_invalid: 'The detected character encoding is invalid ({detected}). Allowed encodings are {encodings}.'
+
+# Expression
+expression: 'This value should be a valid expression.'
+
+# CSS
+css_color: 'This value is not a valid CSS color.'
+
+# AtLeastOneOf
+at_least_one_of: 'This value should satisfy at least one of the following constraints:'
+at_least_one_of_collection: 'Each element of this collection should satisfy its own set of constraints.'
+
+# Word count
+word_count_min: '{min, plural, one {This value is too short. It should contain at least # word.} other {This value is too short. It should contain at least # words.}}'
+word_count_max: '{max, plural, one {This value is too long. It should contain # word or less.} other {This value is too long. It should contain # words or less.}}'
+
+# Week
+week_invalid_format: 'This value does not represent a valid week in the ISO 8601 format.'
+week_invalid: 'This value is not a valid week.'
+week_min: 'This value should not be before week "{min}".'
+week_max: 'This value should not be after week "{max}".'
+
+# Twig
+twig_invalid: 'This value is not a valid Twig template.'
+
+# Security / Characters
+chars_not_allowed: 'This value contains characters that are not allowed by the current restriction-level.'
+invisible_chars: 'Using invisible characters is not allowed.'
+mixed_scripts: 'Mixing numbers from different scripts is not allowed.'
+hidden_overlay: 'Using hidden overlay characters is not allowed.'
+
+# Error
+error: 'Error'
