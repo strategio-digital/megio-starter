@@ -344,3 +344,53 @@ catch (TranslatableExceptionInterface $e) {
 }
 ```
 
+## Generate translations with AI
+
+Prompt for CLI agent (Claude Code, Cursor, etc.):
+
+```
+WORKFLOW: Adding translations from .neon file to database for non-default locale
+
+STEP 0: Ask user for required inputs (DO NOT proceed without these):
+- Ask: "What is the target POSIX locale? (e.g., cs_CZ, de_DE, fr_FR)"
+- Ask: "What is the source .neon file path? (e.g., locale/validator.locale.en_US.neon)"
+Wait for user response before continuing.
+
+STEP 1: Get or create language for target locale
+- Run: docker compose exec postgres psql -U root -d dev-appname -c "SELECT id, posix FROM language;"
+- If target locale exists, note the UUID
+- If target locale does NOT exist, create it:
+  docker compose exec postgres psql -U root -d dev-appname -c \
+    "INSERT INTO language (id, posix, short_code, name, is_default, is_enabled, created_at, updated_at)
+     VALUES (uuidv7(), '<POSIX>', '<SHORT_CODE>', '<LANGUAGE_NAME>', false, true, NOW(), NOW())
+     RETURNING id;"
+  Examples:
+  - cs_CZ: posix='cs_CZ', short_code='cs', name='Čeština'
+  - de_DE: posix='de_DE', short_code='de', name='Deutsch'
+  - fr_FR: posix='fr_FR', short_code='fr', name='Français'
+
+STEP 2: Count existing translations (for later verification)
+- Run: docker compose exec postgres psql -U root -d dev-appname -c "SELECT COUNT(*) FROM language_translation WHERE language_id = '<LANGUAGE_ID>' AND domain = '<DOMAIN>';"
+- Domain is extracted from filename: locale/{domain}.locale.{POSIX}.neon
+
+STEP 3: For each key in NEON file, translate and insert
+- Translate English ICU message to target language
+- Czech plurals use 3 forms: one (1), few (2-4), other (5+)
+- Example EN: {limit, plural, one {# character} other {# characters}}
+- Example CS: {limit, plural, one {# znak} few {# znaky} other {# znaků}}
+- Run for each key:
+  docker compose exec postgres psql -U root -d dev-appname -c \
+    "INSERT INTO language_translation (id, key, domain, value, is_from_source, is_deleted, created_at, updated_at, language_id)
+     VALUES (uuidv7(), '<KEY>', '<DOMAIN>', '<TRANSLATED_ICU_MESSAGE>', false, false, NOW(), NOW(), '<LANGUAGE_ID>')
+     ON CONFLICT (key, domain, language_id) DO NOTHING;"
+
+STEP 4: Verify count matches number of keys in NEON file
+- Run: docker compose exec postgres psql -U root -d dev-appname -c "SELECT COUNT(*) FROM language_translation WHERE language_id = '<LANGUAGE_ID>' AND domain = '<DOMAIN>';"
+
+STEP 5: Invalidate cache
+- Run: docker compose exec app rm -rf /app/temp/translations
+
+STEP 6: Verify translations were imported
+- Run: docker compose exec app bin/console translation:list
+```
+
