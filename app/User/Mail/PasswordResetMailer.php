@@ -15,8 +15,6 @@ use Nette\Mail\Message;
 use RuntimeException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-use function substr;
-
 final readonly class PasswordResetMailer
 {
     public function __construct(

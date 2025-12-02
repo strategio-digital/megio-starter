@@ -12,6 +12,9 @@ const currentPosix = ref<string>('');
 /** POSIX locale (e.g., cs_CZ, en_US) */
 const posix = computed(() => currentPosix.value);
 
+/** BCP 47 locale for Intl APIs (e.g., cs-CZ, en-US) */
+const bcp47 = computed(() => currentPosix.value.replace('_', '-'));
+
 /** Short locale for URLs (e.g., cs, en) */
 const shortCode = computed(() => currentPosix.value.substring(0, 2));
 
@@ -101,7 +104,7 @@ export function useTranslation() {
 			return text;
 		}
 
-		const formatter = new IntlMessageFormat(text, currentPosix.value);
+		const formatter = new IntlMessageFormat(text, bcp47.value);
 		const result = formatter.format(params);
 
 		if (typeof result === 'string') {

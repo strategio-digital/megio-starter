@@ -66,11 +66,34 @@ bin/console translation:import
 
 ## Using ICU MessageFormat
 
-Supports plurals and variables:
+ICU MessageFormat supports variables, plurals, and select expressions.
 
 ```yaml
-items: '{count, plural, =0 {No items} =1 {One item} other {# items}}'
+# Variables
 greeting: 'Hello {name}!'
+
+# Plurals (English)
+items: '{count, plural, =0 {No items} =1 {One item} other {# items}}'
+
+# Plurals (Czech with grammatical cases)
+items_cs: '{count, plural, =0 {Žádné položky} one {# položka} few {# položky} other {# položek}}'
+
+# Select
+status: '{status, select, active {Active} inactive {Inactive} other {Unknown}}'
+```
+
+Usage:
+
+```latte
+{_'app.items', ['count' => 5]}
+```
+
+```typescript
+t('app.items', { count: 5 })
+```
+
+```php
+$this->translator->translate('app.items', ['count' => 5]);
 ```
 
 ## CLI Commands
@@ -211,7 +234,7 @@ Translations are auto-registered:
 
 ```latte
 {_'user.form.email.label'}
-{_'greeting', name: $userName}
+{_'app.greeting', ['name' => $userName]}
 ```
 
 ## Using in Vue

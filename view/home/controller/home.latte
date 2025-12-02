@@ -1,3 +1,5 @@
+{varType Megio\Translation\Translator $translator}
+
 {extends './../../@layout.latte'}
 
 {block head}
@@ -32,10 +34,10 @@
             </div>
             
             <div class="items-center space-x-4 hidden md:flex">
-                <a href="{route('user.login', ['locale' => substr($translator->getLocale(), 0, 2)])}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="{route('user.login', ['locale' => $translator->getShortCode()])}" class="text-gray-600 hover:text-gray-900 transition-colors">
                     {_'app.auth.sign_in'}
                 </a>
-                <a href="{route('user.register', ['locale' => substr($translator->getLocale(), 0, 2)])}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <a href="{route('user.register', ['locale' => $translator->getShortCode()])}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                     {_'app.auth.sign_up'}
                 </a>
             </div>
@@ -56,10 +58,10 @@
                 <a href="#problem" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 1]</a>
                 <a href="#how-it-works" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 2]</a>
                 <a href="#features" class="block px-3 py-2 text-gray-600 hover:text-gray-900">[Section 3]</a>
-                <a href="{route('user.login', ['locale' => substr($translator->getLocale(), 0, 2)])}" class="block px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="{route('user.login', ['locale' => $translator->getShortCode()])}" class="block px-3 py-2 text-gray-600 hover:text-gray-900 transition-colors">
                     {_'app.auth.sign_in'}
                 </a>
-                <a href="{route('user.register', ['locale' => substr($translator->getLocale(), 0, 2)])}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <a href="{route('user.register', ['locale' => $translator->getShortCode()])}" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                     {_'app.auth.sign_up'}
                 </a>
             </div>
@@ -86,7 +88,7 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                     <a
-                        href="{route('user.register', ['locale' => substr($translator->getLocale(), 0, 2)])}"
+                        href="{route('user.register', ['locale' => $translator->getShortCode()])}"
                         class="block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
                         style="line-height: 1.73rem;"
                     >
@@ -401,7 +403,7 @@
             <p class="text-xl text-blue-100 mb-8">
                 [Compelling description of the call to action that encourages users to sign up]
             </p>
-            <a href="{route('user.register', ['locale' => substr($translator->getLocale(), 0, 2)])}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
+            <a href="{route('user.register', ['locale' => $translator->getShortCode()])}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
                 {_'app.auth.sign_up'}
             </a>
         </div>

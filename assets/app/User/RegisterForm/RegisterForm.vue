@@ -59,7 +59,7 @@ const handleSubmit = async () => {
 <template>
     <div class="min-h-screen bg-gray-50 relative px-4 sm:px-6 lg:px-8">
         <div class="absolute top-8 left-1/2 transform -translate-x-1/2 md:left-4 md:transform-none md:translate-x-0 lg:left-8">
-            <Logo linkTo="/" size="sm" />
+            <Logo :linkTo="`/${shortCode}`" size="sm" />
         </div>
         <div class="min-h-screen flex items-center justify-center pt-24">
             <div class="max-w-md w-full space-y-8">
@@ -78,7 +78,7 @@ const handleSubmit = async () => {
                             {{ t('user.message.register_success_message') }}
                         </p>
                     </div>
-                    <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+                    <a :href="`/${shortCode}`" class="text-sm text-gray-500 hover:text-gray-700">
                         {{ t('app.button.back_to_home') }}
                     </a>
                 </div>
@@ -159,7 +159,7 @@ const handleSubmit = async () => {
                         </div>
 
                         <div class="text-center my-6">
-                            <a href="/" class="text-sm text-gray-500 hover:text-gray-700">
+                            <a :href="`/${shortCode}`" class="text-sm text-gray-500 hover:text-gray-700">
                                 {{ t('app.button.back_to_home') }}
                             </a>
                         </div>

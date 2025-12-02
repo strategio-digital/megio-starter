@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{$template->getLocale()}" xmlns:v="urn:schemas-microsoft-com:vml">
+<html lang="{$template->getBcp47Locale()}" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
     <meta charset="UTF-8-8">
     <meta name="x-apple-disable-message-reformatting">
@@ -37,7 +37,7 @@
     {$template->getPreHeader()} {for $i = 0; $i < 150; $i++}&#8199;&#65279;&#847; {/for}
 </div>
 {/if}
-<div role="article" aria-roledescription="email" aria-label="{$template->getSubject()}" lang="{$template->getLocale()}">
+<div role="article" aria-roledescription="email" aria-label="{$template->getSubject()}" lang="{$template->getBcp47Locale()}">
     <div class="bg-slate-50 sm:px-4 font-sans py-10">
         <table align="center">
             <tr>
