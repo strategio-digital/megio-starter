@@ -115,7 +115,7 @@ const handleSubmit = async () => {
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm font-medium text-red-800">
-                                    {{ errors.general }}
+                                    {{ t(errors.general) }}
                                 </p>
                             </div>
                         </div>
