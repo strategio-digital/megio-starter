@@ -46,10 +46,20 @@ const activateUser = async () => {
 		return;
 	}
 
-	error.value =
-		response.data.token ??
-		response.data.general ??
-		t('user.message.activation_error');
+    if (!response.success && !response.data) {
+        error.value = t('user.message.activation_error');
+        return;
+    }
+
+    if (response.data.token) {
+        error.value = response.data.token;
+        return;
+    }
+
+    if (response.data.general) {
+        error.value = t(response.data.general);
+        return;
+    }
 };
 
 activateUser();
