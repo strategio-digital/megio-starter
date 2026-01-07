@@ -1,8 +1,9 @@
 ---
 layout: 'page'
-uri: '/translations'
+uri: '/presentation/translations'
 position: 3
-slug: 'translations'
+slug: 'presentation-translations'
+parent: 'presentation'
 navTitle: 'Translations'
 title: 'Translations'
 description: 'Multi-language support with .neon files, database storage, and ICU MessageFormat.'
@@ -301,9 +302,9 @@ Response is cached for 2 hours (when caching is enabled).
 6. **Vue composable** reads `data-posix` and fetches translations
 7. **API requests** from frontend use POSIX format (`/megio/translation/fetch/cs_CZ`)
 
-## Best Practices
+## Translation Rules
 
-### Where to Translate (output layer)
+### Where to Translate (output layer only)
 
 - **Vue components** - `t('key')` in templates
 - **Latte templates** - `{_'key'}`
@@ -311,7 +312,7 @@ Response is cached for 2 hours (when caching is enabled).
 - **Controllers** - only exceptionally (page titles)
 - **Queue workers** - see [Using in Queue Workers](#using-in-queue-workers)
 
-### Where NOT to Translate
+### Where NOT to Translate (forbidden)
 
 - **Request handlers** - pass translation keys and params to frontend, frontend translates
 - **Translatable exceptions** - implement `TranslatableExceptionInterface`, contain only translation keys and params
@@ -320,7 +321,7 @@ Response is cached for 2 hours (when caching is enabled).
 - **Repositories** - no translations
 - **Entities** - no translations
 - **Other services** - no translations
-- **CLI commands** - developers only, English is fine
+- **CLI commands** - developers only, English only
 - **Log messages** - always English for consistency
 
 ### TranslatableException

@@ -205,7 +205,7 @@ final readonly class RegisterUserFacade
 - Add conditional mounting with DOM element existence check:
 
 ```typescript
-const el = document.getElementById('vue-<domain>-<Project-edit-form>');
+const el = document.getElementById('vue-<domainName>-<ComponentName>');
 if (el) {
     const component = await import('@/assets/app/Domain/Component.vue');
     const someId = String(projectEditEl.getAttribute('data-some-id'));
