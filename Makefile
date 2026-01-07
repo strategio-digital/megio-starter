@@ -46,6 +46,9 @@ db-restore:
 	docker compose exec postgres pg_restore --no-owner --no-privileges -U "$(DB_USERNAME)" -d "$(DB_DATABASE)" /var/lib/postgresql/temp/dump.sql
 	docker compose exec postgres rm /var/lib/postgresql/temp/dump.sql
 
+documan:
+	docker compose up -d documan --build
+
 documan-import:
 	docker compose exec -t documan /documan/bin/documan import
 

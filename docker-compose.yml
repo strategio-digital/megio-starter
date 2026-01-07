@@ -49,3 +49,4 @@ services:
     volumes:
       - ./docs:/documan/data/docs
       - ./README.md:/documan/data/README.md
+      - ./CLAUDE.md:/documan/data/architecture/CLAUDE.md
