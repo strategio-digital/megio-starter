@@ -1,7 +1,7 @@
 ---
 layout: 'page'
 uri: '/translations'
-position: 2
+position: 3
 slug: 'translations'
 navTitle: 'Translations'
 title: 'Translations'
@@ -309,38 +309,41 @@ Response is cached for 2 hours (when caching is enabled).
 - **Latte templates** - `{_'key'}`
 - **Mailers** - email subjects and bodies
 - **Controllers** - only exceptionally (page titles)
-- **Request handlers** - only exceptionally (API error responses)
 - **Queue workers** - see [Using in Queue Workers](#using-in-queue-workers)
 
 ### Where NOT to Translate
 
-- **Facades** - throw keys only, never translate
+- **Request handlers** - pass translation keys and params to frontend, frontend translates
+- **Translatable exceptions** - implement `TranslatableExceptionInterface`, contain only translation keys and params
+- **Internal exceptions** - `Exception`, `RuntimeException`, `InvalidArgumentException` - English only, for developers
+- **Facades** - throw translatable exceptions with keys only, never translate
 - **Repositories** - no translations
 - **Entities** - no translations
 - **Other services** - no translations
 - **CLI commands** - developers only, English is fine
-- **Internal exceptions** - `RuntimeException`, `InvalidArgumentException`
 - **Log messages** - always English for consistency
 
 ### TranslatableException
 
-When you need to translate exceptions (only exceptionally), use `TranslatableExceptionInterface`:
+Any exception that needs translation must extend `Megio\Translation\Exception\TranslatableException`:
 
 ```php
-// Facade - only key
-throw new TranslatableException('user.error.email_exists');
+// Facade - throw with translation key and params
+throw new UserAuthFacadeException(
+    translationKey: 'user.error.email_exists',
+);
 
-// With parameters
-throw new TranslatableException(
+throw new UserAuthFacadeException(
     translationKey: 'user.error.min_age',
     translationParams: ['minAge' => 18],
 );
 
-// Controller/Request handler - translates for response
+// Request handler - pass key and params to frontend (no translation here)
 catch (TranslatableExceptionInterface $e) {
-    return $this->error(
-        $this->translator->translate($e->getTranslationKey(), $e->getTranslationParams())
-    );
+    return $this->error([
+        'general' => $e->getTranslationKey(),
+        'params' => $e->getTranslationParams(),
+    ]);
 }
 ```
 
