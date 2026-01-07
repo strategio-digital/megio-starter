@@ -41,17 +41,17 @@ final readonly class UserPasswordResetMailWorker implements IQueueWorker
         $this->translator->setPosix($posix);
 
         if (is_string($user_id) === false) {
-            throw new Exception($this->translator->translate('user.error.user_id_invalid_type'));
+            throw new Exception('Invalid user_id type in job payload.');
         }
 
         if (Uuid::isValid($user_id) === false) {
-            throw new Exception($this->translator->translate('user.error.user_id_invalid'));
+            throw new Exception('Invalid user_id format in job payload.');
         }
 
         $user = $this->em->getUserRepo()->findOneBy(['id' => $user_id]);
 
         if ($user === null) {
-            throw new Exception($this->translator->translate('user.error.user_not_found'));
+            throw new Exception('User not found: ' . $user_id);
         }
 
         $this->passwordResetMailer->send($user);

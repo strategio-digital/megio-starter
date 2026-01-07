@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
+use App\User\Facade\LoginUserFacade;
 use App\User\Http\Request\Dto\UserLoginDto;
 use DateMalformedStringException;
 use Doctrine\ORM\Exception\ORMException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userFacade,
+        private readonly LoginUserFacade $loginUserFacade,
     ) {}
 
     /**
@@ -29,9 +29,12 @@ class LoginRequest extends AbstractRequest
         $requestDto = $this->requestToDto(UserLoginDto::class);
 
         try {
-            $authResult = $this->userFacade->loginUser($requestDto);
+            $authResult = $this->loginUserFacade->execute($requestDto);
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()], 403);
+            return $this->error([
+                'general' => $e->getTranslationKey(),
+                'params' => $e->getTranslationParams(),
+            ], 403);
         }
 
         return $this->json([

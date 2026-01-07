@@ -4,7 +4,7 @@ namespace Tests\Feature\User;
 
 use App\User\Database\Entity\User;
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
+use App\User\Facade\RegisterUserFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Doctrine\ORM\Exception\ORMException;
 use Megio\Database\Entity\EntityException;
@@ -23,7 +23,7 @@ class UserRegistrationTest extends TestCase
     public function testRegistersUser(): void
     {
         // Arrange
-        $facade = $this->getService(UserAuthFacade::class);
+        $facade = $this->getService(RegisterUserFacade::class);
         $developerMail = EnvConvertor::toString($_ENV['APP_DEVELOPER_MAIL']);
 
         $userRegisterDto = new UserRegisterDto(
@@ -32,7 +32,7 @@ class UserRegistrationTest extends TestCase
         );
 
         // Act
-        $user = $facade->registerUser($userRegisterDto);
+        $user = $facade->execute($userRegisterDto);
 
         // Assert - User was created with correct data
         $this->assertInstanceOf(User::class, $user);
@@ -45,7 +45,7 @@ class UserRegistrationTest extends TestCase
 
         $this->assertCount(1, $roles);
         $this->assertNotFalse($firstRole, 'User should have at least one role');
-        $this->assertSame(UserAuthFacade::USER_ROLE_NAME, $firstRole->getName());
+        $this->assertSame(RegisterUserFacade::USER_ROLE_NAME, $firstRole->getName());
 
         // Assert - Password is hashed (not plain text)
         $this->assertNotSame('SecurePass123!', $user->getPassword());

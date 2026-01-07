@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
+use App\User\Facade\ResetPasswordFacade;
 use App\User\Http\Request\Dto\UserResetPasswordDto;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ResetPasswordRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userAuthFacade,
+        private readonly ResetPasswordFacade $resetPasswordFacade,
     ) {}
 
     /**
@@ -31,9 +31,12 @@ class ResetPasswordRequest extends AbstractRequest
         $requestDto = $this->requestToDto(UserResetPasswordDto::class);
 
         try {
-            $this->userAuthFacade->resetPassword($requestDto);
+            $this->resetPasswordFacade->execute($requestDto);
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            return $this->error([
+                'general' => $e->getTranslationKey(),
+                'params' => $e->getTranslationParams(),
+            ]);
         }
 
         return $this->json();

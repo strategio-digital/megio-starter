@@ -32,7 +32,7 @@ class DashboardAbstractRequest extends AbstractRequest
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        $this->dashboardFacade->computeSomething();
+        $this->dashboardFacade->execute();
         $response = DashboardResponseDto::create($user);
 
         return $this->requestSerializer->serialize($response);

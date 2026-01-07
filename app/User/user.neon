@@ -2,7 +2,11 @@ services:
     - App\User\Console\UserCreateCommand
     - App\User\Console\UserRoleAssignCommand
     - App\User\Resolver\UserTokenResolver
-    - App\User\Facade\UserAuthFacade
+    - App\User\Facade\RegisterUserFacade
+    - App\User\Facade\ActivateUserFacade
+    - App\User\Facade\LoginUserFacade
+    - App\User\Facade\ForgotPasswordFacade
+    - App\User\Facade\ResetPasswordFacade
     - App\User\Mail\UserRegistrationMailer
     - App\User\Mail\PasswordResetMailer
 

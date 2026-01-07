@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
+use App\User\Facade\ForgotPasswordFacade;
 use App\User\Http\Request\Dto\UserForgotPasswordDto;
 use Doctrine\ORM\Exception\ORMException;
 use Megio\Http\Request\AbstractRequest;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ForgotPasswordRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userAuthFacade,
+        private readonly ForgotPasswordFacade $forgotPasswordFacade,
     ) {}
 
     /**
@@ -27,7 +27,7 @@ class ForgotPasswordRequest extends AbstractRequest
         $requestDto = $this->requestToDto(UserForgotPasswordDto::class);
 
         try {
-            $this->userAuthFacade->forgotPassword($requestDto);
+            $this->forgotPasswordFacade->execute($requestDto);
         } catch (UserAuthFacadeException) {
             // To prevent user enumeration, we do not disclose whether the email exists.
         }

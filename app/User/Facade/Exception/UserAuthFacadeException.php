@@ -3,6 +3,6 @@ declare(strict_types=1);
 
 namespace App\User\Facade\Exception;
 
-use Exception;
+use Megio\Translation\Exception\TranslatableException;
 
-class UserAuthFacadeException extends Exception {}
+class UserAuthFacadeException extends TranslatableException {}

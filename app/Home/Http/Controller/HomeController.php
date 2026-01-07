@@ -8,7 +8,7 @@ use Megio\Http\Controller\Base\Controller;
 use Megio\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeController extends Controller
+final class HomeController extends Controller
 {
     public function __construct(
         private readonly Translator $translator,

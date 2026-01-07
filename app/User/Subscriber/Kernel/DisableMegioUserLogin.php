@@ -16,7 +16,7 @@ use function is_array;
 use function is_string;
 use function json_decode;
 
-readonly class DisableMegioUserLogin implements EventSubscriberInterface
+final readonly class DisableMegioUserLogin implements EventSubscriberInterface
 {
     public function __construct(
         private RouteCollection $routeCollection,

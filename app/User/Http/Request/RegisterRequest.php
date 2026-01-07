@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\User\Http\Request;
 
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
+use App\User\Facade\RegisterUserFacade;
 use App\User\Http\Request\Dto\UserRegisterDto;
 use Doctrine\ORM\Exception\ORMException;
 use Megio\Database\Entity\EntityException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RegisterRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userAuthFacade,
+        private readonly RegisterUserFacade $registerUserFacade,
     ) {}
 
     /**
@@ -29,9 +29,12 @@ class RegisterRequest extends AbstractRequest
         $requestDto = $this->requestToDto(UserRegisterDto::class);
 
         try {
-            $this->userAuthFacade->registerUser($requestDto);
+            $this->registerUserFacade->execute($requestDto);
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            return $this->error([
+                'general' => $e->getTranslationKey(),
+                'params' => $e->getTranslationParams(),
+            ]);
         }
 
         return $this->json();

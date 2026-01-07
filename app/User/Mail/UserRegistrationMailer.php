@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\User\Mail;
 
 use App\User\Database\Entity\User;
+use Exception;
 use Megio\Helper\EnvConvertor;
 use Megio\Helper\Path;
 use Megio\Http\Resolver\LinkResolver;
@@ -12,7 +13,6 @@ use Megio\Mailer\EmailTemplateFactory;
 use Megio\Mailer\SmtpMailer;
 use Megio\Translation\Translator;
 use Nette\Mail\Message;
-use RuntimeException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final readonly class UserRegistrationMailer
@@ -23,12 +23,15 @@ final readonly class UserRegistrationMailer
         private Translator $translator,
     ) {}
 
+    /**
+     * @throws Exception
+     */
     public function send(User $user): void
     {
         $token = $user->getActivationToken();
 
         if ($token === null) {
-            throw new RuntimeException($this->translator->translate('user.error.activation_token_missing'));
+            throw new Exception('Activation token is missing for user: ' . $user->getId());
         }
 
         $activationLink = $this->linkResolver->link('user.activation', [

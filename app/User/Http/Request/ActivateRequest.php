@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\User\Http\Request;
 
+use App\User\Facade\ActivateUserFacade;
 use App\User\Facade\Exception\UserAuthFacadeException;
-use App\User\Facade\UserAuthFacade;
 use App\User\Http\Request\Dto\UserActivateDto;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ActivateRequest extends AbstractRequest
 {
     public function __construct(
-        private readonly UserAuthFacade $userAuthFacade,
+        private readonly ActivateUserFacade $activateUserFacade,
     ) {}
 
     /**
@@ -29,9 +29,12 @@ class ActivateRequest extends AbstractRequest
         $requestDto = $this->requestToDto(UserActivateDto::class);
 
         try {
-            $this->userAuthFacade->activateUser($requestDto);
+            $this->activateUserFacade->execute($requestDto);
         } catch (UserAuthFacadeException $e) {
-            return $this->error(['general' => $e->getMessage()]);
+            return $this->error([
+                'general' => $e->getTranslationKey(),
+                'params' => $e->getTranslationParams(),
+            ]);
         }
 
         return $this->json();
