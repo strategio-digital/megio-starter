@@ -54,7 +54,7 @@ Each layer has a single responsibility (SRP). Never mix responsibilities across 
 
 | Layer       | Responsibility (SRP)                                             |
 |-------------|------------------------------------------------------------------|
-| Facade      | Domain orchestration, CRUD, transactions, orchestrates services  |
+| Facade      | Single operation per facade, one `execute()` method, orchestrates services |
 | Integration | External system sync, uses Client, tracks IDs via ImportIdFacade |
 | Repository  | Database queries, CRUD                                           |
 | Resolver    | Business rules/decisions, stateless (service class)              |
@@ -140,10 +140,12 @@ inconsistent data.
 
 ### Business Logic (where logic lives)
 
-| Layer       | When to use                                              |
-|-------------|----------------------------------------------------------|
-| Facade      | Domain orchestration, CRUD, transactions (primary layer) |
-| Integration | Sync with external system                                |
+| Layer       | When to use                                                        |
+|-------------|-------------------------------------------------------------------|
+| Facade      | Single operation per facade with `execute()` method (primary layer) |
+| Integration | Sync with external system                                          |
+
+**Facade naming:** `{Action}{Entity}Facade::execute()` (e.g., `RegisterUserFacade::execute()`)
 
 ### Service Classes (utility layer, orchestrated by Facade)
 

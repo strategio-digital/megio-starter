@@ -22,7 +22,7 @@ app/DomainName/
 ├── Console/       # CLI commands
 ├── Database/      # Entities, Repositories, Fields, Interfaces
 ├── Dto/           # Data Transfer Objects with validation
-├── Facade/        # Business logic layer (orchestrates services)
+├── Facade/        # Single-operation facades with execute() method
 ├── Http/          # Controllers (Latte render), Requests (API), Clients
 ├── Mail/          # Mailers (email composition and sending)
 ├── Recipe/        # CRUD & admin-panel configurations
@@ -49,7 +49,7 @@ app/DomainName/
 
 ## SOLID Principles
 
-- **SRP**: Each class has single responsibility (Controller=renders Latte templates, Facade=business logic, Repository=data access, DTO=validation)
+- **SRP**: Each class has single responsibility (Controller=renders Latte, Facade=single operation, Repository=data access, DTO=validation)
 - **OCP**: Extend via new classes, not modifying existing ones
 - **LSP**: Derived classes must be substitutable for base classes
 - **ISP**: Create specific interfaces, not general-purpose ones
@@ -123,21 +123,35 @@ When adding new functionality (e.g., user registration), follow this complete ch
 - Add Symfony validation attributes (`#[Assert\NotBlank]`, `#[Assert\Email]`, etc.)
 - Set default values in constructor parameters where appropriate
 
-#### Facade (Business Logic)
+#### Facade (Business Logic - Single Operation)
 
-- Create Facade in `app/Domain/Facade/` as readonly class
-- Inject EntityManager via constructor
-- Implement business logic methods accepting DTO objects instead of individual parameters
+- **One operation per facade** with single public `execute()` method
+- **Naming:** `{Action}{Entity}Facade::execute()` (e.g., `RegisterUserFacade`, `LoginUserFacade`)
+- Create Facade in `app/Domain/Facade/` as `final readonly` class
+- Inject only dependencies needed for this specific operation
+- Accept DTO object in `execute()` method, return Entity or DTO
 - Add proper exception declarations (@throws)
 - Find methods belong to repository, not facade
-- Update methods should only take entity parameter, then persist and flush
+
+```php
+final readonly class RegisterUserFacade
+{
+    public function __construct(
+        private EntityManager $em,
+        private UserTokenResolver $tokenResolver,
+    ) {}
+
+    /** @throws UserFacadeException */
+    public function execute(UserRegisterDto $dto): User { ... }
+}
+```
 
 #### Integration Layer
 
 - Create Integration classes in `app/Domain/Integration/` as orchestrators
 - Extract business logic to Facade classes in `app/Domain/Facade/`
 - Integration classes delegate to facades and handle external API operations
-- Register both Integration and Facade classes in `config/app.neon`
+- Register both Integration and Facade classes in `app/<domain>/<domain>.neon`
 
 #### Repository Rules
 
@@ -158,7 +172,7 @@ When adding new functionality (e.g., user registration), follow this complete ch
 
 #### Dependency Injection
 
-- Register new services in `config/app.neon` under services section
+- Register new services in `app/<domain>/<domain>.neon` under services section
 
 ### 2. Routing Configuration
 
