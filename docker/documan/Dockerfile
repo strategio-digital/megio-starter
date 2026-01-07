@@ -3,6 +3,7 @@ FROM jzaplet/documan:2.9.0-alpha
 # Copy your documentation into the image
 COPY ./docs /documan/data/docs
 COPY ./README.md /documan/data/README.md
+COPY ./CLAUDE.md /documan/data/architecture/CLAUDE.md
 
 # Set working directory
 # Important for relative paths in DOCUMAN_DOCS_FILES or DOCUMAN_EXCLUDED_FILES
