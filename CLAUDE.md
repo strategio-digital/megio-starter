@@ -1,3 +1,14 @@
+---
+layout: 'page'
+uri: '/architecture/project'
+position: 1
+slug: 'architecture-project'
+parent: 'architecture'
+navTitle: 'Project Architecture'
+title: 'Project Architecture'
+description: 'Project architecture, patterns, and development workflows for Megio Framework.'
+---
+
 # Project Architecture
 
 ## Overview
@@ -11,11 +22,14 @@ app/DomainName/
 ├── Console/       # CLI commands
 ├── Database/      # Entities, Repositories, Fields, Interfaces
 ├── Dto/           # Data Transfer Objects with validation
-├── Facade/        # Business logic layer
-├── Http/          # Controllers, Requests & API Clients
+├── Facade/        # Business logic layer (orchestrates services)
+├── Http/          # Controllers (Latte render), Requests (API), Clients
+├── Mail/          # Mailers (email composition and sending)
 ├── Recipe/        # CRUD & admin-panel configurations
-├── Subscriber/    # Event subscribers
-└── Worker/        # Background jobs
+├── Resolver/      # Business decisions (stateless utility)
+├── Subscriber/    # Event subscribers (Kernel, Doctrine)
+├── Worker/        # Background jobs (Queue processing)
+└── domain.neon    # DI configuration for this domain
 ```
 
 ## Key Patterns
@@ -35,7 +49,7 @@ app/DomainName/
 
 ## SOLID Principles
 
-- **SRP**: Each class has single responsibility (Controller=HTTP, Facade=logic, Repository=data, DTO=validation)
+- **SRP**: Each class has single responsibility (Controller=renders Latte templates, Facade=business logic, Repository=data access, DTO=validation)
 - **OCP**: Extend via new classes, not modifying existing ones
 - **LSP**: Derived classes must be substitutable for base classes
 - **ISP**: Create specific interfaces, not general-purpose ones
@@ -91,10 +105,11 @@ When adding new functionality (e.g., user registration), follow this complete ch
 - All client methods return endpoint instances for clean API separation
 - Handle authentication via headers (API keys, tokens) in client configuration
 
-#### Controller Method
+#### Controller (renders Latte templates only)
 
 - Add method to appropriate controller in `app/Domain/Http/Controller/`
-- Return Latte template render with title and description
+- Controller only renders Latte templates and passes data (title, description) to view
+- NO business logic in Controller - use Facade for that
 
 #### Latte Template
 
