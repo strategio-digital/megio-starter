@@ -57,3 +57,6 @@ documan-lint:
 
 documan-fix:
 	docker compose exec -t documan /documan/bin/documan fix
+
+documan-vectorize:
+	docker compose exec -t documan /documan/bin/documan vectorize
