@@ -18,6 +18,16 @@ const { load } = useTranslation();
 await load();
 
 import { megio } from 'megio-api';
+
+// Session keeper - token refresh
+import { useSessionKeeper } from '@/assets/app-ui/SessionKeeper/useSessionKeeper';
+
+if (megio.auth.user.get() !== null) {
+	const { start } = useSessionKeeper();
+	start();
+}
+
+// Vue core
 import { createApp } from 'vue';
 
 // Toast system
