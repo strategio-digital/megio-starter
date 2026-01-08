@@ -10,6 +10,8 @@ use App\User\Facade\Exception\UserAuthFacadeException;
 use App\User\Http\Request\Dto\UserForgotPasswordDto;
 use App\User\Resolver\UserTokenResolver;
 use DateTimeImmutable;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Megio\Translation\Translator;
 
 final readonly class ForgotPasswordFacade
@@ -22,6 +24,11 @@ final readonly class ForgotPasswordFacade
         private Translator $translator,
     ) {}
 
+    /**
+     * @throws UserAuthFacadeException
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function execute(UserForgotPasswordDto $dto): User
     {
         $user = $this->em->getUserRepo()->findOneBy(['email' => $dto->email]);
