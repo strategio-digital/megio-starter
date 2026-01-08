@@ -66,29 +66,33 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="space-y-2">
-        <label v-if="label" :for="inputId" class="block text-sm font-medium text-gray-700">
-            {{ label }}
-            <span v-if="required" class="text-red-500">*</span>
-        </label>
-        <input
-            :id="inputId"
-            :name="name"
-            :value="inputValue"
-            type="datetime-local"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            :class="[
+	<div class="space-y-2">
+		<label
+			v-if="label"
+			:for="inputId"
+			class="block text-sm font-medium text-gray-700"
+		>
+			{{ label }}
+			<span v-if="required" class="text-red-500">*</span>
+		</label>
+		<input
+			:id="inputId"
+			:name="name"
+			:value="inputValue"
+			type="datetime-local"
+			:placeholder="placeholder"
+			:disabled="disabled"
+			:class="[
                 'w-full px-3 py-2 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
                 error
                   ? 'border-red-300 focus:ring-red-500'
                   : 'border-gray-300 hover:border-gray-400',
                 disabled && 'bg-gray-50 cursor-not-allowed'
             ]"
-            @input="handleInput"
-            @change="handleChange"
-            @keyup="$emit('keyup', $event)"
-        />
-        <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
-    </div>
+			@input="handleInput"
+			@change="handleChange"
+			@keyup="$emit('keyup', $event)"
+		>
+		<p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+	</div>
 </template>

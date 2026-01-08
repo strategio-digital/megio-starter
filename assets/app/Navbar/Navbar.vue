@@ -33,29 +33,29 @@ const handleBack = () => {
 </script>
 
 <template>
-  <div class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-6">
-        <div class="flex items-center">
-          <Logo :linkTo="`/${shortCode}/dashboard`" size="sm" />
-        </div>
-        <Button
-            v-if="showBackButton"
-            variant="secondary"
-            size="sm"
-            @click="handleBack"
-        >
-          {{ t('app.button.back') }}
-        </Button>
-        <Button
-            v-else
-            variant="secondary"
-            size="sm"
-            @click="handleLogout"
-        >
-          {{ t('user.button.logout') }}
-        </Button>
-      </div>
-    </div>
-  </div>
+	<div class="bg-white shadow">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div class="flex justify-between items-center py-6">
+				<div class="flex items-center">
+					<Logo :linkTo="`/${shortCode}/dashboard`" size="sm" />
+				</div>
+				<Button
+					v-if="showBackButton"
+					variant="secondary"
+					size="sm"
+					@click="handleBack"
+				>
+					{{ t('app.button.back') }}
+				</Button>
+				<Button
+					v-else
+					variant="secondary"
+					size="sm"
+					@click="handleLogout"
+				>
+					{{ t('user.button.logout') }}
+				</Button>
+			</div>
+		</div>
+	</div>
 </template>

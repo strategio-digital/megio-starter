@@ -38,33 +38,44 @@ loadDashboardData();
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50">
-        <Navbar :user="dashboardData?.user" :title="t('dashboard.page.title')" />
+	<div class="min-h-screen bg-gray-50">
+		<Navbar
+			:user="dashboardData?.user"
+			:title="t('dashboard.page.title')"
+		/>
 
-        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div class="px-4 py-6 sm:px-0">
-                <div v-if="isLoading" class="flex justify-center items-center py-12">
-                    <Spinner size="lg" />
-                    <span class="ml-3 text-gray-600">{{ t('app.message.loading') }}</span>
-                </div>
+		<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+			<div class="px-4 py-6 sm:px-0">
+				<div
+					v-if="isLoading"
+					class="flex justify-center items-center py-12"
+				>
+					<Spinner size="lg" />
+					<span class="ml-3 text-gray-600">
+						{{ t('app.message.loading') }}
+					</span>
+				</div>
 
-                <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0 text-red-800">
-                            <ErrorIcon class="w-5 h-5" />
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-red-800">
-                                {{ error }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+				<div
+					v-else-if="error"
+					class="bg-red-50 border border-red-200 rounded-lg p-4"
+				>
+					<div class="flex">
+						<div class="flex-shrink-0 text-red-800">
+							<ErrorIcon class="w-5 h-5" />
+						</div>
+						<div class="ml-3">
+							<p class="text-sm font-medium text-red-800">
+								{{ error }}
+							</p>
+						</div>
+					</div>
+				</div>
 
-                <div v-else-if="dashboardData" class="space-y-6">
-                    <UserInfo :user="dashboardData.user" />
-                </div>
-            </div>
-        </main>
-    </div>
+				<div v-else-if="dashboardData" class="space-y-6">
+					<UserInfo :user="dashboardData.user" />
+				</div>
+			</div>
+		</main>
+	</div>
 </template>

@@ -83,19 +83,23 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="space-y-2">
-        <label v-if="label" :for="inputId" class="block text-sm font-medium text-gray-700">
-            {{ label }}
-            <span v-if="required" class="text-red-500">*</span>
-        </label>
-        <input
-            :id="inputId"
-            :name="name"
-            :value="inputValue"
-            :type="type || 'text'"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            :class="[
+	<div class="space-y-2">
+		<label
+			v-if="label"
+			:for="inputId"
+			class="block text-sm font-medium text-gray-700"
+		>
+			{{ label }}
+			<span v-if="required" class="text-red-500">*</span>
+		</label>
+		<input
+			:id="inputId"
+			:name="name"
+			:value="inputValue"
+			:type="type || 'text'"
+			:placeholder="placeholder"
+			:disabled="disabled"
+			:class="[
                 'w-full border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/90 backdrop-blur-sm',
                 size === 'xl' ? 'px-6 py-4 text-lg' : size === 'lg' ? 'px-4 py-3 text-base' : size === 'sm' ? 'px-2 py-1 text-sm' : 'px-3 py-2',
                 withSpinner && (size === 'xl' || size === 'lg') ? 'pr-12' : '',
@@ -104,14 +108,19 @@ onMounted(() => {
                   : 'border-gray-300 hover:border-gray-400',
                 disabled && 'bg-gray-50 cursor-not-allowed'
             ]"
-            @input="handleInput"
-            @change="handleChange"
-            @keyup="$emit('keyup', $event)"
-        />
-        <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
-        <p v-if="statusMessage && !error" :class="[
+			@input="handleInput"
+			@change="handleChange"
+			@keyup="$emit('keyup', $event)"
+		>
+		<p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+		<p
+			v-if="statusMessage && !error"
+			:class="[
             'text-sm',
             statusVariant === 'success' ? 'text-green-600' : 'text-blue-600'
-        ]">{{ statusMessage }}</p>
-    </div>
+        ]"
+		>
+			{{ statusMessage }}
+		</p>
+	</div>
 </template>

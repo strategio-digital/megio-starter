@@ -25,12 +25,17 @@ const sizeClasses = {
 </script>
 
 <template>
-    <a :href="linkTo" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-        <img
-            :class="`${sizeClasses[size].icon}`"
-            :src="AppLogo"
-            alt="WebAppName"
-        />
-        <h2 :class="`${sizeClasses[size].text} font-bold text-gray-900`">WebAppName</h2>
-    </a>
+	<a
+		:href="linkTo"
+		class="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+	>
+		<img
+			:class="`${sizeClasses[size].icon}`"
+			:src="AppLogo"
+			alt="WebAppName"
+		>
+		<h2 :class="`${sizeClasses[size].text} font-bold text-gray-900`">
+			WebAppName
+		</h2>
+	</a>
 </template>
