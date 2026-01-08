@@ -4,6 +4,7 @@ use App\Dashboard\Http\Request\DashboardAbstractRequest;
 use App\User\Http\Request\ActivateRequest;
 use App\User\Http\Request\ForgotPasswordRequest;
 use App\User\Http\Request\LoginRequest;
+use App\User\Http\Request\RefreshTokenRequest;
 use App\User\Http\Request\RegisterRequest;
 use App\User\Http\Request\ResetPasswordRequest;
 use Megio\Translation\Resolver\PosixResolver;
@@ -40,6 +41,11 @@ return static function (
         ->methods(['POST'])
         ->controller(ResetPasswordRequest::class)
         ->options(['auth' => false])
+        ->requirements(['locale' => PosixResolver::LOCALE_POSIX_PATTERN]);
+
+    $routes->add('api.user.refresh-token', '/api/v1/{locale}/user/refresh-token')
+        ->methods(['POST'])
+        ->controller(RefreshTokenRequest::class)
         ->requirements(['locale' => PosixResolver::LOCALE_POSIX_PATTERN]);
 
     $routes->add('api.dashboard.data', '/api/v1/{locale}/dashboard/data')
