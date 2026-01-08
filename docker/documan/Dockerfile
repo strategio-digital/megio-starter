@@ -1,4 +1,4 @@
-FROM jzaplet/documan:2.9.0-alpha
+FROM jzaplet/documan:2.9.1-alpha
 
 # Copy your documentation into the image
 COPY ./docs /documan/data/docs
