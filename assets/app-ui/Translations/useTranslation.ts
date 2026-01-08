@@ -1,6 +1,10 @@
 import { megio } from 'megio-api';
 import { computed, ref } from 'vue';
 import IntlMessageFormat from 'intl-messageformat';
+import {
+	loadFromCache,
+	saveToCache,
+} from '@/assets/app-ui/Translations/TranslationCache';
 
 type TranslationsResponse = {
 	messages: Record<string, string>;
@@ -27,7 +31,7 @@ const getFallbackLocales = (): string[] => {
 };
 
 /**
- * Initialize current locale from HTML data attribute
+ * Initialize current locale from HTML data attribute and load cached translations
  */
 const initLocale = (): void => {
 	if (currentPosix.value !== '') {
@@ -38,11 +42,16 @@ const initLocale = (): void => {
 
 	if (posix !== undefined && posix !== '') {
 		currentPosix.value = posix;
-		return;
+	} else {
+		const fallbackLocales = getFallbackLocales();
+		currentPosix.value = fallbackLocales[0] ?? 'en_US';
 	}
 
-	const fallbackLocales = getFallbackLocales();
-	currentPosix.value = fallbackLocales[0] ?? 'en_US';
+	// Immediately load from cache to prevent flickering
+	const cached = loadFromCache(currentPosix.value);
+	if (cached !== null) {
+		translations.value = cached;
+	}
 };
 
 export function useTranslation() {
@@ -50,9 +59,14 @@ export function useTranslation() {
 	initLocale();
 
 	/**
-	 * Load translations from API for current locale
+	 * Load translations from API for current locale (skips if cached)
 	 */
 	const load = async (): Promise<void> => {
+		// Skip API call if we already have translations from cache
+		if (Object.keys(translations.value).length > 0) {
+			return;
+		}
+
 		const locale = currentPosix.value;
 		const fallbackLocales = getFallbackLocales();
 		const fallback = fallbackLocales[0] ?? 'en_US';
@@ -64,6 +78,7 @@ export function useTranslation() {
 
 		if (response.success) {
 			translations.value = response.data.messages;
+			saveToCache(locale, response.data.messages);
 			return;
 		}
 
@@ -78,6 +93,7 @@ export function useTranslation() {
 
 		if (fallbackResponse.success) {
 			translations.value = fallbackResponse.data.messages;
+			saveToCache(fallback, fallbackResponse.data.messages);
 		}
 	};
 
@@ -88,6 +104,16 @@ export function useTranslation() {
 		currentPosix.value = newPosix;
 		document.documentElement.dataset.posix = newPosix;
 		document.documentElement.lang = newPosix.replace('_', '-');
+
+		// Load from cache if available
+		const cached = loadFromCache(newPosix);
+		if (cached !== null) {
+			translations.value = cached;
+			return;
+		}
+
+		// Otherwise fetch from API
+		translations.value = {};
 		await load();
 	};
 

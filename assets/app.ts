@@ -15,7 +15,7 @@ MegioApi();
 // Translations
 import { useTranslation } from '@/assets/app-ui/Translations/useTranslation';
 const { load } = useTranslation();
-load();
+await load();
 
 import { megio } from 'megio-api';
 import { createApp } from 'vue';
