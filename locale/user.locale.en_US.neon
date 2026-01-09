@@ -81,22 +81,22 @@ error:
         email_exists: 'This email address is already registered.'
     activation:
         invalid_token_1: 'Invalid activation token.'
-        invalid_token_2: 'Activation token has expired.'
-        invalid_token_3: 'User account not found.'
+        invalid_token_2: 'User account not found.'
+        invalid_token_3: 'Account has been deleted.'
         invalid_token_4: 'Account is already activated.'
     login:
         invalid_credentials_1: 'Invalid email or password.'
         invalid_credentials_2: 'Account is not activated.'
-        invalid_credentials_3: 'Account has been deleted.'
+        invalid_credentials_3: 'Invalid email or password.'
     forgot_password:
         invalid_credentials_1: 'No account found with this email.'
         invalid_credentials_2: 'Account is not activated.'
     reset_password:
         invalid_token_1: 'Invalid reset token.'
-        invalid_token_2: 'Reset token has expired.'
-        invalid_token_3: 'User account not found.'
+        invalid_token_2: 'User account not found.'
+        invalid_token_3: 'Account has been deleted.'
         invalid_token_4: 'Account is not activated.'
-        invalid_token_5: 'Account has been deleted.'
+        invalid_token_5: 'Invalid or expired reset token.'
 
 validation:
     email_exists: 'This email is already in use.'
