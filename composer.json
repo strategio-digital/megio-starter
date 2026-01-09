@@ -24,7 +24,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.4",
-        "strategio/megio-core": "dev-master"
+        "strategio/megio-core": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.0",
