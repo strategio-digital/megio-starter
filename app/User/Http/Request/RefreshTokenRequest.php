@@ -30,7 +30,6 @@ class RefreshTokenRequest extends AbstractRequest
      */
     public function process(Request $request): Response
     {
-        // 1. Get bearer token from header
         $authHeader = $request->headers->get('Authorization');
         if (is_string($authHeader) === false) {
             return $this->error(['general' => 'auth.missing_authorization_header'], 401);
@@ -38,13 +37,12 @@ class RefreshTokenRequest extends AbstractRequest
 
         $bearerToken = trim(str_replace('Bearer', '', $authHeader));
 
-        // 2. Get current user (set by AuthRequest subscriber)
+        // Get current user (set by AuthRequest subscriber)
         $user = $this->authUser->get();
         if (($user instanceof User) === false) {
             return $this->error(['general' => 'auth.user_not_authenticated'], 401);
         }
 
-        // 3. Delegate to Facade
         try {
             $authResult = $this->refreshTokenFacade->execute($bearerToken, $user);
         } catch (UserAuthFacadeException $e) {

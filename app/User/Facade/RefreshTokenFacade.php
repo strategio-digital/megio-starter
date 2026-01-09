@@ -43,7 +43,7 @@ final readonly class RefreshTokenFacade
         }
 
         // Check token age - must be at least 30 minutes old
-        $tokenAge = (new DateTime())->getTimestamp() - $currentToken->getCreatedAt()->getTimestamp();
+        $tokenAge = new DateTime()->getTimestamp() - $currentToken->getCreatedAt()->getTimestamp();
         if (($tokenAge < self::MIN_TOKEN_AGE_SECONDS) === true) {
             throw new UserAuthFacadeException(
                 translationKey: 'auth.token_too_young',
