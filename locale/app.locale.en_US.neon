@@ -19,3 +19,8 @@ field:
 auth:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
+    token_not_found: 'Authentication token not found.'
+    token_user_mismatch: 'Token does not belong to this user.'
+    token_too_young: 'Token must be at least 30 minutes old before refresh.'
+    missing_authorization_header: 'Authorization header is missing.'
+    user_not_authenticated: 'User is not authenticated.'
