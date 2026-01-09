@@ -1,0 +1,56 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Latte\Essential\TranslatorExtension;
+use Latte\Tools\Linter;
+use Megio\Extension\Latte\Engine;
+use Megio\Extension\Latte\Extension\MegioExtension;
+use Megio\Extension\Latte\Function\RouteFunction;
+
+/**
+ * Stub RouteFunction for linter - returns empty string without DI.
+ */
+$stubRouteFunction = new class extends RouteFunction {
+    public function __construct() {}
+
+    public function create(string $name, array $params = [], int $path = 1): string
+    {
+        return '';
+    }
+};
+
+echo "
+Latte linter
+------------
+";
+
+if ($argc < 2) {
+    echo "Usage: latte-lint <path>\n";
+    exit(1);
+}
+
+$debug = in_array('--debug', $argv, true);
+$strict = in_array('--strict', $argv, true);
+$path = $argv[1];
+
+if ($debug) {
+    echo "Debug mode\n";
+}
+if ($strict) {
+    echo "Strict mode\n";
+}
+
+try {
+    $engine = new Engine();
+    $engine->addExtension(new MegioExtension($stubRouteFunction));
+    $engine->addExtension(new TranslatorExtension(null));
+
+    $linter = new Linter(engine: $engine, debug: $debug, strict: $strict);
+    $ok = $linter->scanDirectory($path);
+    exit($ok ? 0 : 1);
+} catch (Throwable $e) {
+    fwrite(STDERR, $debug ? "\n$e\n" : "\nError: {$e->getMessage()}\n");
+    exit(2);
+}
