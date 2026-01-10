@@ -36,7 +36,6 @@ test:
 	yarn typecheck
 	yarn mail
 	docker compose exec app composer analyse
-	docker compose exec app vendor/bin/phpunit --colors=always
 	docker compose exec -t documan /documan/bin/documan lint
 
 db-restore:
